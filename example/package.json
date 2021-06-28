@@ -1,8 +1,8 @@
 {
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
+    "dev": "nodemon --watch ../dist/*.js -x 'cross-env DEBUG=vite-plugin-pages:* vite'",
+    "build": "cross-env DEBUG=vite-plugin-pages vite build",
     "serve": "vite preview"
   },
   "dependencies": {
@@ -11,8 +11,11 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",
     "@vue/compiler-sfc": "^3.0.5",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.7",
     "typescript": "^4.3.2",
     "vite": "^2.3.8",
-    "vue-tsc": "^0.0.24"
+    "vue-tsc": "^0.0.24",
+    "vite-plugin-vue-docs": "file:../"
   }
 }

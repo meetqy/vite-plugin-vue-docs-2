@@ -1,0 +1,33 @@
+{
+  "name": "vite-plugin-vue-docs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "index.d.ts",
+  "scripts": {
+    "dev": "npm run build -- --watch --ignore-watch example",
+    "build": "tsup src/index.ts --dts --format cjs,esm --external @vue/compiler-sfc",
+    "example:dev": "npm -C example run dev",
+    "test:main": "ts-node test/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meetqy/vite-plugin-vue-docs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meetqy/vite-plugin-vue-docs/issues"
+  },
+  "homepage": "https://github.com/meetqy/vite-plugin-vue-docs#readme",
+  "devDependencies": {
+    "@vue/compiler-sfc": "^3.1.2",
+    "rollup": "^2.52.3",
+    "ts-node": "^10.0.0",
+    "tsup": "^4.12.0",
+    "typescript": "^4.3.4",
+    "vite": "^2.3.8"
+  }
+}

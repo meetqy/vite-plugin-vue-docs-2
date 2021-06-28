@@ -1,0 +1,52 @@
+Arguments: 
+  /Users/meetqy/.nvm/versions/node/v14.17.1/bin/node /Users/meetqy/.nvm/versions/node/v14.17.1/bin/yarn add tsup -D
+
+PATH: 
+  /Users/meetqy/.nvm/versions/node/v14.17.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/meetqy/.nvm/versions/node/v14.17.1/bin
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.17.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  SyntaxError: /Users/meetqy/Desktop/vite-plugin-vue-docs/package.json: Unexpected token } in JSON at position 558
+      at JSON.parse (<anonymous>)
+      at /Users/meetqy/.nvm/versions/node/v14.17.1/lib/node_modules/yarn/lib/cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (/Users/meetqy/.nvm/versions/node/v14.17.1/lib/node_modules/yarn/lib/cli.js:310:30)
+      at /Users/meetqy/.nvm/versions/node/v14.17.1/lib/node_modules/yarn/lib/cli.js:321:13
+
+npm manifest: 
+  {
+    "name": "vite-plugin-vue-docs",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "index.d.ts",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/meetqy/vite-plugin-vue-docs.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/meetqy/vite-plugin-vue-docs/issues"
+    },
+    "homepage": "https://github.com/meetqy/vite-plugin-vue-docs#readme",
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
