@@ -1,3 +1,4 @@
 import { transformMain } from "../src/main";
-const res = transformMain();
-console.log(res);
+import code from "./data/vue3";
+
+transformMain(code);
