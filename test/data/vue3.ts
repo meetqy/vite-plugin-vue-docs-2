@@ -39,6 +39,9 @@ import { ref, defineComponent } from 'vue'
 export default defineComponent({
   name: 'HelloWorld',
   props: {
+    // 这是一个msg 测试
+    // 默认值: 123
+    // 必传
     msg: {
       type: String,
       required: true
