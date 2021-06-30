@@ -7,7 +7,7 @@ import MarkdownIt from "markdown-it";
 import { transformMain } from "./main";
 import http from "http";
 
-const md = new MarkdownIt({});
+const md = new MarkdownIt();
 
 function vueDocs(): Plugin {
   return {
