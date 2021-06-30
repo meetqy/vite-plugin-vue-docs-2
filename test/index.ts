@@ -1,4 +1,9 @@
 import { transformMain } from "../src/main";
-import code from "./data/vue3";
+import fs from "fs";
+
+const code = fs.readFileSync(
+  "../example/src/components/HelloWorld.vue",
+  "utf-8"
+);
 
 transformMain(code);

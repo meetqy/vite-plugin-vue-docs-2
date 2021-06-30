@@ -1,9 +1,14 @@
 import { babelParse, parse, SFCScriptBlock } from "@vue/compiler-sfc";
-import traverse, { NodePath, Node } from "@babel/traverse";
-import { ObjectProperty, ObjectExpression } from "@babel/types";
+import traverse, { Node, NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
+import {
+  ArrayExpression,
+  ObjectExpression,
+  ObjectProperty,
+} from "@babel/types";
+import json2md from "json2md";
 
-export function transformMain(code: string) {
+export function transformMain(code: string): string | null {
   const { descriptor, errors } = parse(code);
 
   if (errors.length) {
@@ -12,48 +17,72 @@ export function transformMain(code: string) {
   }
 
   if (descriptor.script) {
-    handleScript(descriptor.script);
+    const { props = [], emits = [] } = handleScript(descriptor.script);
+    return toMarkdown(props, emits);
   }
 
-  return { descriptor, errors };
+  return null;
 }
 
 export function handleScript(
   script: SFCScriptBlock
-): Partial<{ props: string; emits: string }> {
+): Partial<{ props: Prop[]; emits: Emit[] }> {
   const ast = babelParse(script.content, {
     sourceType: "module",
   });
 
+  let props: Prop[] = [];
+  let emits: Emit[] = [];
+
   traverse(ast, {
     enter(path: NodePath) {
+      // props
       if (path.isIdentifier({ name: "props" })) {
         const container = path.container as ObjectProperty;
-        const params = getPropsByObject(
+        props = getPropsByObject(
           container.value as ObjectExpression,
           script.content
         );
-        console.log(params);
+      }
+
+      // emits
+      if (path.isIdentifier({ name: "emits" })) {
+        const container = path.container as ObjectProperty;
+        emits = getEmitsByObject(container.value as ArrayExpression);
       }
     },
   });
 
   return {
-    props: "123",
-    emits: "123",
+    props,
+    emits,
   };
 }
 
-// 处理 {name: xxx, default: 'xxx', required: true}
-export function getPropsByObject(
-  ast: ObjectExpression,
-  code: string
-): Parameter[] {
+// emits ['click', 'change',...]
+export function getEmitsByObject(ast: ArrayExpression): Emit[] {
+  return ast.elements.map((item) => {
+    let emit: Emit = {
+      name: "",
+      notes: "",
+    };
+    if (t.isStringLiteral(item)) {
+      emit.name = item.value;
+      const notes = item.leadingComments?.map((item) => item.value) || [];
+      emit.notes = notes.join("\n");
+    }
+
+    return emit;
+  });
+}
+
+// props {name: xxx, default: 'xxx', required: true}
+export function getPropsByObject(ast: ObjectExpression, code: string): Prop[] {
   if (ast.properties && ast.properties.length) {
-    const params: Parameter[] = ast.properties.map((item) => {
+    return ast.properties.map((item) => {
       const variables = item as ObjectProperty;
 
-      let param: Parameter = {
+      let param: Prop = {
         name: "",
         type: "",
       };
@@ -63,8 +92,7 @@ export function getPropsByObject(
       param.notes = notes && notes.join("\n");
 
       // 参数名
-      const name = getName(variables.key);
-      param.name = name;
+      param.name = getName(variables.key);
 
       const str = code.substring(
         variables.value.start || 0,
@@ -84,7 +112,7 @@ export function getPropsByObject(
               break;
 
             case "required":
-              param.required = v[1] === "true" ? true : false;
+              param.required = v[1] === "true";
               break;
 
             case "default":
@@ -96,8 +124,6 @@ export function getPropsByObject(
 
       return param;
     });
-
-    return params;
   }
 
   return [];
@@ -111,11 +137,53 @@ function getName(ast: Node): string {
   return "";
 }
 
-// 组件参数
-interface Parameter {
+// props emits 转 markdown
+function toMarkdown(props: Prop[], emits: Emit[]): string {
+  let json2mdContent = [];
+  if (props && props.length) {
+    json2mdContent.push({ h2: "Props" });
+    json2mdContent.push({
+      table: {
+        headers: ["参数", "说明", "类型", "默认值", "必填"],
+        rows: props.map((item) => {
+          return [
+            item.name as string,
+            item.type as string,
+            item.notes || "",
+            item.default || "null",
+            item.required ? "true" : "false",
+          ];
+        }),
+      },
+    });
+  }
+
+  if (emits && emits.length) {
+    json2mdContent.push({ h2: "Emits" });
+    json2mdContent.push({
+      table: {
+        headers: ["事件", "说明", "回调参数"],
+        rows: emits.map((item) => {
+          return [item.name as string, item.notes as string, "null"];
+        }),
+      },
+    });
+  }
+
+  return json2md(json2mdContent);
+}
+
+// 参数
+interface Prop {
   name: string;
   type: string;
   default?: string;
   required?: boolean;
+  notes?: string;
+}
+
+// 事件
+interface Emit {
+  name: string;
   notes?: string;
 }

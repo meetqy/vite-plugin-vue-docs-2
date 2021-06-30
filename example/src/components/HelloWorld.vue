@@ -39,11 +39,27 @@ import { ref, defineComponent } from 'vue'
 export default defineComponent({
   name: 'HelloWorld',
   props: {
+    // 这是一个msg
     msg: {
       type: String,
-      required: true
+      required: true,
+      default: 'this is msg'
+    },
+
+    // 这是标题
+    title: {
+      type: String,
+      default: 'this is title'
     }
   },
+
+  emits: [
+    // 点击事件
+    'click',
+    // 数据改变
+    "change"
+  ],
+
   setup: () => {
     const count = ref(0)
     return { count }

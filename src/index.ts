@@ -1,11 +1,11 @@
 import type { Plugin } from "vite";
+// import { transformMain } from "./main";
 
 function vueDocs(): Plugin {
   return {
     name: "vite-plugin-vue-docs",
-    transform(code, id) {
-      console.log(id, code);
-      return null;
+    configureServer(server) {
+      server.watcher();
     },
   };
 }
