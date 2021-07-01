@@ -2,6 +2,8 @@
 
 自动生成组件文档
 
+![](./preview.png)
+
 ## 使用
 
 ``` shell
@@ -21,3 +23,19 @@ export default defineConfig({
 });
 
 ```
+
+## example
+
+```shell
+git clone https://github.com/meetqy/vite-plugin-vue-docs.git
+yarn 
+yarn dev
+yarn example:dev
+
+// 访问 `docs/-hello-world`
+```
+
+## 计划
+
+* [ ] 自动生成导航栏
+* [ ] 初始化可自定义配置
