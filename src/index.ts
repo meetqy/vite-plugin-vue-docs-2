@@ -6,7 +6,16 @@ import humps from "humps";
 import { transformMain } from "./main";
 import http from "http";
 
-function vueDocs(): Plugin {
+export interface Options {
+  base?: string;
+}
+
+function vueDocs(rawOptions: Options): Plugin {
+  let options: Options = {
+    base: "/docs",
+    ...rawOptions,
+  };
+
   return {
     name: "vite-plugin-vue-docs",
     async configureServer(server: ViteDevServer) {
@@ -25,8 +34,9 @@ function vueDocs(): Plugin {
         });
       });
 
+      console.log(options);
       // 构建路由
-      middlewares.use(`/docs`, (req: http.IncomingMessage, res) => {
+      middlewares.use(`${options.base}`, (req: http.IncomingMessage, res) => {
         const result = docs[req.url || ""];
         if (result) {
           res.writeHead(200, {

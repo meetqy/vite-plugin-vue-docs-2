@@ -8,6 +8,21 @@ import {
 } from "@babel/types";
 import Template from "./layout";
 
+// 参数
+interface Prop {
+  name: string;
+  type: string;
+  default?: string;
+  required?: boolean;
+  notes?: string;
+}
+
+// 事件
+interface Emit {
+  name: string;
+  notes?: string;
+}
+
 export function transformMain(code: string): string | null {
   const { descriptor, errors } = parse(code);
 
@@ -172,19 +187,4 @@ function toModule(props: Prop[], emits: Emit[]): {} {
   }
 
   return json;
-}
-
-// 参数
-interface Prop {
-  name: string;
-  type: string;
-  default?: string;
-  required?: boolean;
-  notes?: string;
-}
-
-// 事件
-interface Emit {
-  name: string;
-  notes?: string;
 }

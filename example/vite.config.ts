@@ -4,5 +4,10 @@ import vueDocs from "vite-plugin-vue-docs";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueDocs()],
+  plugins: [
+    vue(),
+    vueDocs({
+      base: "/abc",
+    }),
+  ],
 });
