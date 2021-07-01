@@ -6,13 +6,7 @@ import {
   ObjectExpression,
   ObjectProperty,
 } from "@babel/types";
-import hbs from "handlebars";
-import path from "path";
-import fs from "fs";
-
-const layout = fs.readFileSync(path.join(__dirname, "./layout.hbs"), "utf8");
-
-const Template = hbs.compile(layout);
+import Template from "./layout";
 
 export function transformMain(code: string): string | null {
   const { descriptor, errors } = parse(code);
@@ -149,14 +143,14 @@ function toModule(props: Prop[], emits: Emit[]): {} {
   let json: { [key: string]: any } = {};
   if (props && props.length) {
     json.props = {
-      h2: "Props",
+      h3: "Props",
       table: {
         headers: ["参数", "说明", "类型", "默认值", "必填"],
         rows: props.map((item) => {
           return [
             item.name as string,
-            item.type as string,
             item.notes || "",
+            item.type as string,
             item.default || "null",
             item.required ? "true" : "false",
           ];
@@ -167,7 +161,7 @@ function toModule(props: Prop[], emits: Emit[]): {} {
 
   if (emits && emits.length) {
     json.emits = {
-      h2: "Emits",
+      h3: "Emits",
       table: {
         headers: ["事件", "说明", "回调参数"],
         rows: emits.map((item) => {

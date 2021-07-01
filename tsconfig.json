@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES6",
+    "module": "commonJS",
+    "target": "es2017",
     "lib": [
       "ESNext",
       "DOM"
@@ -18,4 +18,9 @@
   "include": [
     "src/**/*"
   ],
+  "exclude": [
+    "node_modules",
+    "examples",
+    "dist"
+  ]
 }
