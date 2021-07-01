@@ -6,7 +6,13 @@ import {
   ObjectExpression,
   ObjectProperty,
 } from "@babel/types";
-import json2md from "json2md";
+import hbs from "handlebars";
+import path from "path";
+import fs from "fs";
+
+const layout = fs.readFileSync(path.join(__dirname, "./layout.hbs"), "utf8");
+
+const Template = hbs.compile(layout);
 
 export function transformMain(code: string): string | null {
   const { descriptor, errors } = parse(code);
@@ -18,7 +24,8 @@ export function transformMain(code: string): string | null {
 
   if (descriptor.script) {
     const { props = [], emits = [] } = handleScript(descriptor.script);
-    return toMarkdown(props, emits);
+    const result = toModule(props, emits);
+    return Template(result);
   }
 
   return null;
@@ -137,12 +144,12 @@ function getName(ast: Node): string {
   return "";
 }
 
-// props emits 转 markdown
-function toMarkdown(props: Prop[], emits: Emit[]): string {
-  let json2mdContent = [];
+// props emits to module
+function toModule(props: Prop[], emits: Emit[]): {} {
+  let json: { [key: string]: any } = {};
   if (props && props.length) {
-    json2mdContent.push({ h2: "Props" });
-    json2mdContent.push({
+    json.props = {
+      h2: "Props",
       table: {
         headers: ["参数", "说明", "类型", "默认值", "必填"],
         rows: props.map((item) => {
@@ -155,22 +162,22 @@ function toMarkdown(props: Prop[], emits: Emit[]): string {
           ];
         }),
       },
-    });
+    };
   }
 
   if (emits && emits.length) {
-    json2mdContent.push({ h2: "Emits" });
-    json2mdContent.push({
+    json.emits = {
+      h2: "Emits",
       table: {
         headers: ["事件", "说明", "回调参数"],
         rows: emits.map((item) => {
           return [item.name as string, item.notes as string, "null"];
         }),
       },
-    });
+    };
   }
 
-  return json2md(json2mdContent);
+  return json;
 }
 
 // 参数

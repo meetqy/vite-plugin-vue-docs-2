@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "ESNext",
     "target": "ES6",
     "lib": [
       "ESNext",
@@ -16,13 +16,6 @@
     "sourceMap": true
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "*.d.ts"
+    "src/**/*"
   ],
-  "exclude": [
-    "node_modules",
-    "examples",
-    "dist"
-  ]
 }

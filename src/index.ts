@@ -3,11 +3,8 @@ import { ViteDevServer } from "vite";
 import glob from "glob";
 import fs from "fs";
 import humps from "humps";
-import MarkdownIt from "markdown-it";
 import { transformMain } from "./main";
 import http from "http";
-
-const md = new MarkdownIt();
 
 function vueDocs(): Plugin {
   return {
@@ -36,7 +33,7 @@ function vueDocs(): Plugin {
             "content-type": "text/html;charset=utf8",
           });
 
-          res.end(md.render(result));
+          res.end(result);
         } else {
           res.writeHead(404);
           res.end(JSON.stringify(Object.keys(docs)));
