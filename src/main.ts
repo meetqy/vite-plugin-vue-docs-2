@@ -7,15 +7,7 @@ import {
   ObjectProperty,
 } from "@babel/types";
 import Template from "./layout";
-
-// 参数
-interface Prop {
-  name: string;
-  type: string;
-  default?: string;
-  required?: boolean;
-  notes?: string;
-}
+import { Prop, getPropsByObject } from "./handle";
 
 // 事件
 interface Emit {
@@ -55,10 +47,7 @@ export function handleScript(
       // props
       if (path.isIdentifier({ name: "props" })) {
         const container = path.container as ObjectProperty;
-        props = getPropsByObject(
-          container.value as ObjectExpression,
-          script.content
-        );
+        props = getPropsByObject(container.value as ObjectExpression);
       }
 
       // emits
@@ -90,67 +79,6 @@ export function getEmitsByObject(ast: ArrayExpression): Emit[] {
 
     return emit;
   });
-}
-
-// props {name: xxx, default: 'xxx', required: true}
-export function getPropsByObject(ast: ObjectExpression, code: string): Prop[] {
-  if (ast.properties && ast.properties.length) {
-    return ast.properties.map((item) => {
-      const variables = item as ObjectProperty;
-
-      let param: Prop = {
-        name: "",
-        type: "",
-      };
-
-      // 注释数组
-      const notes = variables.leadingComments?.map((item) => item.value);
-      param.notes = notes && notes.join("\n");
-
-      // 参数名
-      param.name = getName(variables.key);
-
-      const str = code.substring(
-        variables.value.start || 0,
-        variables.value.end || 0
-      );
-
-      const paramArr = str.match(
-        /("?)\b(\w+)\1\s*:\s*("?)((?:\w+[-+*%])*?\w+)\b\3/g
-      );
-
-      if (paramArr && paramArr.length) {
-        paramArr.map((item) => {
-          const v = item.replace(/\s/g, "").split(":");
-          switch (v[0]) {
-            case "type":
-              param.type = v[1];
-              break;
-
-            case "required":
-              param.required = v[1] === "true";
-              break;
-
-            case "default":
-              param.default = v[1];
-              break;
-          }
-        });
-      }
-
-      return param;
-    });
-  }
-
-  return [];
-}
-
-function getName(ast: Node): string {
-  if (t.isIdentifier(ast)) {
-    return ast.name;
-  }
-
-  return "";
 }
 
 // props emits to module

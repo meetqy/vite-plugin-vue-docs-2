@@ -32,6 +32,9 @@
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
   </p>
+  <h2>normal: {{normal}}</h2>
+  <h2>letter: {{letter}}</h2>
+  <h2>moreType: {{moreType}}</h2>
 </template>
 
 <script lang="ts">
@@ -39,18 +42,24 @@ import { ref, defineComponent } from 'vue'
 export default defineComponent({
   name: 'HelloWorld',
   props: {
-    // 这是一个msg 默认值还没有测试
-    msg: {
+    // 正常测试
+    normal: {
       type: String,
       required: true,
-      default: 'this is msg'
+      default: '正常测试'
     },
 
-    // 这是标题
-    title: {
+    // 少某一个配置
+    letter: {
       type: String,
-      default: 'this is title'
-    }
+      default: '少某一个配置'
+    },
+
+    // 简写方式
+    easy: String,
+
+    // 多种类型
+    moreType: [String, Number]
   },
 
   emits: [

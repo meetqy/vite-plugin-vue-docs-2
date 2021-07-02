@@ -2,6 +2,7 @@ import humps from "humps";
 import { transformMain } from "./main";
 import fs from "fs";
 import { Config } from "./index";
+import { toLine } from "./utils";
 
 class DocsRoute {
   readonly route: { [key: string]: string };
@@ -17,11 +18,7 @@ class DocsRoute {
   getRouteNameToFile(file: string): string | null {
     if (this.config.fileExp.test(file)) {
       const path = file.replace(this.config.root, "").replace(".vue", "");
-      return humps
-        .decamelize(path, {
-          separator: "-",
-        })
-        .replace(/-/, "");
+      return toLine(path);
     }
 
     return null;

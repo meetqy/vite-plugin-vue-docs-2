@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import hbs from "handlebars";
 
 const template = `<!doctype html>
@@ -75,12 +77,16 @@ const template = `<!doctype html>
 </html>`;
 
 hbs.registerHelper("handleType", function (options) {
-  if (options.data.index === 2) {
-    // @ts-ignore
-    return new hbs.SafeString(`<em>${this}</em>`);
-  } else {
-    // @ts-ignore
-    return this;
+  switch (options.data.index) {
+    case 2: {
+      return new hbs.SafeString(`<em>${this}</em>`);
+    }
+    case 4: {
+      return new hbs.SafeString(`<code>${this}</code>`);
+    }
+    default: {
+      return this;
+    }
   }
 });
 
