@@ -17,9 +17,11 @@ class DocsRoute {
   getRouteNameToFile(file: string): string | null {
     if (this.config.fileExp.test(file)) {
       const path = file.replace(this.config.root, "").replace(".vue", "");
-      return humps.decamelize(path, {
-        separator: "-",
-      });
+      return humps
+        .decamelize(path, {
+          separator: "-",
+        })
+        .replace(/-/, "");
     }
 
     return null;

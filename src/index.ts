@@ -1,9 +1,6 @@
 import type { Plugin } from "vite";
 import { ViteDevServer } from "vite";
 import glob from "glob";
-import fs from "fs";
-import humps from "humps";
-import { transformMain } from "./main";
 import http from "http";
 import DocsRoute from "./route";
 
