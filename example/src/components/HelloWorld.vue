@@ -39,7 +39,7 @@ import { ref, defineComponent } from 'vue'
 export default defineComponent({
   name: 'HelloWorld',
   props: {
-    // 这是一个msg
+    // 这是一个msg 默认值还没有测试
     msg: {
       type: String,
       required: true,

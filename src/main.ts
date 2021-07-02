@@ -166,7 +166,7 @@ function toModule(props: Prop[], emits: Emit[]): {} {
             item.name as string,
             item.notes || "",
             item.type as string,
-            item.default || "null",
+            item.default || "-",
             item.required ? "true" : "false",
           ];
         }),
@@ -180,7 +180,7 @@ function toModule(props: Prop[], emits: Emit[]): {} {
       table: {
         headers: ["事件", "说明", "回调参数"],
         rows: emits.map((item) => {
-          return [item.name as string, item.notes as string, "null"];
+          return [item.name as string, item.notes as string, "-"];
         }),
       },
     };

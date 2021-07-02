@@ -5,39 +5,53 @@ import fs from "fs";
 import humps from "humps";
 import { transformMain } from "./main";
 import http from "http";
+import DocsRoute from "./route";
 
 export interface Options {
+  // 文档路由地址
   base?: string;
+  // 组件路径 相对于 src
+  componentDir?: string;
 }
 
-function vueDocs(rawOptions: Options): Plugin {
+export interface Config extends Options {
+  // 组件绝对路径
+  root: string;
+
+  // 组件正则匹配
+  fileExp: RegExp;
+}
+
+export default function vueDocs(rawOptions: Options): Plugin {
   let options: Options = {
     base: "/docs",
+    componentDir: "/components",
     ...rawOptions,
   };
+
+  let config = {
+    root: `${process.cwd()}/src${options.componentDir}`,
+    fileExp: RegExp(`${options.componentDir}\\/.*?.vue$`),
+    ...options,
+  };
+
+  const Route = new DocsRoute(config);
 
   return {
     name: "vite-plugin-vue-docs",
     async configureServer(server: ViteDevServer) {
       const { watcher, middlewares } = server;
-      const root: string = `${process.cwd()}/src/components`;
 
-      let docs: { [key: string]: string | null } = {};
-
-      glob(`${root}/**/*.vue`, {}, (err, files) => {
+      glob(`${config.root}/**/*.vue`, {}, (err, files) => {
         if (err) throw err;
         files.map((file) => {
-          const path = file.replace(root, "").replace(".vue", "");
-          docs[humps.decamelize(path, { separator: "-" })] = transformMain(
-            fs.readFileSync(file, "utf-8")
-          );
+          Route.add(file);
         });
       });
 
-      console.log(options);
       // 构建路由
       middlewares.use(`${options.base}`, (req: http.IncomingMessage, res) => {
-        const result = docs[req.url || ""];
+        const result = Route.get(req.url);
         if (result) {
           res.writeHead(200, {
             "content-type": "text/html;charset=utf8",
@@ -46,16 +60,14 @@ function vueDocs(rawOptions: Options): Plugin {
           res.end(result);
         } else {
           res.writeHead(404);
-          res.end(JSON.stringify(Object.keys(docs)));
+          res.end(JSON.stringify(Object.keys(Route.get())));
         }
       });
 
       watcher
-        .on("add", (path) => console.log(`File ${path} has been added`))
-        .on("change", (path) => console.log(`File ${path} has been changed`))
-        .on("unlink", (path) => console.log(`File ${path} has been removed`));
+        .on("add", (path) => Route.add(path))
+        .on("change", (path) => Route.change(path))
+        .on("unlink", (path) => Route.remove(path));
     },
   };
 }
-
-export default vueDocs;
