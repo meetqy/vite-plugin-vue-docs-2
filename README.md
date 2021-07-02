@@ -1,5 +1,8 @@
 # vite-plugin-vue-docs
 
+[![npm version](https://badgen.net/npm/v/vite-plugin-vue-docs)](https://www.npmjs.com/package/vite-plugin-vue-docs)
+[![license](https://badgen.net/npm/license/vite-plugin-vue-docs)](https://github.com/hannoeru/vite-plugin-vue-docs/blob/main/LICENSE)
+
 自动生成组件文档
 
 ![](./preview.png)
@@ -31,8 +34,6 @@ git clone https://github.com/meetqy/vite-plugin-vue-docs.git
 yarn 
 yarn dev
 yarn example:dev
-
-// 访问 `docs/-hello-world`
 ```
 
 ## 特点
@@ -40,7 +41,6 @@ yarn example:dev
 * 支持热更新
 * 快速启动，直接在vite上创建的路由，不用单独开端口
 
-## 计划
+## changlog
 
-* [ ] 自动生成导航栏
-* [ ] 初始化可自定义配置
+[版本日志](./CHANGELOG.md)

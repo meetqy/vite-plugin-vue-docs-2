@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-vue-docs",
   "version": "0.0.2",
-  "description": "auto create vue document",
+  "description": "auto document generation",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "index.d.ts",
@@ -10,16 +10,20 @@
   ],
   "scripts": {
     "dev": "npm run build -- --watch --ignore-watch example",
-    "build": "tsup src/index.ts --dts --format cjs,esm --external @vue/compiler-sfc",
+    "build": "tsup src/index.ts --dts --format cjs,esm --external @vue/compiler-sfc,chalk",
     "example:dev": "npm -C example run dev"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meetqy/vite-plugin-vue-docs.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "vue",
+    "vite",
+    "vite-plugin"
+  ],
+  "author": "meetqy <meetqy@qq.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/meetqy/vite-plugin-vue-docs/issues"
   },
