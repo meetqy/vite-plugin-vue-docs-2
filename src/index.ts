@@ -3,6 +3,7 @@ import { ViteDevServer } from "vite";
 import glob from "glob";
 import http from "http";
 import DocsRoute from "./route";
+import { serverLog } from "./utils";
 
 export interface Options {
   // 文档路由地址
@@ -37,7 +38,16 @@ export default function vueDocs(rawOptions: Options): Plugin {
   return {
     name: "vite-plugin-vue-docs",
     async configureServer(server: ViteDevServer) {
-      const { watcher, middlewares } = server;
+      const {
+        watcher,
+        middlewares,
+        httpServer,
+        config: resolvedConfig,
+      } = server;
+
+      httpServer?.on("listening", () => {
+        serverLog(resolvedConfig, config);
+      });
 
       glob(`${config.root}/**/*.vue`, {}, (err, files) => {
         if (err) throw err;
