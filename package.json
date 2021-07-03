@@ -12,7 +12,7 @@
     "dev": "npm run build -- --watch --ignore-watch example",
     "build": "tsup src/index.ts --dts --format cjs,esm --external @vue/compiler-sfc,chalk,../package.json",
     "example:dev": "npm -C example run dev",
-    "publish": "npm version patch && yarn build && npm publish"
+    "patch": "yarn build && npm version patch"
   },
   "repository": {
     "type": "git",
