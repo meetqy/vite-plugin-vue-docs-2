@@ -52,7 +52,6 @@ export function handleScript(script: SFCScriptBlock): Component {
       // export default defineComponent({})
       if (path.isCallExpression()) {
         path.node.arguments.map((item) => {
-          // export default {}
           if (t.isObjectExpression(item)) {
             component = handleExportDefault(item);
           }
@@ -71,6 +70,12 @@ export function handleScript(script: SFCScriptBlock): Component {
   return component;
 }
 
+/**
+ * 解析
+ * export default {} 和
+ * export default defineComponent({}) 中的 json 对象
+ * @param ast: ObjectExpression
+ */
 function handleExportDefault(ast: ObjectExpression): Component {
   let props: Prop[] = [];
   let emits: Emit[] = [];
