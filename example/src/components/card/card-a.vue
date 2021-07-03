@@ -4,7 +4,7 @@
 
 <script>
 export default {
-name: "card-a",
+  name: "card-a",
   props: {
     // 这是一个name
     name: {

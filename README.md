@@ -3,7 +3,7 @@
 [![npm version](https://badgen.net/npm/v/vite-plugin-vue-docs)](https://www.npmjs.com/package/vite-plugin-vue-docs)
 [![license](https://badgen.net/npm/license/vite-plugin-vue-docs)](https://github.com/hannoeru/vite-plugin-vue-docs/blob/main/LICENSE)
 
-自动生成组件文档
+自动生成vue组件文档
 
 ![](./preview.png)
 

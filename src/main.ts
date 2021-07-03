@@ -41,57 +41,73 @@ export function handleScript(script: SFCScriptBlock): Component {
     sourceType: "module",
   });
 
-  let props: Prop[] = [];
-  let emits: Emit[] = [];
-  let componentName: string = "";
+  let component: Component = {
+    name: "",
+    props: [],
+    emits: [],
+  };
 
   traverse(ast, {
     enter(path: NodePath) {
+      // export default defineComponent({})
       if (path.isCallExpression()) {
         path.node.arguments.map((item) => {
           // export default {}
           if (t.isObjectExpression(item)) {
-            item.properties.map((vueParams) => {
-              // data() {}
-              if (t.isObjectMethod(vueParams)) {
-              }
-
-              // name, props, emits, methods
-              if (t.isObjectProperty(vueParams)) {
-                const name = getAstValue(vueParams.key);
-                switch (name) {
-                  // 组件名称
-                  case "name": {
-                    componentName = toLine(
-                      getAstValue(vueParams.value)
-                    ).toLocaleLowerCase();
-                    break;
-                  }
-
-                  case "props": {
-                    props = getPropsByObject(
-                      vueParams.value as ObjectExpression
-                    );
-                    break;
-                  }
-
-                  case "emits": {
-                    emits = getEmitsByObject(
-                      vueParams.value as ArrayExpression
-                    );
-                    break;
-                  }
-
-                  case "methods": {
-                    break;
-                  }
-                }
-              }
-            });
+            component = handleExportDefault(item);
           }
         });
       }
+      // export default {}
+      else if (path.isExportDefaultDeclaration()) {
+        const declaration = path.node.declaration;
+        if (t.isObjectExpression(declaration)) {
+          component = handleExportDefault(declaration);
+        }
+      }
     },
+  });
+
+  return component;
+}
+
+function handleExportDefault(ast: ObjectExpression): Component {
+  let props: Prop[] = [];
+  let emits: Emit[] = [];
+  let componentName: string = "";
+
+  ast.properties.map((vueParams) => {
+    // data() {}
+    if (t.isObjectMethod(vueParams)) {
+    }
+
+    // name, props, emits, methods
+    if (t.isObjectProperty(vueParams)) {
+      const name = getAstValue(vueParams.key);
+      switch (name) {
+        // 组件名称
+        case "name": {
+          componentName = toLine(
+            getAstValue(vueParams.value)
+          ).toLocaleLowerCase();
+          break;
+        }
+
+        case "props": {
+          props = getPropsByObject(vueParams.value as ObjectExpression);
+          break;
+        }
+
+        case "emits": {
+          emits = getEmitsByObject(vueParams.value as ArrayExpression);
+          break;
+        }
+
+        case "methods": {
+          break;
+        }
+      }
+    }
   });
 
   return {

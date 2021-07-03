@@ -1,3 +1,13 @@
+# v0.0.5
+
+### Feature
+
+* 兼容`export default {}`写法
+
+# v0.0.4
+
+build 失误多升级了一个版本
+
 # v0.0.3
 
 ### Feature
