@@ -1,4 +1,4 @@
-import traverse, { Node, NodePath } from "@babel/traverse";
+import { Node } from "@babel/traverse";
 import * as t from "@babel/types";
 import {
   ArrayExpression,
@@ -90,7 +90,7 @@ export function getPropsByObject(ast: ObjectExpression): Prop[] {
   return [];
 }
 
-function getAstValue(ast: Node): string {
+export function getAstValue(ast: Node): string {
   if (t.isIdentifier(ast)) {
     return ast.name;
   }

@@ -1,18 +1,22 @@
 import { babelParse, parse, SFCScriptBlock } from "@vue/compiler-sfc";
-import traverse, { Node, NodePath } from "@babel/traverse";
+import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
-import {
-  ArrayExpression,
-  ObjectExpression,
-  ObjectProperty,
-} from "@babel/types";
+import { ArrayExpression, ObjectExpression } from "@babel/types";
 import Template from "./layout";
-import { Prop, getPropsByObject } from "./handle";
+import { Prop, getPropsByObject, getAstValue } from "./handle";
+import { toLine } from "./utils";
 
 // 事件
 interface Emit {
   name: string;
   notes?: string;
+}
+
+// 组件信息
+export interface Component {
+  name: string;
+  emits: Emit[];
+  props: Prop[];
 }
 
 export function transformMain(code: string): string | null {
@@ -24,41 +28,74 @@ export function transformMain(code: string): string | null {
   }
 
   if (descriptor.script) {
-    const { props = [], emits = [] } = handleScript(descriptor.script);
-    const result = toModule(props, emits);
+    const componentData = handleScript(descriptor.script);
+    const result = componentToLayoutData(componentData);
     return Template(result);
   }
 
   return null;
 }
 
-export function handleScript(
-  script: SFCScriptBlock
-): Partial<{ props: Prop[]; emits: Emit[] }> {
+export function handleScript(script: SFCScriptBlock): Component {
   const ast = babelParse(script.content, {
     sourceType: "module",
   });
 
   let props: Prop[] = [];
   let emits: Emit[] = [];
+  let componentName: string = "";
 
   traverse(ast, {
     enter(path: NodePath) {
-      // props
-      if (path.isIdentifier({ name: "props" })) {
-        const container = path.container as ObjectProperty;
-        props = getPropsByObject(container.value as ObjectExpression);
-      }
+      if (path.isCallExpression()) {
+        path.node.arguments.map((item) => {
+          // export default {}
+          if (t.isObjectExpression(item)) {
+            item.properties.map((vueParams) => {
+              // data() {}
+              if (t.isObjectMethod(vueParams)) {
+              }
 
-      // emits
-      if (path.isIdentifier({ name: "emits" })) {
-        const container = path.container as ObjectProperty;
-        emits = getEmitsByObject(container.value as ArrayExpression);
+              // name, props, emits, methods
+              if (t.isObjectProperty(vueParams)) {
+                const name = getAstValue(vueParams.key);
+                switch (name) {
+                  // 组件名称
+                  case "name": {
+                    componentName = toLine(
+                      getAstValue(vueParams.value)
+                    ).toLocaleLowerCase();
+                    break;
+                  }
+
+                  case "props": {
+                    props = getPropsByObject(
+                      vueParams.value as ObjectExpression
+                    );
+                    break;
+                  }
+
+                  case "emits": {
+                    emits = getEmitsByObject(
+                      vueParams.value as ArrayExpression
+                    );
+                    break;
+                  }
+
+                  case "methods": {
+                    break;
+                  }
+                }
+              }
+            });
+          }
+        });
       }
     },
   });
 
   return {
+    name: componentName,
     props,
     emits,
   };
@@ -81,9 +118,12 @@ export function getEmitsByObject(ast: ArrayExpression): Emit[] {
   });
 }
 
-// props emits to module
-function toModule(props: Prop[], emits: Emit[]): {} {
-  let json: { [key: string]: any } = {};
+// 将component 转换为 模板可用数据
+function componentToLayoutData(component: Component): {} {
+  const { props, emits, name } = component;
+  let json: { [key: string]: any } = {
+    name,
+  };
   if (props && props.length) {
     json.props = {
       h3: "Props",

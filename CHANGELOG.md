@@ -4,10 +4,12 @@
 
 * 默认值解析
 * 类型解析支持多种类型 `name: [string, number]`
+* 新增组件名称显示 `xxx-xxx`
 
 ### Bugfix
 
 * index.d.ts路径错误问题
+* 参数与变量名冲突导致报错
 
 ### Perf
 

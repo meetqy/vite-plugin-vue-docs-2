@@ -22,7 +22,7 @@ const template = `<!doctype html>
     <div class="van-doc-container van-doc-row van-doc-container--with-simulator">
         <div class="van-doc-content van-doc-content--common">
             <section>
-                <h1>组件名</h1>
+                <h1>{{name}}</h1>
                 {{#if props}}
                     <div class="card">
                         <h3 id="props">{{props.h3}}</h3>
