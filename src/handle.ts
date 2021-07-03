@@ -1,6 +1,10 @@
 import traverse, { Node, NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
-import { ObjectExpression, ObjectProperty } from "@babel/types";
+import {
+  ArrayExpression,
+  ObjectExpression,
+  ObjectProperty,
+} from "@babel/types";
 import { toLine } from "./utils";
 
 // 参数
@@ -55,6 +59,19 @@ export function handleProp(variables: Node): Prop {
         }
       });
     }
+
+    /**
+     * 简写方式
+     * type: String
+     */
+    if (t.isIdentifier(variables.value)) {
+      param.type = getAstValue(variables.value).toLocaleLowerCase();
+    }
+
+    // type: [string, number]
+    if (t.isArrayExpression(variables.value)) {
+      param.type = handleTypes(variables.value).join(" | ").toLocaleLowerCase();
+    }
     return param;
   }
 
@@ -83,4 +100,14 @@ function getAstValue(ast: Node): string {
   }
 
   return "";
+}
+
+/**
+ * 处理支持多种类型的参数
+ * type: [string, number]
+ */
+function handleTypes(ast: ArrayExpression): string[] {
+  return ast.elements.map((item) => {
+    return getAstValue(item as Node);
+  });
 }
