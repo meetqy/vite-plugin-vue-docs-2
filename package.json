@@ -9,8 +9,9 @@
     "dist"
   ],
   "scripts": {
-    "dev": "npm run build -- --watch --ignore-watch example",
-    "build": "tsup src/index.ts --dts --format cjs,esm --external @vue/compiler-sfc,chalk,../package.json",
+    "dev": "npm run build -- --watch --ignore-watch example & yarn run watch:hbs",
+    "build": "tsup src/index.ts --dts",
+    "watch:hbs": "nodemon --watch ./src/template -e hbs --exec 'copyfiles -f src/template/*.hbs dist/template'",
     "example:dev": "npm -C example run dev",
     "patch": "yarn build && npm version patch"
   },
@@ -35,10 +36,12 @@
     "@types/humps": "^2.0.0",
     "@types/node": "^15.12.5",
     "@vue/compiler-sfc": "^3.1.2",
+    "chalk": "^4.1.1",
+    "copyfiles": "^2.4.1",
+    "nodemon": "^2.0.9",
     "tsup": "^4.12.0",
     "typescript": "^4.3.4",
-    "vite": "^2.3.8",
-    "chalk": "^4.1.1"
+    "vite": "^2.3.8"
   },
   "peerDependencies": {
     "vite": "^2.3.8"

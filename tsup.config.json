@@ -1,0 +1,15 @@
+{
+  "entryPoints": "src/index.ts",
+  "external": [
+    "@vue/compiler-sfc",
+    "chalk",
+    "../package.json",
+    "copyfiles",
+    "chokidar"
+  ],
+  "format": [
+    "esm",
+    "cjs"
+  ],
+  "dts": true
+}
