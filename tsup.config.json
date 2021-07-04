@@ -4,8 +4,7 @@
     "@vue/compiler-sfc",
     "chalk",
     "../package.json",
-    "copyfiles",
-    "chokidar"
+    "copyfiles"
   ],
   "format": [
     "esm",
