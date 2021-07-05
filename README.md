@@ -40,11 +40,8 @@ yarn example:dev
 
 * 支持热更新
 * 快速启动，依赖于vite，无需另起服务
+* 自动生成组件导航
 
 ## changlog
 
 [版本日志](./CHANGELOG.md)
-
-## 感谢
-
-> ui来源: [vant-weapp](https://youzan.github.io/vant-weapp/#/home);
