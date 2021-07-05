@@ -45,4 +45,6 @@ yarn example:dev
 
 [版本日志](./CHANGELOG.md)
 
-> ui界面来源: [vant-weapp](https://youzan.github.io/vant-weapp/#/home);
+## 感谢
+
+> ui来源: [vant-weapp](https://youzan.github.io/vant-weapp/#/home);
