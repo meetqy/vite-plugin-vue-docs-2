@@ -32,18 +32,9 @@
             </div>
         </div>
     </div>
-    <div class="van-doc-nav" style="top: 64px; bottom: 0px;">
-        <div class="van-doc-nav__group">
-            <div class="van-doc-nav__title">项目名称</div>
-            <div class="van-doc-nav__item">
-                {{#each route}}
-                <a href="/docs/{{this}}" class="router-link-active active">
 
-                </a>
-                {{/each}}
-            </div>
-        </div>
-    </div>
+    {{> nav route=route}}
+
     <div class="van-doc-container van-doc-row ">
         <div class="van-doc-content van-doc-content--common">
             {{> content name=content.name props=content.props emits=content.emites}}

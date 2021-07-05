@@ -1,15 +1,30 @@
-import { transformMain } from "./main";
+import { Component, transformMain } from "./main";
 import fs from "fs";
 import { Config } from "./index";
 import { toLine } from "./utils";
 
-class DocsRoute {
-  readonly route: { [key: string]: string };
-  config: Config;
+interface Router {
+  html: string;
+  component: Component;
+  routeName: string;
+}
 
-  constructor(config: Config) {
+class DocsRoute {
+  route: { [key: string]: Router };
+  config: Config;
+  private static _instance: DocsRoute;
+
+  private constructor(config: Config) {
     this.route = {};
     this.config = config;
+  }
+
+  static instance(config?: Config) {
+    if (!this._instance && config) {
+      this._instance = new this(config);
+    }
+
+    return this._instance;
   }
 
   // 验证文件路径是否符合要求
@@ -26,8 +41,14 @@ class DocsRoute {
   add(file: string) {
     const routeName = this.getRouteNameToFile(file);
     if (routeName) {
-      this.route[routeName] =
-        transformMain(fs.readFileSync(file, "utf-8")) || "";
+      const result = transformMain(fs.readFileSync(file, "utf-8"));
+
+      if (result) {
+        this.route[routeName] = {
+          ...result,
+          routeName,
+        };
+      }
     }
   }
 
@@ -46,6 +67,10 @@ class DocsRoute {
       delete this.route[routeName];
     }
   }
+}
+
+export function Route(config?: Config): DocsRoute {
+  return DocsRoute.instance(config);
 }
 
 export default DocsRoute;

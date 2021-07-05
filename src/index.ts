@@ -33,7 +33,7 @@ export default function vueDocs(rawOptions: Options): Plugin {
     ...options,
   };
 
-  const Route = new DocsRoute(config);
+  const Route = DocsRoute.instance(config);
 
   return {
     name: "vite-plugin-vue-docs",
@@ -64,7 +64,7 @@ export default function vueDocs(rawOptions: Options): Plugin {
             "content-type": "text/html;charset=utf8",
           });
 
-          res.end(result);
+          res.end(result.html);
         } else {
           res.writeHead(404);
           res.end(JSON.stringify(Object.keys(Route.get())));

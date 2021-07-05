@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import fs from "fs";
 import hbs from "handlebars";
 import path from "path";
@@ -22,6 +21,11 @@ hbs.registerHelper("handleType", function (options) {
       return this;
     }
   }
+});
+
+hbs.registerHelper("checkedNavActive", function (options) {
+  const route = options.data.root.route;
+  return route.path === this.path ? "active" : this;
 });
 
 // 注册代码片段
