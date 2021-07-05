@@ -39,7 +39,7 @@ yarn example:dev
 ## 特点
 
 * 支持热更新
-* 快速启动，直接在vite上创建的路由，不用单独开端口
+* 快速启动，依赖于vite，无需另起服务
 
 ## changlog
 
