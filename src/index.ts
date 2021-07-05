@@ -2,10 +2,11 @@ import type { Plugin } from "vite";
 import { ViteDevServer } from "vite";
 import glob from "glob";
 import http from "http";
+import fs from "fs";
 import DocsRoute from "./route";
 import { serverLog } from "./utils";
 import { transformMain } from "./main";
-import * as fs from "fs";
+import Template from "./template";
 
 export interface Options {
   // 文档路由地址
@@ -62,10 +63,11 @@ export default function vueDocs(rawOptions: Options): Plugin {
       // 构建路由
       middlewares.use(`${options.base}`, (req: http.IncomingMessage, res) => {
         const filepath = Route.get(req.url) as string;
+        const routeArray = Route.toArray();
         if (filepath) {
           const result = transformMain(
             fs.readFileSync(filepath, "utf-8"),
-            Route.toArray(),
+            routeArray,
             req.url as string
           );
 
@@ -77,7 +79,13 @@ export default function vueDocs(rawOptions: Options): Plugin {
           }
         } else {
           res.writeHead(404);
-          res.end(JSON.stringify(Object.keys(Route.get())));
+          const result = Template({
+            route: {
+              path: req.url,
+              list: routeArray,
+            },
+          });
+          res.end(result);
         }
       });
 
