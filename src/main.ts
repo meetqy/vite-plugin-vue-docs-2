@@ -2,7 +2,7 @@ import { babelParse, parse, SFCScriptBlock } from "@vue/compiler-sfc";
 import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import { ArrayExpression, ObjectExpression } from "@babel/types";
-import Template from "./layout";
+import Template from "./template";
 import { Prop, getPropsByObject, getAstValue } from "./handle";
 import { toLine } from "./utils";
 
@@ -19,6 +19,7 @@ export interface Component {
   props: Prop[];
 }
 
+// 返回html
 export function transformMain(code: string): string | null {
   const { descriptor, errors } = parse(code);
 

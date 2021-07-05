@@ -1,4 +1,3 @@
-import humps from "humps";
 import { transformMain } from "./main";
 import fs from "fs";
 import { Config } from "./index";
