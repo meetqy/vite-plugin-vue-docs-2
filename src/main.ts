@@ -31,7 +31,9 @@ export function transformMain(code: string): string | null {
   if (descriptor.script) {
     const componentData = handleScript(descriptor.script);
     const result = componentToLayoutData(componentData);
-    return Template(result);
+    return Template({
+      content: result,
+    });
   }
 
   return null;

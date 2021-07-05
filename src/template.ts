@@ -9,6 +9,7 @@ const template = fs.readFileSync(
   "utf-8"
 );
 
+// helper
 hbs.registerHelper("handleType", function (options) {
   switch (options.data.index) {
     case 2: {
@@ -22,5 +23,17 @@ hbs.registerHelper("handleType", function (options) {
     }
   }
 });
+
+// 注册代码片段
+registerPartial("style", "./template/style.css");
+registerPartial("content", "./template/content.hbs");
+registerPartial("nav", "./template/nav.hbs");
+
+function registerPartial(name: string, filePath: string) {
+  hbs.registerPartial(
+    name,
+    fs.readFileSync(path.join(__dirname, filePath), "utf-8")
+  );
+}
 
 export default hbs.compile(template);

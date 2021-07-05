@@ -9,9 +9,11 @@
     "dist"
   ],
   "scripts": {
-    "dev": "npm run build -- --watch --ignore-watch example & yarn run watch:hbs",
-    "build": "tsup src/index.ts --dts",
-    "watch:hbs": "nodemon --watch ./src/template -e hbs --exec 'copyfiles -f src/template/*.hbs dist/template'",
+    "dev": "yarn tsup --watch --ignore-watch example & yarn watch:template",
+    "build": "yarn tsup && yarn cp:template",
+    "tsup": "tsup src/index.ts --dts",
+    "watch:template": "nodemon --watch ./src/template -e hbs,css --exec 'yarn cp:template'",
+    "cp:template": "copyfiles -f src/template/* dist/template",
     "example:dev": "npm -C example run dev",
     "patch": "yarn build && npm version patch"
   },

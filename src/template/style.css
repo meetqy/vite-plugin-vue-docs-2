@@ -1,0 +1,252 @@
+/* 样式来源: https://youzan.github.io/vant-weapp/#/home */
+
+
+body {
+    min-width: 1100px;
+    overflow-x: auto;
+    color: #323233;
+    font-size: 16px;
+    font-family: Open Sans, -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, Segoe UI, Arial, Roboto, PingFang SC, miui, Hiragino Sans GB, Microsoft Yahei, sans-serif;
+    background-color: #f7f8fa;
+    -webkit-font-smoothing: antialiased
+}
+
+body, p {
+    margin: 0
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-size: inherit
+}
+
+ol, ul {
+    margin: 0;
+    padding: 0;
+    list-style: none
+}
+
+a {
+    text-decoration: none
+}
+
+.van-doc-row {
+    width: 100%
+}
+
+@media (min-width: 1680px) {
+    .van-doc-row {
+        width: 1680px;
+        margin: 0 auto
+    }
+}
+
+.van-doc-content {
+    position: relative;
+    -webkit-flex: 1;
+    flex: 1;
+    padding: 0 0 75px
+}
+
+.van-doc-content .card {
+    margin-bottom: 24px;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 8px 12px #ebedf0
+}
+
+.van-doc-content a {
+    margin: 0 1px;
+    color: #1989fa;
+}
+
+.van-doc-content a:hover {
+    color: #0570db
+}
+
+.van-doc-content a:active {
+    color: #0456a9
+}
+
+.van-doc-content h1, .van-doc-content h2, .van-doc-content h3, .van-doc-content h4, .van-doc-content h5, .van-doc-content h6 {
+    color: #323233;
+    font-weight: 400;
+    line-height: 1.5
+}
+
+.van-doc-content h1[id], .van-doc-content h2[id], .van-doc-content h3[id], .van-doc-content h4[id], .van-doc-content h5[id], .van-doc-content h6[id] {
+    cursor: pointer
+}
+
+.van-doc-content h1 {
+    margin: 0 0 30px;
+    font-size: 30px;
+    cursor: default
+}
+
+.van-doc-content h2 {
+    margin: 45px 0 20px;
+    font-size: 25px
+}
+
+.van-doc-content h3 {
+    margin-bottom: 16px;
+    font-weight: 600;
+    font-size: 18px
+}
+
+.van-doc-content h4 {
+    margin: 24px 0 12px;
+    font-weight: 600;
+    font-size: 16px
+}
+
+.van-doc-content h5 {
+    margin: 24px 0 12px;
+    font-weight: 600;
+    font-size: 15px
+}
+
+.van-doc-content p {
+    color: #34495e;
+    font-size: 15px;
+    line-height: 26px
+}
+
+.van-doc-content table {
+    width: 100%;
+    margin-top: 12px;
+    color: #34495e;
+    font-size: 14px;
+    line-height: 1.5;
+    border-collapse: collapse
+}
+
+.van-doc-content table th {
+    padding: 8px 10px;
+    font-weight: 600;
+    text-align: left
+}
+
+.van-doc-content table th:first-child {
+    padding-left: 0
+}
+
+.van-doc-content table th:last-child {
+    padding-right: 0
+}
+
+.van-doc-content table td {
+    padding: 8px;
+    border-top: 1px solid #f1f4f8
+}
+
+.van-doc-content table td:first-child {
+    padding-left: 0
+}
+
+.van-doc-content table td:first-child code {
+    margin: 0;
+    padding: 2px 6px;
+    color: #1989fa;
+    font-weight: 600;
+    font-size: 11px;
+    background-color: rgba(25, 137, 250, .1);
+    border-radius: 20px
+}
+
+.van-doc-content table td:last-child {
+    padding-right: 0
+}
+
+.van-doc-content table em {
+    color: #4fc08d;
+    font-size: 14px;
+    font-family: Source Code Pro, Monaco, Inconsolata, monospace;
+    font-style: normal;
+}
+
+.van-doc-content ol li, .van-doc-content ul li {
+    position: relative;
+    margin: 5px 0 5px 10px;
+    padding-left: 15px;
+    color: #34495e;
+    font-size: 15px;
+    line-height: 26px
+}
+
+.van-doc-content ol li:before, .van-doc-content ul li:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    width: 6px;
+    height: 6px;
+    margin-top: 10px;
+    border: 1px solid #666;
+    border-radius: 50%;
+    content: ""
+}
+
+.van-doc-content hr {
+    margin: 30px 0;
+    border: 0;
+    border-top: 1px solid #eee
+}
+
+.van-doc-content li > code, .van-doc-content p > code, .van-doc-content table code {
+    display: inline;
+    margin: 0 2px;
+    padding: 2px 5px;
+    font-size: 14px;
+    font-family: inherit;
+    word-break: keep-all;
+    background-color: #f7f8fa;
+    border-radius: 4px;
+    -webkit-font-smoothing: antialiased
+}
+
+.van-doc-content p > code {
+    font-size: 14px
+}
+
+.van-doc-content section {
+    padding: 24px;
+    overflow: hidden
+}
+
+.van-doc-content blockquote {
+    margin: 16px 0 0;
+    padding: 16px;
+    background-color: #ecf9ff;
+    border-radius: 20px
+}
+
+.van-doc-content img {
+    width: 100%;
+    margin: 16px 0;
+    border-radius: 20px
+}
+
+.van-doc-content--changelog strong {
+    display: block;
+    margin: 24px 0 12px;
+    font-weight: 600;
+    font-size: 15px
+}
+
+.van-doc-content--changelog h3 + p code {
+    margin: 0
+}
+
+.van-doc-content--changelog h3 a {
+    color: inherit;
+    font-size: 20px
+}
+
+.van-doc-nav{position:fixed;left:0;z-index:1;min-width:220px;max-width:220px;padding:24px 0;overflow-y:scroll;background-color:#fff;box-shadow:0 8px 12px #ebedf0}@media (min-width:1680px){.van-doc-nav{left:50%;margin-left:-840px}}.van-doc-nav::-webkit-scrollbar{width:6px;height:6px;background-color:initial}.van-doc-nav::-webkit-scrollbar-thumb{background-color:initial;border-radius:6px}.van-doc-nav:hover::-webkit-scrollbar-thumb{background-color:rgba(69,90,100,.2)}.van-doc-nav__group{margin-bottom:16px;padding-left:6px}.van-doc-nav__title{padding:8px 0 8px 24px;color:#455a64;font-weight:600;font-size:15px;line-height:28px}.van-doc-nav__item a{display:block;margin:8px 0;padding:8px 0 8px 24px;color:#455a64;font-size:14px;line-height:20px;transition:color .2s}.van-doc-nav__item a.active,.van-doc-nav__item a:hover{color:#4fc08d}.van-doc-nav__item a.active{font-weight:600;background-color:#ebfff0;border-radius:999px}.van-doc-nav__item a span{font-size:13px}@media (max-width:1300px){.van-doc-nav__item a{font-size:13px}.van-doc-nav__item:active{font-size:14px}}
+
+.van-doc-container{box-sizing:border-box;padding-left:220px;overflow:hidden}.van-doc-container--with-simulator{padding-right:384px}
+
+.van-doc-header{width:100%;background-color:#001938;-webkit-user-select:none;user-select:none}.van-doc-header__top{display:-webkit-flex;display:flex;-webkit-align-items:center;align-items:center;height:64px;padding:0 24px}.van-doc-header__top-nav{-webkit-flex:1;flex:1;font-size:0;text-align:right}.van-doc-header__top-nav>li{position:relative;display:inline-block;vertical-align:middle}.van-doc-header__top-nav-item{margin-left:16px}.van-doc-header__top-nav-title{display:block;font-size:15px}.van-doc-header__cube{position:relative;display:block;padding:0 12px;color:#001938;background:#f7f8fa;font-size:14px;line-height:30px;text-align:center;border:1px solid hsla(0,0%,100%,.7);border-radius:20px;cursor:pointer;transition:.3s ease-in-out}.van-doc-header__version{padding-right:20px}.van-doc-header__version:after{position:absolute;top:10px;right:9px;width:5px;height:5px;color:#001938;border-color:transparent transparent currentcolor currentcolor;border-style:solid;border-width:1px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);content:""}.van-doc-header__version-pop{position:absolute;top:34px;left:0;width:100%;z-index:99;color:#333;line-height:36px;text-align:left;overflow:hidden;background-color:#fff;border-radius:8px;box-shadow:0 4px 12px #ebedf0;-webkit-transform-origin:top;transform-origin:top;transition:.2s cubic-bezier(.215,.61,.355,1)}.van-doc-header__version-pop-item{padding-left:12px;transition:.2s}.van-doc-header__version-pop-item:hover{color:#1989fa;background-color:#f7f8fa}.van-doc-header__logo{display:block}.van-doc-header__logo img,.van-doc-header__logo span{display:inline-block;vertical-align:middle}.van-doc-header__logo img{width:28px;margin-right:12px}.van-doc-header__logo span{color:#fff;font-size:22px}.van-doc-header__link span{color:#fff;font-size:16px}.van-doc-header__link img{display:block;width:30px;height:30px;transition:.3s cubic-bezier(.175,.885,.32,1.275)}.van-doc-header__link img:hover{-webkit-transform:scale(1.2);transform:scale(1.2)}.van-doc-dropdown-enter,.van-doc-dropdown-leave-active{-webkit-transform:scaleY(0);transform:scaleY(0);opacity:0}

@@ -1,0 +1,49 @@
+<section>
+    <h1>{{name}}</h1>
+    {{#if props}}
+        <div class="card">
+            <h3 id="props">{{props.h3}}</h3>
+            <table>
+                <thead>
+                <tr>
+                    {{#each props.table.headers}}
+                        <th>{{this}}</th>
+                    {{/each}}
+                </tr>
+                </thead>
+                <tbody>
+                {{#each props.table.rows}}
+                    <tr>
+                        {{#each this}}
+                            <td>{{handleType}}</td>
+                        {{/each}}
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{/if}}
+    {{#if emits}}
+        <div class="card">
+            <h3 id="props">{{emits.h3}}</h3>
+            <table>
+                <thead>
+                <tr>
+                    {{#each emits.table.headers}}
+                        <th>{{this}}</th>
+                    {{/each}}
+                </tr>
+                </thead>
+                <tbody>
+                {{#each emits.table.rows}}
+                    <tr>
+                        {{#each this}}
+                            <td>{{this}}</td>
+                        {{/each}}
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{/if}}
+</section>
