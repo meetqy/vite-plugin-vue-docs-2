@@ -1,14 +1,16 @@
+import { Component, transformMain } from "./main";
+import fs from "fs";
 import { Config } from "./index";
 import { toLine } from "./utils";
 
-export interface Route {
-  name: string;
-  path: string;
-  file: string;
+interface Router {
+  html: string;
+  component: Component;
+  routeName: string;
 }
 
 class DocsRoute {
-  route: { [key: string]: string };
+  route: { [key: string]: Router };
   config: Config;
   private static _instance: DocsRoute;
 
@@ -27,7 +29,7 @@ class DocsRoute {
 
   // 验证文件路径是否符合要求
   // 返回正确的routeName
-  getRouteNameByFile(file: string): string | null {
+  getRouteNameToFile(file: string): string | null {
     if (this.config.fileExp.test(file)) {
       const path = file.replace(this.config.root, "").replace(".vue", "");
       return toLine(path);
@@ -37,9 +39,16 @@ class DocsRoute {
   }
 
   add(file: string) {
-    const routeName = this.getRouteNameByFile(file);
+    const routeName = this.getRouteNameToFile(file);
     if (routeName) {
-      this.route[routeName] = file;
+      const result = transformMain(fs.readFileSync(file, "utf-8"));
+
+      if (result) {
+        this.route[routeName] = {
+          ...result,
+          routeName,
+        };
+      }
     }
   }
 
@@ -52,24 +61,8 @@ class DocsRoute {
     return this.route;
   }
 
-  toArray(): Route[] {
-    const routes = Object.keys(this.route);
-    let arr: Route[] = [];
-
-    routes.map((key) => {
-      const name = key.split("/");
-      arr.push({
-        path: key,
-        name: name[name.length - 1],
-        file: this.route[key],
-      });
-    });
-
-    return arr;
-  }
-
   remove(file: string) {
-    const routeName = this.getRouteNameByFile(file);
+    const routeName = this.getRouteNameToFile(file);
     if (routeName) {
       delete this.route[routeName];
     }

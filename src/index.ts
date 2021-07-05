@@ -4,6 +4,8 @@ import glob from "glob";
 import http from "http";
 import DocsRoute from "./route";
 import { serverLog } from "./utils";
+import { transformMain } from "./main";
+import * as fs from "fs";
 
 export interface Options {
   // 文档路由地址
@@ -49,6 +51,7 @@ export default function vueDocs(rawOptions: Options): Plugin {
         serverLog(resolvedConfig, config);
       });
 
+      // 生成路由
       glob(`${config.root}/**/*.vue`, {}, (err, files) => {
         if (err) throw err;
         files.map((file) => {
@@ -58,13 +61,20 @@ export default function vueDocs(rawOptions: Options): Plugin {
 
       // 构建路由
       middlewares.use(`${options.base}`, (req: http.IncomingMessage, res) => {
-        const result = Route.get(req.url);
-        if (result) {
-          res.writeHead(200, {
-            "content-type": "text/html;charset=utf8",
-          });
+        const filepath = Route.get(req.url) as string;
+        if (filepath) {
+          const result = transformMain(
+            fs.readFileSync(filepath, "utf-8"),
+            Route.toArray(),
+            req.url as string
+          );
 
-          res.end(result.html);
+          if (result) {
+            res.writeHead(200, {
+              "content-type": "text/html;charset=utf8",
+            });
+            res.end(result.html);
+          }
         } else {
           res.writeHead(404);
           res.end(JSON.stringify(Object.keys(Route.get())));

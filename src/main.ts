@@ -5,7 +5,7 @@ import { ArrayExpression, ObjectExpression } from "@babel/types";
 import Template from "./template";
 import { Prop, getPropsByObject, getAstValue } from "./handle";
 import { toLine } from "./utils";
-import DocsRoute from "./route";
+import DocsRoute, { Route } from "./route";
 
 // 事件
 interface Emit {
@@ -22,7 +22,9 @@ export interface Component {
 
 // 返回html
 export function transformMain(
-  code: string
+  code: string,
+  routes: Route[],
+  url: string
 ): { html: string; component: Component } | null {
   const { descriptor, errors } = parse(code);
 
@@ -38,11 +40,8 @@ export function transformMain(
       html: Template({
         content: result,
         route: {
-          path: "/hello-world",
-          list: [
-            { path: "/card/card-a", name: "card-a" },
-            { path: "/hello-world", name: "hello-world" },
-          ],
+          path: url,
+          list: routes,
         },
       }),
       component: componentData,
