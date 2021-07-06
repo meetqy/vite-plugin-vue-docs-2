@@ -36,7 +36,7 @@ jobs:
           yarn
           yarn patch
           git push
-        with:
+        env:
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge main -> devlop
