@@ -1,12 +1,12 @@
 # vite-plugin-vue-docs
 
-[![npm version](https://badgen.net/npm/v/vite-plugin-vue-docs)](https://www.npmjs.com/package/vite-plugin-vue-docs)
-[![license](https://badgen.net/npm/license/vite-plugin-vue-docs)](https://github.com/hannoeru/vite-plugin-vue-docs/blob/main/LICENSE)
+![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)
+![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
 ![jest coverage](./badges/badge-statements.svg)
 
 vite插件 - 自动生成vue组件文档
 
-![](./preview.png)
+![preview](./preview.png)
 
 ## 使用
 
