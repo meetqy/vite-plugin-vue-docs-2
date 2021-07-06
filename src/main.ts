@@ -144,8 +144,16 @@ export function getEmitsByObject(ast: ArrayExpression): Emit[] {
       name: "",
       notes: "",
     };
-    if (t.isStringLiteral(item)) {
-      emit.name = item.value;
+
+    /**
+     * emits: [
+     *    // 点击事件
+     *    'click'
+     * ]
+     */
+    const name = getAstValue(item);
+    if (name && item) {
+      emit.name = name;
       const notes = item.leadingComments?.map((item) => item.value) || [];
       emit.notes = notes.join("\n");
     }

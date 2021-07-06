@@ -25,7 +25,7 @@ export function handleProp(variables: Node): Prop {
 
   // 注释
   const notes = variables.leadingComments?.map((item) => item.value);
-  param.notes = notes && notes.join("\n");
+  param.notes = (notes && notes.join("\n")) || "";
 
   if (t.isObjectProperty(variables)) {
     // 参数名
@@ -43,7 +43,22 @@ export function handleProp(variables: Node): Prop {
       variables.value.properties.map((item) => {
         const obj = item as ObjectProperty;
         const name = getAstValue(obj.key);
-        const value = getAstValue(obj.value);
+        let value: string = "";
+
+        // type: string
+        if (t.isIdentifier(obj.value) || t.isStringLiteral(obj.value)) {
+          value = getAstValue(obj.value);
+        }
+
+        // type: [string, number]
+        if (t.isArrayExpression(obj.value)) {
+          value = obj.value.elements
+            .map((type) => getAstValue(type))
+            .filter((str) => str)
+            .join(" | ")
+            .toLocaleLowerCase();
+        }
+
         switch (name) {
           case "type":
             param.type = value.toLocaleLowerCase();
@@ -90,7 +105,7 @@ export function getPropsByObject(ast: ObjectExpression): Prop[] {
   return [];
 }
 
-export function getAstValue(ast: Node): string {
+export function getAstValue(ast: Node | null): string {
   if (t.isIdentifier(ast)) {
     return ast.name;
   }

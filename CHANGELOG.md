@@ -1,3 +1,11 @@
+# v0.0.6
+
+### Chore
+
+* 新增commit规范检查
+* eslint+prettier代码规范
+
+
 # v0.0.5
 
 ### Feature
