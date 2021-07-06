@@ -30,19 +30,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: test
-        run: |
-          yarn test
-
       # build
-#      - run: |
-#          yarn
-#          yarn build
+      - name: build
+        run: |
+          yarn
+          git config --global user.email "meetqy@qq.com"
+          git config --global user.name "meetqy"
+          yarn patch
+          git push
 
-      # publish
-#      - run: |
-#          npm version patch
-#          npm publish
+      - name: Merge main -> devlop
+        uses: devmasx/merge-branch@v1.3.1
+        with:
+          type: now
+          from_branch: main
+          target_branch: devlop
+          github_token: ${{ github.token }}
+
+#      - name: publish
+#        run: npm publish --access publish
 #        env:
 #          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
