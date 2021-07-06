@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "yarn tsup --watch --ignore-watch example & yarn watch:template",
-    "build": "yarn tsup && yarn cp:template",
+    "build": "yarn test && yarn tsup && yarn cp:template",
     "tsup": "tsup src/index.ts --dts",
     "watch:template": "nodemon --watch ./src/template -e hbs,css --exec 'yarn cp:template'",
     "cp:template": "copyfiles -f src/template/* dist/template",

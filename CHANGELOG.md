@@ -1,9 +1,15 @@
 # v0.0.6
 
+### Bugfix
+
+* 修复`props: {type: [string, number]}`解析失败bug
+* 修复`emits: ["click"]`没写注释解析失败bug
+
 ### Chore
 
 * 新增commit规范检查
 * eslint+prettier代码规范
+* 新增jest测试&用例
 
 
 # v0.0.5
