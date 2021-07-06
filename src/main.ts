@@ -5,7 +5,7 @@ import { ArrayExpression, ObjectExpression } from "@babel/types";
 import Template from "./template";
 import { Prop, getPropsByObject, getAstValue } from "./handle";
 import { toLine } from "./utils";
-import DocsRoute, { Route } from "./route";
+import { Route } from "./route";
 
 // 事件
 interface Emit {
