@@ -33,8 +33,7 @@ jobs:
       # build
       - name: build
         run: |
-          yarn
-          yarn path
+          yarn patch
           git push
 
       - name: Merge main -> devlop
