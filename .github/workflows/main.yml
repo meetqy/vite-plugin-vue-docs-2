@@ -32,7 +32,7 @@ jobs:
 
       # build
       - name: build
-      - run: |
+        run: |
           yarn
           yarn path
           git push
