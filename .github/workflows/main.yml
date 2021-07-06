@@ -3,7 +3,7 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, devlop ]
   pull_request:
     branches: [ main ]
 
@@ -30,17 +30,21 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - uses: artiomtr/jest-coverage-report-action@v2.0-rc.1
+        with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+
       # build
-      - run: |
-          yarn
-          yarn build
+#      - run: |
+#          yarn
+#          yarn build
 
       # publish
-      - run: |
-          npm version patch
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+#      - run: |
+#          npm version patch
+#          npm publish
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 
 
