@@ -34,10 +34,10 @@ jobs:
       - name: build
         run: |
           yarn
+          git config --global user.email "meetqy@qq.com"
+          git config --global user.name "meetqy"
           yarn patch
           git push
-        env:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Merge main -> devlop
         uses: devmasx/merge-branch@v1.3.1
