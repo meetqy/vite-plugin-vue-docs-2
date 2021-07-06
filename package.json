@@ -16,7 +16,8 @@
     "cp:template": "copyfiles -f src/template/* dist/template",
     "example:dev": "npm -C example run dev",
     "patch": "yarn build && npm version patch",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "test:badge": "yarn run test && jest-coverage-badges --output './badges'"
   },
   "repository": {
     "type": "git",
@@ -65,6 +66,7 @@
     "eslint-plugin-prettier": "^3.4.0",
     "husky": "^7.0.0",
     "jest": "^27.0.6",
+    "jest-coverage-badges": "^1.1.2",
     "lint-staged": "^11.0.0",
     "nodemon": "^2.0.9",
     "prettier": "^2.3.2",
@@ -81,5 +83,12 @@
     "glob": "^7.1.7",
     "handlebars": "^4.7.7",
     "humps": "^2.0.1"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json-summary",
+      "text",
+      "lcov"
+    ]
   }
 }
