@@ -18,34 +18,34 @@ jobs:
             node-version: 14.x
 
       # yarn cache
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
-
-      - uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+#      - name: Get yarn cache directory path
+#        id: yarn-cache-dir-path
+#        run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
+#
+#      - uses: actions/cache@v2
+#        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+#        with:
+#          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+#          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+#          restore-keys: |
+#            ${{ runner.os }}-yarn-
 
       # build
-      - name: build
-        run: |
-          yarn
-          git config --global user.email "meetqy@qq.com"
-          git config --global user.name "meetqy"
-          yarn patch
-          git push
-
-      - name: Merge main -> devlop
-        uses: devmasx/merge-branch@v1.3.1
-        with:
-          type: now
-          from_branch: main
-          target_branch: devlop
-          github_token: ${{ github.token }}
+#      - name: build
+#        run: |
+#          yarn
+#          git config --global user.email "meetqy@qq.com"
+#          git config --global user.name "meetqy"
+#          yarn patch
+#          git push
+#
+#      - name: Merge main -> devlop
+#        uses: devmasx/merge-branch@v1.3.1
+#        with:
+#          type: now
+#          from_branch: main
+#          target_branch: devlop
+#          github_token: ${{ github.token }}
 
 #      - name: publish
 #        run: npm publish --access publish
