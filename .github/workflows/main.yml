@@ -33,6 +33,7 @@ jobs:
       # build
       - name: build
         run: |
+          yarn
           yarn patch
           git push
 
