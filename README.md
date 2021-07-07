@@ -6,6 +6,8 @@
 
 vite plugin-automatically generate vue component documentation
 
+<a href="./README.zh.md">中文文档</a>
+
 ![preview](./preview.png)
 
 ## Features
@@ -13,7 +15,7 @@ vite plugin-automatically generate vue component documentation
 - Support hot update
 - Quick start, rely on vite, no need to start another service
 - Automatically generated component navigation
-- ui adopts the style of [`vant-ui`](https://youzan.github.io/vant-weapp/#/home)
+- ui adopts the style of <a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>
 - Core method coverage reached 92.86%
 
 ## Use
