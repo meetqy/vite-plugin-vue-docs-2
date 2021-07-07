@@ -4,19 +4,19 @@
 ![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
 ![jest coverage](./badges/badge-statements.svg)
 
-vite 插件 - 自动生成 vue 组件文档
+vite plugin-automatically generate vue component documentation
 
 ![preview](./preview.png)
 
-## 特点
+## Features
 
-- 支持热更新
-- 快速启动，依赖于 vite，无需另起服务
-- 自动生成组件导航
-- ui 采用了`vant-ui`的样式
-- 核心方法覆盖率达到了 92.86%
+- Support hot update
+- Quick start, rely on vite, no need to start another service
+- Automatically generated component navigation
+- ui adopts the style of `vant-ui`
+- Core method coverage reached 92.86%
 
-## 使用
+## Use
 
 ```shell
 yarn add vite-plugin-vue-docs -D
@@ -44,22 +44,24 @@ yarn dev
 yarn example:dev
 ```
 
-## 计划
+## Plan
 
-🚀 表示已经实现的功能，👷 表示进行中的功能，⏳ 表示规划中的功能
+- 🚀 means functions that have been implemented
+- 👷 means functions in progress
+- ⏳ means functions in planning
 
-| 功能                               | 状态      |
-| ---------------------------------- | --------- |
-| 打包成静态网页                     | ⏳ 规划中 |
-| 页面跳转 history 模式 \| hash 模式 | ⏳ 规划中 |
-| 可配置文档网站                     | ⏳ 规划中 |
-| 修改文件直接热更新，无须 F5 刷新   | ⏳ 规划中 |
-| 支持解析`ref`                      | 👷 进行中 |
-| 支持解析`slot`                     | 👷 进行中 |
-| 支持`defineComponent()`写法        | 🚀 已完成 |
-| 支持`type`多种类型                 | 🚀 已完成 |
-| 自动生成路由                       | 🚀 已完成 |
+| Features                                                   | Status       |
+| ---------------------------------------------------------- | ------------ |
+| Packaged into a static web page                            | ⏳ Planning  |
+| Page jump history mode &#124;&#124; hash mode              | ⏳ Planning  |
+| Configurable document website                              | ⏳ Planning  |
+| Modified files are directly hot-updated without F5 refresh | ⏳ Planning  |
+| Support parsing `ref`                                      | 👷 Progress  |
+| Support parsing `slot`                                     | 👷 Progress  |
+| Support `defineComponent()` writing method                 | 🚀 Completed |
+| Support `type` multiple types                              | 🚀 Completed |
+| Automatically generate routing                             | 🚀 Completed |
 
 ## changlog
 
-[版本日志](./CHANGELOG.md)
+[Version log](./CHANGELOG.md)

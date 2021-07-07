@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     vue(),
     vueDocs({
-      base: "/docs",
+      base: "/docs/",
     }),
   ],
 });

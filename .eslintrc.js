@@ -3,5 +3,5 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
   },
-  extends: ['plugin:prettier/recommended"'],
+  extends: ["plugin:prettier/recommended"],
 };

@@ -24,13 +24,13 @@ export interface Config extends Options {
 }
 
 export default function vueDocs(rawOptions: Options): Plugin {
-  let options: Options = {
+  const options: Options = {
     base: "/docs",
     componentDir: "/components",
     ...rawOptions,
   };
 
-  let config = {
+  const config = {
     root: `${process.cwd()}/src${options.componentDir}`,
     fileExp: RegExp(`${options.componentDir}\\/.*?.vue$`),
     ...options,

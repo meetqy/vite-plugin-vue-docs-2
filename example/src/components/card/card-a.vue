@@ -11,7 +11,14 @@ export default {
       type: Object,
       default: () => {}
     }
-  }
+  },
+  emits: [
+      // click事件
+      "click",
+
+      // change事件123
+      "change"
+  ]
 }
 </script>
 
