@@ -16,16 +16,12 @@
     "watch:template": "nodemon --watch ./src/template -e hbs,css --exec 'yarn cp:template'",
     "cp:template": "copyfiles -f src/template/* dist/template",
     "example:dev": "npm -C example run dev",
-    "test": "jest --coverage && jest-coverage-badges --output './badges'"
+    "test": "jest --coverage && jest-coverage-badges --output './badges'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/meetqy/vite-plugin-vue-docs.git"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
@@ -33,7 +29,8 @@
       "eslint",
       "yarn test",
       "git add"
-    ]
+    ],
+    "*.js": "eslint --cache --fix"
   },
   "keywords": [
     "vue",
@@ -70,6 +67,7 @@
     "lint-staged": "^11.0.0",
     "nodemon": "^2.0.9",
     "prettier": "^2.3.2",
+    "prettier-eslint": "^12.0.0",
     "tsup": "^4.12.0",
     "typescript": "^4.3.4",
     "vite": "^2.3.8"
