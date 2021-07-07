@@ -1,17 +1,17 @@
-import { babelParse, parse, SFCScriptBlock } from "@vue/compiler-sfc";
+import {
+  babelParse,
+  parse,
+  SFCScriptBlock,
+  compileScript,
+} from "@vue/compiler-sfc";
 import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import { ArrayExpression, ObjectExpression } from "@babel/types";
 import Template from "./template";
-import { Prop, getPropsByObject, getAstValue } from "./handle";
+import { getPropsByObject, getAstValue, getEmitsByObject } from "./handle";
 import { toLine } from "./utils";
 import { Route } from "./route";
-
-// 事件
-interface Emit {
-  name: string;
-  notes?: string;
-}
+import { Emit, Prop } from "./type";
 
 // 组件信息
 export interface Component {
@@ -54,6 +54,7 @@ export function transformMain(
 export function handleScript(script: SFCScriptBlock): Component {
   const ast = babelParse(script.content, {
     sourceType: "module",
+    plugins: script.lang === "ts" ? ["typescript"] : [],
   });
 
   let component: Component = {
@@ -135,31 +136,6 @@ function handleExportDefault(ast: ObjectExpression): Component {
     props,
     emits,
   };
-}
-
-// emits ['click', 'change',...]
-export function getEmitsByObject(ast: ArrayExpression): Emit[] {
-  return ast.elements.map((item) => {
-    let emit: Emit = {
-      name: "",
-      notes: "",
-    };
-
-    /**
-     * emits: [
-     *    // 点击事件
-     *    'click'
-     * ]
-     */
-    const name = getAstValue(item);
-    if (name && item) {
-      emit.name = name;
-      const notes = item.leadingComments?.map((item) => item.value) || [];
-      emit.notes = notes.join("\n");
-    }
-
-    return emit;
-  });
 }
 
 // 将component 转换为 模板可用数据

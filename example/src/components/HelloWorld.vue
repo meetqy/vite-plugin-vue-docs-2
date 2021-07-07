@@ -65,7 +65,7 @@ export default defineComponent({
     // 多种类型
     moreType: [String, Number],
 
-    // 测试 关键词冲突问题
+    // 测试 关键词冲突问题12
     emits: Array
   },
 
@@ -83,12 +83,30 @@ export default defineComponent({
   },
 
   methods: {
+    /**
+     * @vue-docs-ref
+     * @description 这是一个描述
+     * @param p1 {string}  参数说明
+     * @return {}
+     */
     props() {
 
     },
-    emits() {
-      
+
+    /**
+     * @vue-docs-ref
+     * @description 这是一个描述
+     * @param p1 {string}  参数说明
+     * @param [options] {object}  可选参数
+     * @return {name: number, version: string}
+     */
+    emits(p1: string, options?: object) {
+      return {
+        name: 'vue-docs',
+        version: 'v0.0.6'
+      }
     }
+
   },
 
   setup: () => {

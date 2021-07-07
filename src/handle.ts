@@ -6,17 +6,21 @@ import {
   ObjectProperty,
 } from "@babel/types";
 import { toLine } from "./utils";
+import { Emit, Prop } from "./type";
 
-// 参数
-export interface Prop {
-  name: string;
-  type: string;
-  default?: string;
-  required?: boolean;
-  notes?: string;
+export function getPropsByObject(ast: ObjectExpression): Prop[] {
+  if (ast.properties && ast.properties.length) {
+    return ast.properties.map((item) => {
+      const variables = item as ObjectProperty;
+
+      return handleProp(variables);
+    });
+  }
+
+  return [];
 }
 
-// 处理prop
+// 处理props
 export function handleProp(variables: Node): Prop {
   const param: Prop = {
     name: "",
@@ -93,16 +97,29 @@ export function handleProp(variables: Node): Prop {
   return param;
 }
 
-export function getPropsByObject(ast: ObjectExpression): Prop[] {
-  if (ast.properties && ast.properties.length) {
-    return ast.properties.map((item) => {
-      const variables = item as ObjectProperty;
+// 处理emits ['click', 'change',...]
+export function getEmitsByObject(ast: ArrayExpression): Emit[] {
+  return ast.elements.map((item) => {
+    let emit: Emit = {
+      name: "",
+      notes: "",
+    };
 
-      return handleProp(variables);
-    });
-  }
+    /**
+     * emits: [
+     *    // 点击事件
+     *    'click'
+     * ]
+     */
+    const name = getAstValue(item);
+    if (name && item) {
+      emit.name = name;
+      const notes = item.leadingComments?.map((item) => item.value) || [];
+      emit.notes = notes.join("\n");
+    }
 
-  return [];
+    return emit;
+  });
 }
 
 export function getAstValue(ast: Node | null): string {
