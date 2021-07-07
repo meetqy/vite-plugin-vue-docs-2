@@ -1,9 +1,4 @@
-import {
-  babelParse,
-  parse,
-  SFCScriptBlock,
-  compileScript,
-} from "@vue/compiler-sfc";
+import { babelParse, parse, SFCScriptBlock } from "@vue/compiler-sfc";
 import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import { ArrayExpression, ObjectExpression } from "@babel/types";
@@ -11,7 +6,7 @@ import Template from "./template";
 import { getPropsByObject, getAstValue, getEmitsByObject } from "./handle";
 import { toLine } from "./utils";
 import { Route } from "./route";
-import { Emit, Prop } from "./type";
+import { Emit, Prop, RenderData } from "./type";
 
 // 组件信息
 export interface Component {
@@ -95,12 +90,12 @@ export function handleScript(script: SFCScriptBlock): Component {
 function handleExportDefault(ast: ObjectExpression): Component {
   let props: Prop[] = [];
   let emits: Emit[] = [];
-  let componentName: string = "";
+  let componentName = "";
 
   ast.properties.map((vueParams) => {
     // data() {}
-    if (t.isObjectMethod(vueParams)) {
-    }
+    // if (t.isObjectMethod(vueParams)) {
+    // }
 
     // name, props, emits, methods
     if (t.isObjectProperty(vueParams)) {
@@ -139,9 +134,9 @@ function handleExportDefault(ast: ObjectExpression): Component {
 }
 
 // 将component 转换为 模板可用数据
-function componentToLayoutData(component: Component): {} {
+function componentToLayoutData(component: Component): RenderData {
   const { props, emits, name } = component;
-  let json: { [key: string]: any } = {
+  const json: RenderData = {
     name,
   };
   if (props && props.length) {

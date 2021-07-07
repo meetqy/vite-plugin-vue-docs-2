@@ -22,3 +22,21 @@ export interface Method {
   // {name: string, age: number}
   return: string;
 }
+
+export interface RenderData {
+  name: string;
+  props?: {
+    h3: string;
+    table: {
+      headers: string[];
+      rows: Prop.key[];
+    };
+  };
+  emits?: {
+    h3: string;
+    table: {
+      headers: string[];
+      rows: Emit.key[];
+    };
+  };
+}

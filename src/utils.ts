@@ -6,7 +6,10 @@ import humps from "humps";
 
 const log = console.log;
 
-export function serverLog(resolvedConfig: ResolvedConfig, config: Config) {
+export function serverLog(
+  resolvedConfig: ResolvedConfig,
+  config: Config
+): void {
   const pkgInfo = `\n  ${Pkg.name} v${Pkg.version}`;
   log(`  ${chalk.cyan(pkgInfo)} ${chalk.green("docs running at: ")}\n`);
 

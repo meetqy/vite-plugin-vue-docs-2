@@ -17,7 +17,7 @@ class DocsRoute {
     this.config = config;
   }
 
-  static instance(config?: Config) {
+  static instance(config?: Config): DocsRoute {
     if (!this._instance && config) {
       this._instance = new this(config);
     }
@@ -36,25 +36,25 @@ class DocsRoute {
     return null;
   }
 
-  add(file: string) {
+  add(file: string): void {
     const routeName = this.getRouteNameByFile(file);
     if (routeName) {
       this.route[routeName] = file;
     }
   }
 
-  change(file: string) {
+  change(file: string): void {
     this.add(file);
   }
 
-  get(routeName?: string) {
+  get(routeName?: string): { [key: string]: string } | string {
     if (routeName) return this.route[routeName];
     return this.route;
   }
 
   toArray(): Route[] {
     const routes = Object.keys(this.route);
-    let arr: Route[] = [];
+    const arr: Route[] = [];
 
     routes.map((key) => {
       const name = key.split("/");
@@ -68,7 +68,7 @@ class DocsRoute {
     return arr;
   }
 
-  remove(file: string) {
+  remove(file: string): void {
     const routeName = this.getRouteNameByFile(file);
     if (routeName) {
       delete this.route[routeName];

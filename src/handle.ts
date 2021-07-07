@@ -47,7 +47,7 @@ export function handleProp(variables: Node): Prop {
       variables.value.properties.map((item) => {
         const obj = item as ObjectProperty;
         const name = getAstValue(obj.key);
-        let value: string = "";
+        let value = "";
 
         // type: string
         if (t.isIdentifier(obj.value) || t.isStringLiteral(obj.value)) {
@@ -100,7 +100,7 @@ export function handleProp(variables: Node): Prop {
 // 处理emits ['click', 'change',...]
 export function getEmitsByObject(ast: ArrayExpression): Emit[] {
   return ast.elements.map((item) => {
-    let emit: Emit = {
+    const emit: Emit = {
       name: "",
       notes: "",
     };
