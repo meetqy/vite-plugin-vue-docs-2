@@ -6,6 +6,8 @@
 
 vite 插件 - 自动生成 vue 组件文档
 
+<a href="./README.zh.md">中文文档</a>
+
 ![preview](./preview.png)
 
 ## 特点

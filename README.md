@@ -13,7 +13,7 @@ vite plugin-automatically generate vue component documentation
 - Support hot update
 - Quick start, rely on vite, no need to start another service
 - Automatically generated component navigation
-- ui adopts the style of `vant-ui`
+- ui adopts the style of [`vant-ui`](https://youzan.github.io/vant-weapp/#/home)
 - Core method coverage reached 92.86%
 
 ## Use
