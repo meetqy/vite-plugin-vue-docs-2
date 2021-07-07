@@ -4,3 +4,4 @@
 yarn test
 yarn lint
 yarn fix
+npx lint-staged

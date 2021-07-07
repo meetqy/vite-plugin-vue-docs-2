@@ -59,6 +59,7 @@
     "husky": "^7.0.1",
     "jest": "^27.0.6",
     "jest-coverage-badges": "^1.1.2",
+    "lint-staged": ">=10",
     "nodemon": "^2.0.9",
     "prettier": "^2.3.2",
     "tsup": "^4.12.0",
@@ -81,5 +82,9 @@
       "text",
       "lcov"
     ]
+  },
+  "lint-staged": {
+    "src/**/*.ts": "yarn lint",
+    "src/**/*.{ts,css}": "yarn fix"
   }
 }
