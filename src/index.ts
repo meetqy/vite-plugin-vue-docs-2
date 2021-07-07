@@ -89,6 +89,7 @@ export default function vueDocs(rawOptions: Options): Plugin {
         }
       });
 
+      //
       watcher
         .on("add", (path) => Route.add(path))
         .on("change", (path) => Route.change(path))
