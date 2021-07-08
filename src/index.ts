@@ -23,7 +23,7 @@ export interface Config extends Options {
   fileExp: RegExp;
 }
 
-export default function vueDocs(rawOptions: Options): Plugin {
+export default function vueDocs(rawOptions?: Options): Plugin {
   const options: Options = {
     base: "/docs",
     componentDir: "/components",
@@ -41,15 +41,12 @@ export default function vueDocs(rawOptions: Options): Plugin {
   return {
     name: "vite-plugin-vue-docs",
     async configureServer(server: ViteDevServer) {
-      const {
-        watcher,
-        middlewares,
-        httpServer,
-        config: resolvedConfig,
-      } = server;
+      const { watcher, middlewares, httpServer } = server;
 
       httpServer?.on("listening", () => {
-        serverLog(resolvedConfig, config);
+        setTimeout(() => {
+          serverLog(config);
+        });
       });
 
       // 生成路由

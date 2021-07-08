@@ -4,6 +4,10 @@
 
 * 新增`ref method`解析
 
+### Bugfix
+
+* fix: #1
+
 ### Perf 
 
 * Jest测试文件结构优化
