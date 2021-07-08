@@ -3,16 +3,22 @@ import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import { ArrayExpression, ObjectExpression } from "@babel/types";
 import Template from "./template";
-import { getPropsByObject, getAstValue, getEmitsByObject } from "./handle";
+import {
+  getPropsByObject,
+  getAstValue,
+  getEmitsByArray,
+  getMethodsByObject,
+} from "./handle";
 import { toLine } from "./utils";
 import { Route } from "./route";
-import { Emit, Prop, RenderData } from "./type";
+import { Emit, Method, Prop, RenderData } from "./type";
 
 // 组件信息
 export interface Component {
   name: string;
   emits: Emit[];
   props: Prop[];
+  methods: Method[];
 }
 
 // 返回html
@@ -56,6 +62,7 @@ export function handleScript(script: SFCScriptBlock): Component {
     name: "",
     props: [],
     emits: [],
+    methods: [],
   };
 
   traverse(ast, {
@@ -90,6 +97,7 @@ export function handleScript(script: SFCScriptBlock): Component {
 function handleExportDefault(ast: ObjectExpression): Component {
   let props: Prop[] = [];
   let emits: Emit[] = [];
+  let methods: Method[] = [];
   let componentName = "";
 
   ast.properties.map((vueParams) => {
@@ -115,11 +123,12 @@ function handleExportDefault(ast: ObjectExpression): Component {
         }
 
         case "emits": {
-          emits = getEmitsByObject(vueParams.value as ArrayExpression);
+          emits = getEmitsByArray(vueParams.value as ArrayExpression);
           break;
         }
 
         case "methods": {
+          methods = getMethodsByObject(vueParams.value as ObjectExpression);
           break;
         }
       }
@@ -130,12 +139,13 @@ function handleExportDefault(ast: ObjectExpression): Component {
     name: componentName,
     props,
     emits,
+    methods,
   };
 }
 
 // 将component 转换为 模板可用数据
 function componentToLayoutData(component: Component): RenderData {
-  const { props, emits, name } = component;
+  const { props, emits, name, methods } = component;
   const json: RenderData = {
     name,
   };
@@ -164,6 +174,27 @@ function componentToLayoutData(component: Component): RenderData {
         headers: ["事件", "说明", "回调参数"],
         rows: emits.map((item) => {
           return [item.name as string, item.notes as string, "-"];
+        }),
+      },
+    };
+  }
+
+  if (methods && methods.length) {
+    json.methods = {
+      h3: "Methods",
+      table: {
+        headers: ["方法名", "说明", "参数: 说明", "返回值"],
+        rows: methods.map((method) => {
+          return [
+            method.name,
+            method.desc,
+            method.params?.length
+              ? method.params.map((item) => {
+                  return `${item.name}: ${item.notes}`;
+                })
+              : "-",
+            method.return || "-",
+          ];
         }),
       },
     };

@@ -2,11 +2,13 @@ import { Node } from "@babel/traverse";
 import * as t from "@babel/types";
 import {
   ArrayExpression,
+  CommentBlock,
   ObjectExpression,
   ObjectProperty,
 } from "@babel/types";
 import { toLine } from "./utils";
-import { Emit, Prop } from "./type";
+import { Emit, Prop, Method } from "./type";
+import { parse as commentParse } from "comment-parser/lib";
 
 export function getPropsByObject(ast: ObjectExpression): Prop[] {
   if (ast.properties && ast.properties.length) {
@@ -18,6 +20,94 @@ export function getPropsByObject(ast: ObjectExpression): Prop[] {
   }
 
   return [];
+}
+
+// 处理emits ['click', 'change',...]
+export function getEmitsByArray(ast: ArrayExpression): Emit[] {
+  return ast.elements.map((item) => {
+    const emit: Emit = {
+      name: "",
+      notes: "",
+    };
+
+    /**
+     * emits: [
+     *    // 点击事件
+     *    'click'
+     * ]
+     */
+    const name = getAstValue(item);
+    if (name && item) {
+      emit.name = name;
+      const notes = item.leadingComments?.map((item) => item.value) || [];
+      emit.notes = notes.join("\n");
+    }
+
+    return emit;
+  });
+}
+
+export function getMethodsByObject(ast: ObjectExpression): Method[] {
+  const methods: Method[] = [];
+
+  ast.properties.map((item) => {
+    if (t.isObjectMethod(item)) {
+      const method: Method = {
+        name: getAstValue(item.key),
+        desc: "",
+        params: [],
+        return: "",
+      };
+      const methodProps: Prop[] = [];
+      const comments = item.leadingComments || [];
+      const comment = comments[0] as CommentBlock;
+      if (comment) {
+        const commentArr = commentParse(`/*${comment.value}\n*/`) || [];
+        const commentTag = commentArr[0].tags;
+        if (commentTag && commentTag[0].tag === "vue-docs-ref") {
+          commentTag.map((item) => {
+            switch (item.tag) {
+              case "description": {
+                method.desc = item.name;
+                break;
+              }
+
+              case "param": {
+                methodProps.push({
+                  name: item.name,
+                  type: item.type.toLocaleLowerCase(),
+                  notes: item.description,
+                  default: "-",
+                });
+                break;
+              }
+
+              case "return": {
+                method.return = item.description || "-";
+                break;
+              }
+            }
+          });
+          method.params = methodProps;
+          methods.push(method);
+        }
+      }
+    }
+  });
+
+  return methods;
+}
+
+export function getAstValue(ast: Node | null): string {
+  if (t.isIdentifier(ast)) {
+    return ast.name;
+  }
+
+  if (t.isStringLiteral(ast)) {
+    return ast.value;
+  }
+
+  return "";
 }
 
 // 处理props
@@ -95,43 +185,6 @@ export function handleProp(variables: Node): Prop {
   }
 
   return param;
-}
-
-// 处理emits ['click', 'change',...]
-export function getEmitsByObject(ast: ArrayExpression): Emit[] {
-  return ast.elements.map((item) => {
-    const emit: Emit = {
-      name: "",
-      notes: "",
-    };
-
-    /**
-     * emits: [
-     *    // 点击事件
-     *    'click'
-     * ]
-     */
-    const name = getAstValue(item);
-    if (name && item) {
-      emit.name = name;
-      const notes = item.leadingComments?.map((item) => item.value) || [];
-      emit.notes = notes.join("\n");
-    }
-
-    return emit;
-  });
-}
-
-export function getAstValue(ast: Node | null): string {
-  if (t.isIdentifier(ast)) {
-    return ast.name;
-  }
-
-  if (t.isStringLiteral(ast)) {
-    return ast.value;
-  }
-
-  return "";
 }
 
 /**

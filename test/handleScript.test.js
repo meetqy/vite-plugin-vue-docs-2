@@ -24,6 +24,7 @@ test("test handleScript props 1", () => {
       },
     ],
     emits: [],
+    methods: [],
   });
 });
 
@@ -40,6 +41,7 @@ test("test handleScript props 2", () => {
       },
     ],
     emits: [],
+    methods: [],
   });
 });
 
@@ -57,6 +59,7 @@ test("test handleScript props 3", () => {
       },
     ],
     emits: [],
+    methods: [],
   });
 });
 
@@ -74,6 +77,7 @@ test("test handleScript props 4", () => {
       },
     ],
     emits: [],
+    methods: [],
   });
 });
 
@@ -91,6 +95,7 @@ test("test handleScript props 5", () => {
       },
     ],
     emits: [],
+    methods: [],
   });
 });
 
@@ -100,6 +105,7 @@ test("test handleScript emits 1", () => {
     name: "hello-world",
     props: [],
     emits: [{ name: "click", notes: "" }],
+    methods: [],
   });
 });
 
@@ -109,6 +115,7 @@ test("test handleScript emits 2", () => {
     name: "hello-world",
     props: [],
     emits: [{ name: "click", notes: " 这是事件注释" }],
+    methods: [],
   });
 });
 
@@ -118,6 +125,7 @@ test("test handleScript normal 1", () => {
     name: "hello-world",
     props: [{ name: "name", notes: " 这是props注释", type: "string | number" }],
     emits: [{ name: "click", notes: " 这是事件注释" }],
+    methods: [],
   });
 });
 
@@ -127,5 +135,6 @@ test("test handleScript default 1", () => {
     name: "hello-world",
     props: [{ name: "name", notes: " 这是props注释", type: "string | number" }],
     emits: [{ name: "click", notes: " 这是事件注释" }],
+    methods: [],
   });
 });

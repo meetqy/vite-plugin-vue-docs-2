@@ -347,6 +347,8 @@ a {
 }
 
 .van-doc-header {
+  position: fixed;
+  z-index: 999;
   width: 100%;
   background-color: #001938;
   -webkit-user-select: none;

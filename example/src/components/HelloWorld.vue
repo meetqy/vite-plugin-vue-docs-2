@@ -86,25 +86,23 @@ export default defineComponent({
     /**
      * @vue-docs-ref
      * @description 这是一个描述
-     * @param p1 {string}  参数说明
-     * @return {}
-     */
-    props() {
-
-    },
-
-    /**
-     * @vue-docs-ref
-     * @description 这是一个描述
-     * @param p1 {string}  参数说明
-     * @param [options] {object}  可选参数
-     * @return {name: number, version: string}
+     * @param {string} p1 参数说明
+     * @param {object} [options]   可选参数
+     * @return $ {name: number, version: string}
      */
     emits(p1: string, options?: object) {
       return {
         name: 'vue-docs',
         version: 'v0.0.6'
       }
+    },
+
+    /**
+     * @vue-docs-ref
+     * @description 这是一个props方法
+     */
+    props() {
+
     }
 
   },

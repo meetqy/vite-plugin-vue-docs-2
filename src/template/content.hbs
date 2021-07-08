@@ -38,7 +38,7 @@
           {{#each emits.table.rows}}
             <tr>
               {{#each this}}
-                <td>{{this}}</td>
+                  <td>{{this}}</td>
               {{/each}}
             </tr>
           {{/each}}
@@ -46,4 +46,28 @@
       </table>
     </div>
   {{/if}}
+
+{{#if methods}}
+    <div class="card">
+        <h3 id="props">{{methods.h3}}</h3>
+        <table>
+            <thead>
+            <tr>
+                {{#each methods.table.headers}}
+                    <th>{{this}}</th>
+                {{/each}}
+            </tr>
+            </thead>
+            <tbody>
+            {{#each methods.table.rows}}
+                <tr>
+                    {{#each this}}
+                        <td>{{this}}</td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+{{/if}}
 </section>

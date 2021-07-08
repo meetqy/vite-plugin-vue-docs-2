@@ -1,4 +1,5 @@
 // 事件
+
 interface Emit {
   name: string;
   notes?: string;
@@ -18,9 +19,10 @@ export interface Method {
   name: string;
   // 描述
   desc: string;
-  params: Prop[];
+  // 参数
+  params?: Prop[];
   // {name: string, age: number}
-  return: string;
+  return?: string;
 }
 
 export interface RenderData {
@@ -37,6 +39,13 @@ export interface RenderData {
     table: {
       headers: string[];
       rows: Emit.key[];
+    };
+  };
+  methods?: {
+    h3: string;
+    table: {
+      headers: string[];
+      rows: Method.key[];
     };
   };
 }
