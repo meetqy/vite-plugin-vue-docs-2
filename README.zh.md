@@ -48,7 +48,7 @@ yarn example:dev
 
 `emits`,`props`，vue 有对应的写法，所以只需要在写法上加上注释，插件就会自动解析。
 
-### ref method
+### ref
 
 ref 一般调用的是某一些 methods 当中的方法，所以需要在方法上面加上`@vue-docs-ref`标识，并使用多行注释的方式。
 

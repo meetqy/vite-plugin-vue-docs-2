@@ -17,7 +17,8 @@
     "cp:template": "copyfiles -f src/template/* dist/template",
     "example:dev": "npm -C example run dev",
     "test:dev": "jest --watch",
-    "test": "jest --coverage && jest-coverage-badges --output './badges'",
+    "test": "jest",
+    "test:badge": "jest --coverage && jest-coverage-badges --output './badges'",
     "prepare": "husky install",
     "lint": "eslint src/**/*.ts",
     "fix": "prettier --write src/**/*.{ts,css}"

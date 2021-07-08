@@ -46,6 +46,43 @@ yarn dev
 yarn example:dev
 ```
 
+## Syntax
+
+`emits`, `props`, and vue have corresponding wording, so just add a comment on the wording, and the plug-in will automatically parse it.
+
+### ref
+
+Ref generally calls methods in certain methods, so you need to add the `@vue-docs-ref` mark to the method, and use multi-line comments.
+
+```js
+export default {
+  methods: {
+    /**
+     * @vue-docs-ref
+     * @description This is a say method
+     * @param {string} name
+     * @param {number} age
+     * @return {name: string, age: number}
+     */
+    say(name: string, age: number) {
+      return {
+        name,
+        age,
+      };
+    },
+  },
+};
+```
+
+### Parameter Description
+
+| Name          | Description                     | Required  |
+| ------------- | ------------------------------- | --------- |
+| @vue-docs-ref | Invoke identification via `ref` | **true**  |
+| @description  | Descriptive information         | **false** |
+| @param        | Parameters                      | **false** |
+| @return       | Return value                    | **false** |
+
 ## Plan
 
 - 🚀 means functions that have been implemented
@@ -58,8 +95,8 @@ yarn example:dev
 | Page jump history mode &#124;&#124; hash mode              | ⏳ Planning  |
 | Configurable document website                              | ⏳ Planning  |
 | Modified files are directly hot-updated without F5 refresh | ⏳ Planning  |
-| Support parsing `ref`                                      | 👷 Progress  |
 | Support parsing `slot`                                     | 👷 Progress  |
+| Support parsing `ref`                                      | 👷 Completed  |
 | Support `defineComponent()` writing method                 | 🚀 Completed |
 | Support `type` multiple types                              | 🚀 Completed |
 | Automatically generate routing                             | 🚀 Completed |
