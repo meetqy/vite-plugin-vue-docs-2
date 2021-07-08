@@ -103,6 +103,12 @@ export default defineComponent({
      */
     props() {
 
+    },
+
+
+    // 这不是一个ref方法
+    notRef() {
+
     }
 
   },

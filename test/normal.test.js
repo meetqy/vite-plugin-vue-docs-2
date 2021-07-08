@@ -1,6 +1,6 @@
 import { parse } from "@vue/compiler-sfc";
 import { handleScript } from "../src/main";
-import { normal1, default1 } from "./data/handleScript";
+import { normal1, default1 } from "./data/normal";
 
 test("test handleScript normal 1", () => {
   const { descriptor } = parse(normal1);

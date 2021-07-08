@@ -1,6 +1,6 @@
 import { parse } from "@vue/compiler-sfc";
 import { handleScript } from "../src/main";
-import { emits1, emits2 } from "./data/handleScript";
+import { emits1, emits2 } from "./data/emits";
 
 test("test handleScript emits 1", () => {
   const { descriptor } = parse(emits1);

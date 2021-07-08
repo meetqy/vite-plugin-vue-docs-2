@@ -82,6 +82,11 @@
       "json-summary",
       "text",
       "lcov"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "src/template.ts",
+      "src/utils.ts"
     ]
   },
   "lint-staged": {
