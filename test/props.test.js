@@ -1,16 +1,6 @@
 import { parse } from "@vue/compiler-sfc";
 import { handleScript } from "../src/main";
-import {
-  props1,
-  props2,
-  props3,
-  props4,
-  props5,
-  emits1,
-  emits2,
-  normal1,
-  default1,
-} from "./data/handleScript";
+import { props1, props2, props3, props4, props5 } from "./data/handleScript";
 
 test("test handleScript props 1", () => {
   const { descriptor } = parse(props1);
@@ -95,46 +85,6 @@ test("test handleScript props 5", () => {
       },
     ],
     emits: [],
-    methods: [],
-  });
-});
-
-test("test handleScript emits 1", () => {
-  const { descriptor } = parse(emits1);
-  expect(handleScript(descriptor.script)).toEqual({
-    name: "hello-world",
-    props: [],
-    emits: [{ name: "click", notes: "" }],
-    methods: [],
-  });
-});
-
-test("test handleScript emits 2", () => {
-  const { descriptor } = parse(emits2);
-  expect(handleScript(descriptor.script)).toEqual({
-    name: "hello-world",
-    props: [],
-    emits: [{ name: "click", notes: " 这是事件注释" }],
-    methods: [],
-  });
-});
-
-test("test handleScript normal 1", () => {
-  const { descriptor } = parse(normal1);
-  expect(handleScript(descriptor.script)).toEqual({
-    name: "hello-world",
-    props: [{ name: "name", notes: " 这是props注释", type: "string | number" }],
-    emits: [{ name: "click", notes: " 这是事件注释" }],
-    methods: [],
-  });
-});
-
-test("test handleScript default 1", () => {
-  const { descriptor } = parse(default1);
-  expect(handleScript(descriptor.script)).toEqual({
-    name: "hello-world",
-    props: [{ name: "name", notes: " 这是props注释", type: "string | number" }],
-    emits: [{ name: "click", notes: " 这是事件注释" }],
     methods: [],
   });
 });
