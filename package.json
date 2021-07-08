@@ -85,6 +85,9 @@
     ]
   },
   "lint-staged": {
+    "test/**/*.js": [
+      "yarn test"
+    ],
     "src/**/*.ts": [
       "yarn lint",
       "yarn test"
