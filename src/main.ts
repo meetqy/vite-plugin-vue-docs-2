@@ -144,6 +144,7 @@ function handleExportDefault(ast: ObjectExpression): Component {
 }
 
 // 将component 转换为 模板可用数据
+// 如果是 undefined null "" 的转换，都在此方法中
 function componentToLayoutData(component: Component): RenderData {
   const { props, emits, name, methods } = component;
   const json: RenderData = {

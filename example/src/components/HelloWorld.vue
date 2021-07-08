@@ -96,21 +96,6 @@ export default defineComponent({
         version: 'v0.0.6'
       }
     },
-
-    /**
-     * @vue-docs-ref
-     * @description 这是一个props方法
-     */
-    props() {
-
-    },
-
-
-    // 这不是一个ref方法
-    notRef() {
-
-    }
-
   },
 
   setup: () => {

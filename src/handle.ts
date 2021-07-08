@@ -60,7 +60,12 @@ export function getMethodsByObject(ast: ObjectExpression): Method[] {
       };
       const methodProps: Prop[] = [];
       const comments = item.leadingComments || [];
-      const comment = comments[0] as CommentBlock;
+      const comment = comments.filter((item) => {
+        return (
+          item.type === "CommentBlock" && item.value.includes("@vue-docs-ref")
+        );
+      })[0];
+
       if (comment) {
         const commentArr = commentParse(`/*${comment.value}\n*/`) || [];
         const commentTag = commentArr[0].tags;
@@ -77,13 +82,13 @@ export function getMethodsByObject(ast: ObjectExpression): Method[] {
                   name: item.name,
                   type: item.type.toLocaleLowerCase(),
                   notes: item.description,
-                  default: "-",
+                  default: "",
                 });
                 break;
               }
 
               case "return": {
-                method.return = item.description || "-";
+                method.return = item.description;
                 break;
               }
             }
