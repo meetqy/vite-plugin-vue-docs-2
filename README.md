@@ -52,7 +52,8 @@ yarn example:dev
 
 ### ref
 
-Ref generally calls methods in certain methods, so you need to add the `@vue-docs-ref` mark to the method, and use multi-line comments.
+`red` generally calls methods in certain methods, so you need to add the `@vue-docs-ref` mark to the method, and use multi-line comments.
+Annotation specification reference[JavaScript编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
 
 ```js
 export default {
@@ -96,7 +97,7 @@ export default {
 | Configurable document website                              | ⏳ Planning  |
 | Modified files are directly hot-updated without F5 refresh | ⏳ Planning  |
 | Support parsing `slot`                                     | 👷 Progress  |
-| Support parsing `ref`                                      | 👷 Completed  |
+| Support parsing `ref`                                      | 🚀 Completed  |
 | Support `defineComponent()` writing method                 | 🚀 Completed |
 | Support `type` multiple types                              | 🚀 Completed |
 | Automatically generate routing                             | 🚀 Completed |

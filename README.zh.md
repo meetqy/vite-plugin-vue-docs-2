@@ -51,6 +51,7 @@ yarn example:dev
 ### ref
 
 `ref` 一般调用的是methods当中的某一些方法，所以需要在方法上面加上`@vue-docs-ref`标识，并使用多行注释的方式。
+注释规范参照[JavaScript编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
 
 ```js
 export default {
@@ -92,7 +93,7 @@ export default {
 | 可配置文档网站                               | ⏳ 规划中 |
 | 修改文件直接热更新，无须 F5 刷新             | ⏳ 规划中 |
 | 支持解析`slot`                               | 👷 进行中 |
-| 支持解析`ref`                                | 👷 已完成 |
+| 支持解析`ref`                                | 🚀 已完成 |
 | 支持`defineComponent()`写法                  | 🚀 已完成 |
 | 支持`type`多种类型                           | 🚀 已完成 |
 | 自动生成路由                                 | 🚀 已完成 |
