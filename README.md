@@ -49,7 +49,8 @@ yarn dev
 
 ## Syntax
 
-`emits`, `props`, and vue have corresponding wording, so just add a comment on the wording, and the plug-in will automatically parse it.
+- `emits`, `props`, and vue have corresponding wording, so just add a comment on the wording, and the plug-in will automatically parse it.
+- `slots` is also generated automatically. If you need to add a description, you only need to add a comment on the previous line of the `<slot>` tag.
 
 ### ref
 

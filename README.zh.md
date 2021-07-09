@@ -49,12 +49,14 @@ yarn dev
 
 ## 语法
 
-`emits`,`props`，在vue中有对应的写法，所以只需要在写法上加上注释，插件就会自动解析。
+* `emits`,`props`，在vue中有对应的写法，所以只需要在写法上加上注释，插件就会自动解析。
+* `slots`也是自动生成，如需增加说明，只需在`<slot>`标签的上一行增加注释。
 
 ### ref
 
 `ref` 一般调用的是methods当中的某一些方法，所以需要在方法上面加上`@vue-docs-ref`标识，并使用多行注释的方式。
 注释规范参照[JavaScript编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
+
 
 ```js
 export default {
