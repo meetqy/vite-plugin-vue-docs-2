@@ -1,5 +1,5 @@
 {
-  "name": "@vite-plugin-vue-docs/example",
+  "name": "example",
   "version": "0.0.0",
   "scripts": {
     "dev": "nodemon --watch ../dist -e hbs,js --exec 'cross-env DEBUG=vite-plugin-vue-docs:* vite'",
@@ -16,6 +16,6 @@
     "nodemon": "^2.0.7",
     "typescript": "^4.3.2",
     "vite": "^2.3.8",
-    "vite-plugin-vue-docs": "file:../"
+    "vite-plugin-vue-docs": "^0.0.8"
   }
 }
