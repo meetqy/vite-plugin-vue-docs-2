@@ -6,7 +6,7 @@
 
 vite plugin-automatically generate vue component documentation
 
-<a href="./README.zh.md">中文文档</a>
+English | [中文](./README.zh.md)
 
 ![preview](./preview.png)
 

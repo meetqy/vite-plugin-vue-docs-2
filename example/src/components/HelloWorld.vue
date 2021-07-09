@@ -45,28 +45,21 @@ export default defineComponent({
   props: {
     // 测试获取组件名称
     name: String,
-
     // 正常测试
     normal: {
       type: String,
       required: true,
       default: '正常测试'
     },
-
     // 少某一个配置
     letter: {
       type: String,
       default: '少某一个配置'
     },
-
     // 简写方式
     easy: String,
-
     // 多种类型
     moreType: [String, Number],
-
-    // 测试 关键词冲突问题12
-    emits: Array
   },
 
   emits: [
@@ -75,12 +68,6 @@ export default defineComponent({
     // 数据改变
     "change"
   ],
-
-  data() {
-    return {
-      name: '测试获取组件名称',
-    }
-  },
 
   methods: {
     /**
@@ -96,6 +83,12 @@ export default defineComponent({
         version: 'v0.0.6'
       }
     },
+  },
+
+  data() {
+    return {
+      name: '测试获取组件名称',
+    }
   },
 
   setup: () => {
