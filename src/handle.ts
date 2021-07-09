@@ -145,7 +145,7 @@ export function getSlotsByTemplate(template: SFCTemplateBlock): Slot[] {
       const name = $(slot).attr("name") || "default";
       slots.push({
         name,
-        desc: comment?.data || "-",
+        desc: comment && comment.data ? comment.data.replace(/\s+/g, "") : "",
         params:
           Object.keys($(slot).attr())
             .filter((param) => param != "name")

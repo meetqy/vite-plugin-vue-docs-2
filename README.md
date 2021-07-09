@@ -97,7 +97,7 @@ export default {
 | Page jump history mode &#124;&#124; hash mode              | ⏳ Planning  |
 | Configurable document website                              | ⏳ Planning  |
 | Modified files are directly hot-updated without F5 refresh | ⏳ Planning  |
-| Support parsing `slot`                                     | 👷 Progress  |
+| Support parsing `slot`                                     | 🚀 Completed  |
 | Support parsing `ref`                                      | 🚀 Completed  |
 | Support `defineComponent()` writing method                 | 🚀 Completed |
 | Support `type` multiple types                              | 🚀 Completed |

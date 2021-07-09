@@ -1,5 +1,9 @@
 # v0.0.9
 
+### Feature
+
+* 新增`Slot`解析
+
 ### Bugfix 
 
 * 修复开发环境example不能监听.hbs模板文件改动
