@@ -1,40 +1,14 @@
 <template>
-  <h1>{{ msg }}</h1>
-
-  <p>
-    Recommended IDE setup:
-    <a href="https://code.visualstudio.com/" target="_blank">VSCode</a>
-    +
-    <a
-      href="https://marketplace.visualstudio.com/items?itemName=octref.vetur"
-      target="_blank"
-    >
-      Vetur
-    </a>
-    or
-    <a href="https://github.com/johnsoncodehk/volar" target="_blank">Volar</a>
-    (if using
-    <code>&lt;script setup&gt;</code>)
-  </p>
-
-  <p>See <code>README.md</code> for more information.</p>
-
-  <p>
-    <a href="https://vitejs.dev/guide/features.html" target="_blank">
-      Vite Docs
-    </a>
-    |
-    <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-  </p>
-
-  <button type="button" @click="count++">count is: {{ count }}</button>
-  <p>
-    Edit
-    <code>components/HelloWorld.vue</code> to test hot module replacement.
-  </p>
-  <h2>normal: {{normal}}</h2>
-  <h2>letter: {{letter}}</h2>
-  <h2>moreType: {{moreType}}</h2>
+  <h1 @click="handleClick">{{ name }}</h1>
+  <h2>{{ version }}</h2>
+  <h2>{{ normal }}</h2>
+  <header>
+    <!-- 这是一个header插槽 -->
+    <slot></slot>
+  </header>
+  <h2>{{ letter }}</h2>
+  <h2>{{ moreType }}</h2>
+  <slot name="header" :show="false"></slot>
 </template>
 
 <script lang="ts">
@@ -56,8 +30,8 @@ export default defineComponent({
       type: String,
       default: '少某一个配置'
     },
-    // 简写方式
-    easy: String,
+    // 版本号
+    version: String,
     // 多种类型
     moreType: [String, Number],
   },
@@ -67,6 +41,11 @@ export default defineComponent({
     'click',
     // 数据改变
     "change"
+  ],
+
+  slots: [
+      "default",
+      "age"
   ],
 
   methods: {
@@ -83,35 +62,18 @@ export default defineComponent({
         version: 'v0.0.6'
       }
     },
-  },
 
-  data() {
-    return {
-      name: '测试获取组件名称',
+    /**
+     * @vue-docs-ref
+     * @description 显示
+     */
+    show() {
+
+    },
+
+    handleClick() {
+      alert('click')
     }
   },
-
-  setup: () => {
-    const count = ref(0)
-    return { count }
-  }
 })
 </script>
-
-<style scoped>
-a {
-  color: #42b983;
-}
-
-label {
-  margin: 0 0.5em;
-  font-weight: bold;
-}
-
-code {
-  background-color: #eee;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #304455;
-}
-</style>

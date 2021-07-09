@@ -4,7 +4,9 @@
     "@vue/compiler-sfc",
     "chalk",
     "../package.json",
-    "copyfiles"
+    "copyfiles",
+    "@babel/traverse",
+    "@babel/types"
   ],
   "format": [
     "esm",

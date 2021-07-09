@@ -45,7 +45,7 @@ yarn
 yarn dev
 ```
 
-> If you need to use local package, you need to make your own ` link '`
+> If you need to use local package, you need to make your own ` link `
 
 ## Syntax
 

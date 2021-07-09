@@ -1,6 +1,6 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld normal="正常测试" :more-type="123" msg="Hello Vue 3 + TypeScript + Vite" />
+  <HelloWorld normal="正常测试" name="vite-plugin-vue-docs" :more-type="123" version="^v0.0.8" />
 </template>
 
 <script lang="ts">

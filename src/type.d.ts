@@ -25,6 +25,12 @@ export interface Method {
   return?: string;
 }
 
+export interface Slot {
+  name: string;
+  desc: string;
+  params?: string[];
+}
+
 export interface RenderData {
   name: string;
   props?: {
@@ -48,4 +54,20 @@ export interface RenderData {
       rows: Method.key[];
     };
   };
+  slots?: {
+    h3: string;
+    table: {
+      headers: string[];
+      rows: Slot.key[];
+    };
+  };
+}
+
+// 组件信息
+export interface Component {
+  name: string;
+  emits?: Emit[];
+  props?: Prop[];
+  methods?: Method[];
+  slots?: Slot[];
 }

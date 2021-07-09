@@ -8,18 +8,11 @@ import {
   getAstValue,
   getEmitsByArray,
   getMethodsByObject,
+  getSlotsByTemplate,
 } from "./handle";
 import { toLine } from "./utils";
 import { Route } from "./route";
-import { Emit, Method, Prop, RenderData } from "./type";
-
-// 组件信息
-export interface Component {
-  name: string;
-  emits: Emit[];
-  props: Prop[];
-  methods: Method[];
-}
+import { Component, Emit, Method, Prop, RenderData } from "./type";
 
 // 返回html
 export function transformMain(
@@ -29,13 +22,29 @@ export function transformMain(
 ): { html: string; component: Component } | null {
   const { descriptor, errors } = parse(code);
 
+  const componentData: Component = {
+    name: "",
+  };
+
   if (errors.length) {
     console.error(errors);
     return null;
   }
 
   if (descriptor.script) {
-    const componentData = handleScript(descriptor.script);
+    const { name, emits, methods, props } = handleScript(descriptor.script);
+    componentData.name = name;
+    componentData.emits = emits;
+    componentData.methods = methods;
+    componentData.props = props;
+  }
+
+  // 获取slot
+  if (descriptor.template) {
+    componentData.slots = getSlotsByTemplate(descriptor.template);
+  }
+
+  if (componentData) {
     const result = componentToLayoutData(componentData);
     return {
       html: Template({
@@ -146,10 +155,27 @@ function handleExportDefault(ast: ObjectExpression): Component {
 // 将component 转换为 模板可用数据
 // 如果是 undefined null "" 的转换，都在此方法中
 function componentToLayoutData(component: Component): RenderData {
-  const { props, emits, name, methods } = component;
+  const { props, emits, name, methods, slots } = component;
   const json: RenderData = {
     name,
   };
+
+  if (slots && slots.length) {
+    json.slots = {
+      h3: "Slots",
+      table: {
+        headers: ["名称", "说明", "返回参数"],
+        rows: slots.map((item) => {
+          return [
+            item.name as string,
+            item.desc || "-",
+            item.params?.length ? item.params.join(",") : "-",
+          ];
+        }),
+      },
+    };
+  }
+
   if (props && props.length) {
     json.props = {
       h3: "Props",
@@ -158,7 +184,7 @@ function componentToLayoutData(component: Component): RenderData {
         rows: props.map((item) => {
           return [
             item.name as string,
-            item.notes || "",
+            item.notes || "-",
             item.type as string,
             item.default || "-",
             item.required ? "true" : "false",
@@ -188,7 +214,7 @@ function componentToLayoutData(component: Component): RenderData {
         rows: methods.map((method) => {
           return [
             method.name,
-            method.desc,
+            method.desc || "-",
             method.params?.length
               ? method.params.map((item) => {
                   return `${item.name}: ${item.notes}`;

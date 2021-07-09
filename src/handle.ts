@@ -2,13 +2,14 @@ import { Node } from "@babel/traverse";
 import * as t from "@babel/types";
 import {
   ArrayExpression,
-  CommentBlock,
   ObjectExpression,
   ObjectProperty,
 } from "@babel/types";
 import { toLine } from "./utils";
-import { Emit, Prop, Method } from "./type";
+import { Emit, Prop, Method, Slot } from "./type";
 import { parse as commentParse } from "comment-parser/lib";
+import { SFCTemplateBlock } from "@vue/compiler-sfc";
+import * as cheerio from "cheerio";
 
 export function getPropsByObject(ast: ObjectExpression): Prop[] {
   if (ast.properties && ast.properties.length) {
@@ -113,6 +114,47 @@ export function getAstValue(ast: Node | null): string {
   }
 
   return "";
+}
+
+interface SlotAst {
+  slot: cheerio.Element;
+  comment?: cheerio.CommentElement | null;
+}
+
+export function getSlotsByTemplate(template: SFCTemplateBlock): Slot[] {
+  const slots: Slot[] = [];
+  const html = template.content;
+  const $ = cheerio.load(html);
+  const $contents = $("*").contents();
+  const slotAsts: SlotAst[] = [];
+
+  $contents.map((index, el) => {
+    if (el.type === "tag" && el.name === "slot") {
+      // slot前面有一个文本节点，所以减2
+      const comment = $contents[index - 2];
+      slotAsts.push({
+        slot: el,
+        comment: comment.type === "comment" ? comment : null,
+      });
+    }
+  });
+
+  if (slotAsts.length) {
+    slotAsts.map((item) => {
+      const { slot, comment } = item;
+      const name = $(slot).attr("name") || "default";
+      slots.push({
+        name,
+        desc: comment?.data || "-",
+        params:
+          Object.keys($(slot).attr())
+            .filter((param) => param != "name")
+            .map((item) => item.replace(/:/, "")) || [],
+      });
+    });
+  }
+
+  return slots;
 }
 
 // 处理props

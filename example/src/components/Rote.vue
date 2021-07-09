@@ -25,6 +25,6 @@ export default  {
   emits: [
     // 当前分值变化时触发的事件
     "change"
-  ]
+  ],
 }
 </script>
