@@ -6,7 +6,7 @@
 
 vite plugin-automatically generate vue component documentation
 
-English | [中文](./README.zh.md)
+**English** | [中文](./README.zh.md)
 
 ![preview](./preview.png)
 
@@ -43,7 +43,6 @@ export default defineConfig({
 git clone https://github.com/meetqy/vite-plugin-vue-docs.git
 yarn
 yarn dev
-yarn example:dev
 ```
 
 ## Syntax

@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "yarn tsup --watch --ignore-watch example & yarn watch:template",
+    "dev": "yarn tsup --watch --ignore-watch example & yarn watch:template & yarn example:dev",
     "build": "yarn test && yarn tsup && yarn cp:template",
     "tsup": "tsup src/index.ts --dts",
     "patch": "yarn build && npm version patch",
@@ -99,5 +99,10 @@
       "yarn test"
     ],
     "src/**/*.{ts,css}": "yarn fix"
+  },
+  "private": true,
+  "workspaces": ["example"],
+  "publishConfig": {
+    "access": "public"
   }
 }
