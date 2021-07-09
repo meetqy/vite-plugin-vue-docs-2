@@ -45,6 +45,8 @@ yarn
 yarn dev
 ```
 
+> 如需使用本地package需自行`link`
+
 ## 语法
 
 `emits`,`props`，在vue中有对应的写法，所以只需要在写法上加上注释，插件就会自动解析。

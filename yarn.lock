@@ -5808,8 +5808,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-"vite-plugin-vue-docs@file:.":
+vite-plugin-vue-docs@^0.0.8:
   version "0.0.8"
+  resolved "https://registry.yarnpkg.com/vite-plugin-vue-docs/-/vite-plugin-vue-docs-0.0.8.tgz#965453080b97d59d402ae0a58dfc63e0af0e7b2a"
+  integrity sha512-woAquRDpkF9zj/RL7fdj8L2WNTiQWvOlLbv1ily6s3oGtcen2DBRdyIE4Dt59dq9kxj1WXUjAgX/DNvdmuBGrw==
   dependencies:
     "@babel/traverse" "^7.14.7"
     "@babel/types" "^7.14.5"

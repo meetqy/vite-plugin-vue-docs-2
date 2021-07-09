@@ -45,6 +45,8 @@ yarn
 yarn dev
 ```
 
+> If you need to use local package, you need to make your own ` link '`
+
 ## Syntax
 
 `emits`, `props`, and vue have corresponding wording, so just add a comment on the wording, and the plug-in will automatically parse it.
