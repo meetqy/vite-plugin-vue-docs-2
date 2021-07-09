@@ -42,12 +42,6 @@ export default defineComponent({
     // 数据改变
     "change"
   ],
-
-  slots: [
-      "default",
-      "age"
-  ],
-
   methods: {
     /**
      * @vue-docs-ref
