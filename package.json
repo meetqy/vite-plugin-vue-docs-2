@@ -41,14 +41,14 @@
     "typescript": "^4.3.4"
   },
   "lint-staged": {
-    "packages/**/src/**/*.js": [
+    "packages/**/src/*.js": [
       "yarn test"
     ],
-    "packages/**/src/**/*.ts": [
+    "packages/**/src/*.ts": [
       "yarn lint",
       "yarn test"
     ],
-    "packages/**/src/**/*.{ts,js,vue}": "yarn fix"
+    "packages/**/src/*.{ts,js,vue}": "yarn fix"
   },
   "private": true,
   "workspaces": [
