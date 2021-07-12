@@ -2,7 +2,7 @@
 
 ![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)
 ![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
-![jest coverage](./badges/badge-statements.svg)
+![jest coverage](./packages/vue-docs/badges/badge-statements.svg)
 
 vite 插件 - 自动生成 vue 组件文档
 

@@ -11,7 +11,7 @@
     "clean": "lerna clean",
     "dev": "lerna run dev",
     "prepare": "husky install",
-    "test": "lerna run test --since -- ls -la",
+    "test": "lerna run test",
     "lint": "eslint packages/**/src",
     "fix": "prettier --write packages/**/src/"
   },
