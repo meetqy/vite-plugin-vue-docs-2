@@ -46,7 +46,7 @@
     ],
     "*.ts": [
       "yarn lint",
-      "lerna run test --"
+      "yarn test"
     ],
     "*.{ts,js,vue}": "yarn fix"
   },

@@ -10,7 +10,7 @@ import Template from "./template";
 
 // 可自定义的配置
 export interface UserConfig {
-  // 文档路由地址
+  // 文档路由地址 test
   base?: string;
   // 组件路径 相对于 src
   componentDir?: string;
