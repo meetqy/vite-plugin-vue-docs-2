@@ -41,12 +41,9 @@
     "typescript": "^4.3.4"
   },
   "lint-staged": {
-    "*.js": [
-      "yarn test"
-    ],
     "*.ts": [
       "yarn lint",
-      "lerna run test --since --stream -- ls -la"
+      "lerna run test --since -- ls -la"
     ],
     "*.{ts,js,vue}": "yarn fix"
   },
