@@ -1,6 +1,6 @@
 {
-  "name": "example",
-  "version": "0.0.0",
+  "name": "@vue-docs/example",
+  "version": "0.0.9",
   "scripts": {
     "dev": "nodemon --watch ../vue-docs/dist -e hbs,js --exec 'vite'",
     "serve": "vite preview"
@@ -8,7 +8,6 @@
   "dependencies": {
     "vue": "^3.0.5"
   },
-  "prettier": "true",
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",
     "@vue/compiler-sfc": "^3.0.5",

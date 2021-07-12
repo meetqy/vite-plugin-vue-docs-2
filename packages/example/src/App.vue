@@ -1,18 +1,23 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld normal="正常测试" name="vite-plugin-vue-docs" :more-type="123" version="^v0.0.8" />
+  <HelloWorld
+    normal="正常测试"
+    name="vite-plugin-vue-docs"
+    :more-type="123"
+    version="^v0.0.8"
+  />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import HelloWorld from './components/HelloWorld.vue'
+import { defineComponent } from "vue";
+import HelloWorld from "./components/HelloWorld.vue";
 
 export default defineComponent({
-  name: 'App1',
+  name: "App1",
   components: {
-    HelloWorld
-  }
-})
+    HelloWorld,
+  },
+});
 </script>
 
 <style>

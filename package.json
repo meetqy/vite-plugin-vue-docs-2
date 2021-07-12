@@ -7,12 +7,13 @@
     "url": "git+https://github.com/meetqy/vite-plugin-vue-docs.git"
   },
   "scripts": {
-    "dev": "lerna run dev --stream",
     "setup": "lerna bootstrap && lerna link --force-local",
+    "clean": "lerna clean",
+    "dev": "lerna run dev",
     "prepare": "husky install",
     "test": "lerna run test",
-    "lint": "lerna run lint",
-    "fix": "lerna run fix"
+    "lint": "eslint packages/**/src",
+    "fix": "prettier --write packages/**/src/"
   },
   "keywords": [
     "vue",
@@ -40,14 +41,14 @@
     "typescript": "^4.3.4"
   },
   "lint-staged": {
-    "packages/vue-docs/src/**/*.js": [
+    "src/**/*.js": [
       "yarn test"
     ],
-    "packages/vue-docs/src/**/*.ts": [
+    "src/**/*.ts": [
       "yarn lint",
       "yarn test"
     ],
-    "packages/**/*.{ts,css}": "yarn fix"
+    "src/**/*.{ts,js}": "yarn fix"
   },
   "private": true,
   "workspaces": [

@@ -2,7 +2,7 @@
 
 ![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)
 ![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
-![jest coverage](./badges/badge-statements.svg)
+![jest coverage](./packages/vue-docs/badges/badge-statements.svg)
 
 vite plugin-automatically generate vue component documentation
 
@@ -45,7 +45,7 @@ yarn
 yarn dev
 ```
 
-> If you need to use local package, you need to make your own ` link `
+> If you need to use local package, you need to make your own `link`
 
 ## Syntax
 
@@ -55,7 +55,7 @@ yarn dev
 ### ref
 
 `red` generally calls methods in certain methods, so you need to add the `@vue-docs-ref` mark to the method, and use multi-line comments.
-Annotation specification reference[JavaScript编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
+Annotation specification reference[JavaScript 编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
 
 ```js
 export default {
@@ -98,8 +98,8 @@ export default {
 | Page jump history mode &#124;&#124; hash mode              | ⏳ Planning  |
 | Configurable document website                              | ⏳ Planning  |
 | Modified files are directly hot-updated without F5 refresh | ⏳ Planning  |
-| Support parsing `slot`                                     | 🚀 Completed  |
-| Support parsing `ref`                                      | 🚀 Completed  |
+| Support parsing `slot`                                     | 🚀 Completed |
+| Support parsing `ref`                                      | 🚀 Completed |
 | Support `defineComponent()` writing method                 | 🚀 Completed |
 | Support `type` multiple types                              | 🚀 Completed |
 | Automatically generate routing                             | 🚀 Completed |

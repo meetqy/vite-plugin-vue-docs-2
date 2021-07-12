@@ -1,5 +1,5 @@
 <section>
-    <h1>{{content.name}}</h1>
+  <h1>{{content.name}}</h1>
   {{#if content.props}}
     <div class="card">
       <h3 id="props">{{content.props.h3}}</h3>
@@ -38,7 +38,7 @@
           {{#each content.emits.table.rows}}
             <tr>
               {{#each this}}
-                  <td>{{this}}</td>
+                <td>{{this}}</td>
               {{/each}}
             </tr>
           {{/each}}
@@ -47,52 +47,52 @@
     </div>
   {{/if}}
 
-{{#if content.methods}}
+  {{#if content.methods}}
     <div class="card">
-        <h3 id="props">{{content.methods.h3}}</h3>
-        <p>可通过<code>this.$refs?.method</code>调用</p>
-        <table>
-            <thead>
-            <tr>
-                {{#each content.methods.table.headers}}
-                    <th>{{this}}</th>
-                {{/each}}
-            </tr>
-            </thead>
-            <tbody>
-            {{#each content.methods.table.rows}}
-                <tr>
-                    {{#each this}}
-                        <td>{{this}}</td>
-                    {{/each}}
-                </tr>
+      <h3 id="props">{{content.methods.h3}}</h3>
+      <p>可通过<code>this.$refs?.method</code>调用</p>
+      <table>
+        <thead>
+          <tr>
+            {{#each content.methods.table.headers}}
+              <th>{{this}}</th>
             {{/each}}
-            </tbody>
-        </table>
-    </div>
-{{/if}}
-
-{{#if content.slots}}
-  <div class="card">
-    <h3 id="props">{{content.slots.h3}}</h3>
-    <table>
-      <thead>
-      <tr>
-        {{#each content.slots.table.headers}}
-          <th>{{this}}</th>
-        {{/each}}
-      </tr>
-      </thead>
-      <tbody>
-      {{#each content.slots.table.rows}}
-        <tr>
-          {{#each this}}
-            <td>{{this}}</td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each content.methods.table.rows}}
+            <tr>
+              {{#each this}}
+                <td>{{this}}</td>
+              {{/each}}
+            </tr>
           {{/each}}
-        </tr>
-      {{/each}}
-      </tbody>
-    </table>
-  </div>
-{{/if}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+
+  {{#if content.slots}}
+    <div class="card">
+      <h3 id="props">{{content.slots.h3}}</h3>
+      <table>
+        <thead>
+          <tr>
+            {{#each content.slots.table.headers}}
+              <th>{{this}}</th>
+            {{/each}}
+          </tr>
+        </thead>
+        <tbody>
+          {{#each content.slots.table.rows}}
+            <tr>
+              {{#each this}}
+                <td>{{this}}</td>
+              {{/each}}
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
 </section>

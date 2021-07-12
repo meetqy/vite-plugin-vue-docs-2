@@ -12,9 +12,9 @@
 </template>
 
 <script lang="ts">
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent } from "vue";
 export default defineComponent({
-  name: 'HelloWorld',
+  name: "HelloWorld",
 
   props: {
     // 测试获取组件名称
@@ -23,12 +23,12 @@ export default defineComponent({
     normal: {
       type: String,
       required: true,
-      default: '正常测试'
+      default: "正常测试",
     },
     // 少某一个配置
     letter: {
       type: String,
-      default: '少某一个配置'
+      default: "少某一个配置",
     },
     // 版本号
     version: String,
@@ -38,9 +38,9 @@ export default defineComponent({
 
   emits: [
     // 点击事件
-    'click',
+    "click",
     // 数据改变
-    "change"
+    "change",
   ],
   methods: {
     /**
@@ -52,22 +52,20 @@ export default defineComponent({
      */
     emits(p1: string, options?: object) {
       return {
-        name: 'vue-docs',
-        version: 'v0.0.6'
-      }
+        name: "vue-docs",
+        version: "v0.0.6",
+      };
     },
 
     /**
      * @vue-docs-ref
      * @description 显示
      */
-    show() {
-
-    },
+    show() {},
 
     handleClick() {
-      alert('click')
-    }
+      alert("click");
+    },
   },
-})
+});
 </script>

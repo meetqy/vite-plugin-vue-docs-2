@@ -1,5 +1,4 @@
 // 事件
-
 interface Emit {
   name: string;
   notes?: string;

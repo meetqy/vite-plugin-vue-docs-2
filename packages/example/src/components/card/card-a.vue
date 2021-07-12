@@ -1,6 +1,4 @@
-<template>
-
-</template>
+<template></template>
 
 <script>
 export default {
@@ -9,19 +7,17 @@ export default {
     // 这是一个name
     name: {
       type: Object,
-      default: () => {}
-    }
+      default: () => {},
+    },
   },
   emits: [
-      // click事件
-      "click",
+    // click事件
+    "click",
 
-      // change事件123
-      "change"
-  ]
-}
+    // change事件123
+    "change",
+  ],
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

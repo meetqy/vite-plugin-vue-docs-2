@@ -8,22 +8,22 @@
 </template>
 <script lang="ts">
 export default {
-  name: 'Preview',
+  name: "Preview",
   props: {
     // 这是标题
     name: {
       type: String,
       required: true,
-      default: '正常测试'
+      default: "正常测试",
     },
     // 支持多种类型
-    age: [Number, String]
+    age: [Number, String],
   },
   emits: [
     // 点击事件
-    'click',
+    "click",
     // 数据改变
-    "change"
+    "change",
   ],
   methods: {
     /**
@@ -35,10 +35,10 @@ export default {
      */
     emits(p1: string, options?: object) {
       return {
-        name: 'vue-docs',
-        version: 'v0.0.6'
-      }
+        name: "vue-docs",
+        version: "v0.0.6",
+      };
     },
   },
-}
+};
 </script>
