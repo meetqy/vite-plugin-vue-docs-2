@@ -8,14 +8,17 @@ import { serverLog } from "./utils";
 import { transformMain } from "./main";
 import Template from "./template";
 
-export interface Options {
+// 可自定义的配置
+export interface UserConfig {
   // 文档路由地址
   base?: string;
   // 组件路径 相对于 src
   componentDir?: string;
+  // 打开浏览器
+  open?: boolean;
 }
 
-export interface Config extends Options {
+export interface Config extends UserConfig {
   // 组件绝对路径
   root: string;
 
@@ -23,23 +26,31 @@ export interface Config extends Options {
   fileExp: RegExp;
 }
 
-export default function vueDocs(rawOptions?: Options): Plugin {
-  const options: Options = {
+export default function vueDocs(rawOptions?: UserConfig): Plugin {
+  const config: Config = {
     base: "/docs",
     componentDir: "/components",
+    open: true,
+    root: "",
+    fileExp: RegExp(""),
     ...rawOptions,
   };
 
-  const config = {
-    root: `${process.cwd()}/src${options.componentDir}`,
-    fileExp: RegExp(`${options.componentDir}\\/.*?.vue$`),
-    ...options,
-  };
+  config.root = `${process.cwd()}/src${config.componentDir}`;
+  config.fileExp = RegExp(`${config.componentDir}\\/.*?.vue$`);
 
   const Route = DocsRoute.instance(config);
 
   return {
     name: "vite-plugin-vue-docs",
+    config() {
+      return {
+        server: {
+          open: config.open ? config.base : false,
+          force: true,
+        },
+      };
+    },
     async configureServer(server: ViteDevServer) {
       const { watcher, middlewares, httpServer } = server;
 
@@ -58,7 +69,7 @@ export default function vueDocs(rawOptions?: Options): Plugin {
       });
 
       // 构建路由
-      middlewares.use(`${options.base}`, (req: http.IncomingMessage, res) => {
+      middlewares.use(`${config.base}`, (req: http.IncomingMessage, res) => {
         const filepath = Route.get(req.url) as string;
         const routeArray = Route.toArray();
         if (filepath) {
