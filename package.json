@@ -10,6 +10,7 @@
     "dev": "lerna run dev --stream",
     "setup": "lerna bootstrap && lerna link --force-local",
     "prepare": "husky install",
+    "test": "lerna run test",
     "lint": "lerna run lint",
     "fix": "lerna run fix"
   },
@@ -39,14 +40,14 @@
     "typescript": "^4.3.4"
   },
   "lint-staged": {
-    "test/**/*.js": [
+    "packages/vue-docs/src/**/*.js": [
       "yarn test"
     ],
-    "src/**/*.ts": [
+    "packages/vue-docs/src/**/*.ts": [
       "yarn lint",
       "yarn test"
     ],
-    "src/**/*.{ts,css}": "yarn fix"
+    "packages/**/*.{ts,css}": "yarn fix"
   },
   "private": true,
   "workspaces": [
