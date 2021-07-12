@@ -2,7 +2,7 @@
   "name": "example",
   "version": "0.0.0",
   "scripts": {
-    "dev": "nodemon --watch ../dist -e hbs,js --exec 'cross-env DEBUG=vite-plugin-vue-docs:* vite'",
+    "dev": "nodemon --watch ../../dist -e hbs,js --exec 'cross-env DEBUG=vite-plugin-vue-docs:* vite'",
     "serve": "vite preview"
   },
   "dependencies": {

@@ -15,7 +15,7 @@
     "patch": "yarn build && npm version patch",
     "watch:template": "nodemon --watch ./src/template -e hbs,css --exec 'yarn cp:template'",
     "cp:template": "copyfiles -f src/template/* dist/template",
-    "example:dev": "npm -C example run dev",
+    "example:dev": "npm -C packages/example run dev",
     "test:dev": "jest --watch",
     "test": "jest --coverage && jest-coverage-badges --output './badges'",
     "prepare": "husky install",
