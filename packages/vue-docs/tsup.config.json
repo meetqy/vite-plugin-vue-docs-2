@@ -1,0 +1,16 @@
+{
+  "entryPoints": "src/index.ts",
+  "external": [
+    "@vue/compiler-sfc",
+    "chalk",
+    "../package.json",
+    "copyfiles",
+    "@babel/traverse",
+    "@babel/types"
+  ],
+  "format": [
+    "esm",
+    "cjs"
+  ],
+  "dts": true
+}
