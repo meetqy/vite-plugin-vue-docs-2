@@ -11,7 +11,7 @@
     "clean": "lerna clean",
     "dev": "lerna run dev",
     "prepare": "husky install",
-    "test": "lerna run test --stream",
+    "test": "lerna run test --since -- ls -la",
     "lint": "eslint packages/**/src",
     "fix": "prettier --write packages/**/src/"
   },
@@ -46,7 +46,7 @@
     ],
     "*.ts": [
       "yarn lint",
-      "yarn test"
+      "lerna run test --since --stream -- ls -la"
     ],
     "*.{ts,js,vue}": "yarn fix"
   },
