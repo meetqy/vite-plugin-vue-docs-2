@@ -15,7 +15,6 @@
 import { ref, defineComponent } from "vue";
 export default defineComponent({
   name: "HelloWorld",
-
   props: {
     // 测试获取组件名称
     name: String,
