@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-vue-docs",
-  "version": "0.0.11",
+  "version": "0.1.0",
   "description": "vite plugin auto document generation for vue",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -56,9 +56,9 @@
     "vite": "^2.3.8"
   },
   "dependencies": {
-    "@vue/compiler-sfc": "^3.1.2",
     "@babel/traverse": "^7.14.7",
     "@babel/types": "^7.14.5",
+    "@vue/compiler-sfc": "^3.1.2",
     "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.10",
     "comment-parser": "^1.1.5",
