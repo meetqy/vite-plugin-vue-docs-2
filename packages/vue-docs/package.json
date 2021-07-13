@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-vue-docs",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "vite plugin auto document generation for vue",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -34,11 +34,11 @@
   },
   "homepage": "https://github.com/meetqy/vite-plugin-vue-docs#readme",
   "devDependencies": {
-    "@babel/traverse": "^7.14.7",
-    "@babel/types": "^7.14.5",
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@babel/preset-typescript": "^7.14.5",
+    "@babel/traverse": "^7.14.7",
+    "@babel/types": "^7.14.5",
     "@types/babel__traverse": "^7.14.0",
     "@types/cheerio": "^0.22.30",
     "@types/glob": "^7.1.3",
