@@ -105,3 +105,5 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
     },
   };
 }
+
+export { transformMain };
