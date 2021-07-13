@@ -37,6 +37,13 @@ export default defineConfig({
 });
 ```
 
+### js中使用
+
+```js
+import { transformMain } from "vite-plugin-vue-docs";
+const { html, component } = transformMain(code);
+```
+
 ## example
 
 ```shell
