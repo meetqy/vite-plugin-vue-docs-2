@@ -4,21 +4,21 @@
 ![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
 ![jest coverage](./packages/vue-docs/badges/badge-statements.svg)
 
-vite plugin-automatically generate vue component documentation
+vite 插件 - 自动生成 vue 组件文档
 
-**English** | [中文](./README.zh.md)
+[English](./README.md) | **中文**
 
 ![preview](./preview.png)
 
-## Features
+## 特点
 
-- Support hot update
-- Quick start, rely on vite, no need to start another service
-- Automatically generated component navigation
-- ui adopts the style of <a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>
-- Core method coverage reached 92.86%
+- 支持热更新
+- 快速启动，依赖于 vite，无需另起服务
+- 自动生成组件导航
+- ui 采用了<a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>的样式
+- 核心方法覆盖率达到了 92.86%
 
-## Use
+## 使用
 
 ```shell
 yarn add vite-plugin-vue-docs -D
@@ -45,26 +45,27 @@ yarn setup
 yarn dev
 ```
 
-> If you need to use local package, you need to make your own `link`
+> 如需使用本地package需自行`link`
 
-## Syntax
+## 语法
 
-- `emits`, `props`, and vue have corresponding wording, so just add a comment on the wording, and the plug-in will automatically parse it.
-- `slots` is also generated automatically. If you need to add a description, you only need to add a comment on the previous line of the `<slot>` tag.
+* `emits`,`props`，在vue中有对应的写法，所以只需要在写法上加上注释，插件就会自动解析。
+* `slots`也是自动生成，如需增加说明，只需在`<slot>`标签的上一行增加注释。
 
 ### ref
 
-`red` generally calls methods in certain methods, so you need to add the `@vue-docs-ref` mark to the method, and use multi-line comments.
-Annotation specification reference[JavaScript 编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
+`ref` 一般调用的是methods当中的某一些方法，所以需要在方法上面加上`@vue-docs-ref`标识，并使用多行注释的方式。
+注释规范参照[JavaScript编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
+
 
 ```js
 export default {
   methods: {
     /**
      * @vue-docs-ref
-     * @description This is a say method
-     * @param {string} name
-     * @param {number} age
+     * @description 这是一个say方法
+     * @param {string} name 姓名
+     * @param {number} age  年龄
      * @return {name: string, age: number}
      */
     say(name: string, age: number) {
@@ -77,33 +78,33 @@ export default {
 };
 ```
 
-### Parameter Description
+### 参数说明
 
-| Name          | Description                     | Required  |
-| ------------- | ------------------------------- | --------- |
-| @vue-docs-ref | Invoke identification via `ref` | **true**  |
-| @description  | Descriptive information         | **false** |
-| @param        | Parameters                      | **false** |
-| @return       | Return value                    | **false** |
+| 名称          | 说明              | 必填      |
+| ------------- | ----------------- | --------- |
+| @vue-docs-ref | 通过`ref`调用标识 | **true**  |
+| @description  | 描述信息          | **false** |
+| @param        | 参数              | **false** |
+| @return       | 返回值            | **false** |
 
-## Plan
+## 计划
 
-- 🚀 means functions that have been implemented
-- 👷 means functions in progress
-- ⏳ means functions in planning
+- 🚀 表示已经实现的功能 
+- 👷 表示进行中的功能
+- ⏳ 表示规划中的功能
 
-| Features                                                   | Status       |
-| ---------------------------------------------------------- | ------------ |
-| Packaged into a static web page                            | ⏳ Planning  |
-| Page jump history mode &#124;&#124; hash mode              | ⏳ Planning  |
-| Configurable document website                              | ⏳ Planning  |
-| Modified files are directly hot-updated without F5 refresh | ⏳ Planning  |
-| Support parsing `slot`                                     | 🚀 Completed |
-| Support parsing `ref`                                      | 🚀 Completed |
-| Support `defineComponent()` writing method                 | 🚀 Completed |
-| Support `type` multiple types                              | 🚀 Completed |
-| Automatically generate routing                             | 🚀 Completed |
+| 功能                                         | 状态      |
+| -------------------------------------------- | --------- |
+| 打包成静态网页                               | ⏳ 规划中 |
+| 页面跳转 history 模式 &#124;&#124; hash 模式 | ⏳ 规划中 |
+| 可配置文档网站                               | ⏳ 规划中 |
+| 修改文件直接热更新，无须 F5 刷新             | ⏳ 规划中 |
+| 支持解析`slot`                               | 🚀 已完成 |
+| 支持解析`ref`                                | 🚀 已完成 |
+| 支持`defineComponent()`写法                  | 🚀 已完成 |
+| 支持`type`多种类型                           | 🚀 已完成 |
+| 自动生成路由                                 | 🚀 已完成 |
 
 ## changlog
 
-[Version log](./CHANGELOG.md)
+[版本日志](./CHANGELOG.md)
