@@ -1,3 +1,9 @@
+# v0.0.11
+
+### BugFix
+
+* 修复`Cannot find module **`#2
+
 # v0.0.10
 
 ### Feature
