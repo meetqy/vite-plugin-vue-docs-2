@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-vue-docs",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "vite plugin auto document generation for vue",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -57,14 +57,14 @@
     "vite": "^2.3.8"
   },
   "dependencies": {
+    "@babel/traverse": "^7.14.7",
+    "@babel/types": "^7.14.5",
     "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.10",
     "comment-parser": "^1.1.5",
     "glob": "^7.1.7",
     "handlebars": "^4.7.7",
-    "humps": "^2.0.1",
-    "@babel/traverse": "^7.14.7",
-    "@babel/types": "^7.14.5"
+    "humps": "^2.0.1"
   },
   "jest": {
     "coverageReporters": [
