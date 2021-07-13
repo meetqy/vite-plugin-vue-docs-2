@@ -41,7 +41,7 @@ export default defineConfig({
 
 ```shell
 git clone https://github.com/meetqy/vite-plugin-vue-docs.git
-yarn setup
+yarn
 yarn dev
 ```
 
