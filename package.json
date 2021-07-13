@@ -9,6 +9,7 @@
   "scripts": {
     "setup": "lerna bootstrap && lerna link --force-local",
     "clean": "lerna clean",
+    "patch": "lerna version patch",
     "dev": "lerna run dev",
     "prepare": "husky install",
     "test": "lerna run test",
