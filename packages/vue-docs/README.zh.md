@@ -37,6 +37,17 @@ export default defineConfig({
 });
 ```
 
+### 作为方法单独使用
+
+```js
+// 任意js中
+
+import { transformMain } from 'vite-plugin-vue-docs';
+const { html, component } = transformMain(code);
+
+// 返回解析的`内容对象`和`html`
+```
+
 ## example
 
 ```shell

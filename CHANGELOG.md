@@ -1,4 +1,10 @@
-# v0.0.11
+# v0.1.1
+
+### Feature
+
+* 新增`transformMain`方法,可将vue转换为html文档
+
+# v0.0.11, v0.1.0
 
 ### BugFix
 

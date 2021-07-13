@@ -14,11 +14,11 @@ import { toLine } from "./utils";
 import { Route } from "./route";
 import { Component, Emit, Method, Prop, RenderData } from "./type";
 
-// 返回html
+// 返回code信息
 export function transformMain(
   code: string,
-  routes: Route[],
-  url: string
+  routes?: Route[],
+  url?: string
 ): { html: string; component: Component } | null {
   const { descriptor, errors } = parse(code);
 
@@ -50,8 +50,8 @@ export function transformMain(
       html: Template({
         content: result,
         route: {
-          path: url,
-          list: routes,
+          path: url || "",
+          list: routes || [],
         },
       }),
       component: componentData,
