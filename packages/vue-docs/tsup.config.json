@@ -3,10 +3,11 @@
   "external": [
     "@vue/compiler-sfc",
     "chalk",
-    "../package.json",
-    "copyfiles",
     "@babel/traverse",
-    "@babel/types"
+    "@babel/types",
+    "@babel/traverse",
+    "../package.json",
+    "copyfiles"
   ],
   "format": [
     "esm",
