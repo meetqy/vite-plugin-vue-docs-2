@@ -2,12 +2,13 @@
   "name": "@vue-docs/example",
   "version": "0.1.0",
   "scripts": {
-    "dev": "nodemon --watch ../vue-docs/dist -e hbs,js --exec 'vite'",
+    "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec 'vite'",
     "serve": "vite preview"
   },
   "dependencies": {
     "vue": "^3.0.5",
-    "vue-codemirror": "^4.0.6"
+    "vue-codemirror": "^4.0.6",
+    "vue-router": "^4.0.10"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",

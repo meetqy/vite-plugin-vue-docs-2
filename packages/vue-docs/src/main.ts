@@ -2,7 +2,6 @@ import { babelParse, parse, SFCScriptBlock } from "@vue/compiler-sfc";
 import traverse, { NodePath } from "@babel/traverse";
 import * as t from "@babel/types";
 import { ArrayExpression, ObjectExpression } from "@babel/types";
-import Template from "./template";
 import {
   getPropsByObject,
   getAstValue,
@@ -11,15 +10,12 @@ import {
   getSlotsByTemplate,
 } from "./handle";
 import { toLine } from "./utils";
-import { Route } from "./route";
 import { Component, Emit, Method, Prop, RenderData } from "./type";
 
 // 返回code信息
 export function transformMain(
-  code: string,
-  routes?: Route[],
-  url?: string
-): { html: string; component: Component } | null {
+  code: string
+): { content: RenderData; component: Component } | null {
   const { descriptor, errors } = parse(code);
 
   const componentData: Component = {
@@ -47,13 +43,7 @@ export function transformMain(
   if (componentData) {
     const result = componentToLayoutData(componentData);
     return {
-      html: Template({
-        content: result,
-        route: {
-          path: url || "",
-          list: routes || [],
-        },
-      }),
+      content: result,
       component: componentData,
     };
   }

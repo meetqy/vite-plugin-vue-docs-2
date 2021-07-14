@@ -1,12 +1,9 @@
 import type { Plugin } from "vite";
 import { ViteDevServer } from "vite";
-import glob from "glob";
-import http from "http";
-import fs from "fs";
+import fg from "fast-glob";
 import DocsRoute from "./route";
-import { serverLog } from "./utils";
 import { transformMain } from "./main";
-import Template from "./template";
+import path from "path";
 
 // 可自定义的配置
 export interface UserConfig {
@@ -43,58 +40,53 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
 
   return {
     name: "vite-plugin-vue-docs",
+    enforce: "pre",
+    transform(code, id) {
+      if (id.endsWith("main.ts")) {
+        const routes = Route.toArray();
+        code += `router.addRoute({
+          path: '${config.base}',
+          component: import('${path.join(
+            process.cwd(),
+            "./node_modules/vite-plugin-vue-docs/dist/template/layout.vue"
+          )}'),
+          props: {
+            content: {
+              nav: ${JSON.stringify(routes)}
+            }
+          },
+          children: [${routes
+            .map((item) => {
+              return `{ 
+                path: '${item.path.replace("/docs/", "")}', 
+                component: import('${path.join(
+                  process.cwd(),
+                  "./node_modules/vite-plugin-vue-docs/dist/template/content.vue"
+                )}')}`;
+            })
+            .join(",")}]
+        });`;
+        code += `router.push('${config.base}');`;
+        return code;
+      }
+      return null;
+    },
+
     config() {
       return {
         server: {
-          open: config.open ? config.base : false,
+          // open: config.open ? config.base : false,
           force: true,
         },
       };
     },
+
     async configureServer(server: ViteDevServer) {
-      const { watcher, middlewares, httpServer } = server;
+      const { watcher } = server;
 
-      httpServer?.on("listening", () => {
-        setTimeout(() => {
-          serverLog(config);
-        });
-      });
-
-      // 生成路由
-      glob(`${config.root}/**/*.vue`, {}, (err, files) => {
-        if (err) throw err;
-        files.map((file) => {
-          Route.add(file);
-        });
-      });
-
-      // 构建路由
-      middlewares.use(`${config.base}`, (req: http.IncomingMessage, res) => {
-        const filepath = Route.get(req.url) as string;
-        const routeArray = Route.toArray();
-        if (filepath) {
-          const result = transformMain(
-            fs.readFileSync(filepath, "utf-8"),
-            routeArray,
-            req.url as string
-          );
-
-          if (result) {
-            res.writeHead(200, {
-              "content-type": "text/html;charset=utf8",
-            });
-            res.end(result.html);
-          }
-        } else {
-          res.writeHead(404);
-          const result = Template({
-            route: {
-              path: req.url,
-              list: routeArray,
-            },
-          });
-          res.end(result);
-        }
+      const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
+      files.map((item) => {
+        Route.add(item);
       });
 
       //

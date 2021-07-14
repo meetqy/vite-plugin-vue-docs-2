@@ -1,11 +1,5 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld
-    normal="正常测试"
-    name="vite-plugin-vue-docs"
-    :more-type="123"
-    version="^v0.0.8"
-  />
+  <router-view></router-view>
 </template>
 
 <script lang="ts">
@@ -20,13 +14,4 @@ export default defineComponent({
 });
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>

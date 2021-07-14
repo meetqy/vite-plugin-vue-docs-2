@@ -13,7 +13,7 @@
     "build": "yarn test && yarn tsup && yarn cp:template",
     "tsup": "tsup src/index.ts --dts",
     "patch": "yarn build && npm version patch",
-    "watch:template": "nodemon --watch ./src/template -e hbs,css --exec 'yarn cp:template'",
+    "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template'",
     "cp:template": "copyfiles -f src/template/* dist/template",
     "test:dev": "jest --watch",
     "test": "jest --coverage && jest-coverage-badges --output './badges'"
@@ -39,7 +39,6 @@
     "@babel/preset-typescript": "^7.14.5",
     "@types/babel__traverse": "^7.14.0",
     "@types/cheerio": "^0.22.30",
-    "@types/glob": "^7.1.3",
     "@types/humps": "^2.0.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.12.5",
@@ -62,9 +61,10 @@
     "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.10",
     "comment-parser": "^1.1.5",
-    "glob": "^7.1.7",
+    "fast-glob": "^3.2.7",
     "handlebars": "^4.7.7",
-    "humps": "^2.0.1"
+    "humps": "^2.0.1",
+    "vue-router": "4"
   },
   "jest": {
     "coverageReporters": [
