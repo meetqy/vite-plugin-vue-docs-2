@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "yarn tsup --watch & yarn watch:template",
-    "build": "yarn test && yarn tsup && yarn cp:template",
+    "build": "rm -rf dist && yarn test && yarn tsup && yarn cp:template",
     "tsup": "tsup src/index.ts --dts",
     "patch": "yarn build && npm version patch",
     "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template'",
@@ -52,13 +52,13 @@
     "vite": "^2.3.8"
   },
   "peerDependencies": {
-    "vite": "^2.3.8"
+    "vite": "^2.3.8",
+    "vue-router": "^4.0.0"
   },
   "dependencies": {
     "@babel/traverse": "^7.14.7",
     "@babel/types": "^7.14.5",
     "@vue/compiler-sfc": "^3.1.2",
-    "chalk": "^4.1.1",
     "cheerio": "^1.0.0-rc.10",
     "comment-parser": "^1.1.5",
     "fast-glob": "^3.2.7",
@@ -73,7 +73,6 @@
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "src/template.ts",
       "src/utils.ts"
     ]
   },

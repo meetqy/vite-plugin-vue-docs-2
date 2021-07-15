@@ -15,6 +15,8 @@ export interface UserConfig {
   componentDir?: string;
   // 打开浏览器
   open?: boolean;
+  // router实例名称
+  vueRoute?: string;
 }
 
 export interface Config extends UserConfig {
@@ -29,8 +31,9 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
   const config: Config = {
     base: "/docs",
     componentDir: "/components",
-    open: true,
+    open: false,
     root: "",
+    vueRoute: "router",
     fileExp: RegExp(""),
     ...rawOptions,
   };
@@ -46,7 +49,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
     transform(code, id) {
       if (id.endsWith("main.ts")) {
         const routes = Route.toArray();
-        code += `router.addRoute({
+        code += `${config.vueRoute}.addRoute({
           path: '${config.base}',
           component: import("vite-plugin-vue-docs/dist/template/layout.vue"),
           props: {
@@ -68,8 +71,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
             .join(",")}]
         });`;
 
-        code += `const reloadPath = localStorage.getItem('vue-docs-reload-path');
-        reloadPath ? router.push(reloadPath) : router.push('${config.base}');`;
+        code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)})`;
         return code;
       }
 
@@ -107,7 +109,6 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
         );
       }
 
-      //
       watcher
         .on("add", (path) => {
           Route.add(path);
