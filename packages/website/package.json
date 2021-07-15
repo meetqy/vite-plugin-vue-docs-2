@@ -16,5 +16,8 @@
     "vite": "^2.4.2",
     "vite-plugin-vue-docs": "^0.1.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }
