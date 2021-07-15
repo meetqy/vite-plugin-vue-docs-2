@@ -18,31 +18,12 @@ vite 插件 - 自动生成 vue 组件文档
 - ui 采用了<a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>的样式
 - 核心方法覆盖率达到了 92.86%
 
+
 ## 使用
 
-```shell
-yarn add vite-plugin-vue-docs -D
-```
+使用方式参考 [@vue-docs/example](./packages/example/README.md)
 
-```js
-// vite.config.js
-
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import vueDocs from "vite-plugin-vue-docs";
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue(), vueDocs()],
-});
-```
-
-### js中使用
-
-```js
-import { transformMain } from "vite-plugin-vue-docs";
-const { html, component } = transformMain(code);
-```
+> ^0.1.3 依赖 `vue-router`
 
 ## example
 
@@ -51,8 +32,6 @@ git clone https://github.com/meetqy/vite-plugin-vue-docs.git
 yarn setup
 yarn dev
 ```
-
-> 如需使用本地package需自行`link`
 
 ## 语法
 

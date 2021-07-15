@@ -18,24 +18,11 @@ vite plugin-automatically generate vue component documentation
 - ui adopts the style of <a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>
 - Core method coverage reached 92.86%
 
-## Use
+##Use
 
-```shell
-yarn add vite-plugin-vue-docs -D
-```
+For usage, refer to [@vue docs/example](./packages/example/README.md)
 
-```js
-// vite.config.js
-
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import vueDocs from "vite-plugin-vue-docs";
-
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [vue(), vueDocs()],
-});
-```
+> ^0.1.3 dependency `vue router`
 
 ## example
 
@@ -44,8 +31,6 @@ git clone https://github.com/meetqy/vite-plugin-vue-docs.git
 yarn setup
 yarn dev
 ```
-
-> If you need to use local package, you need to make your own `link`
 
 ## Syntax
 
