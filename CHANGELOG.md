@@ -1,3 +1,10 @@
+# v0.1.3
+
+### BugFix
+
+* 修复路径跳转
+* 修复`vue-router`实例名称不为`router`报错
+
 # v0.1.1, v0.1.2
 
 ### Feature
