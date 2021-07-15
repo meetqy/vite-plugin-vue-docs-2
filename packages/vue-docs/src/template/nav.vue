@@ -20,6 +20,11 @@ export default {
   props: {
     navs: Array,
   },
+  watch: {
+    $route(val) {
+      localStorage.setItem("vue-docs-reload-path", val.path);
+    },
+  },
 };
 </script>
 

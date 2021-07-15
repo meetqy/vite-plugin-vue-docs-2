@@ -14,7 +14,7 @@ export default {
     // click事件
     "click",
 
-    // change事件123
+    // change事件
     "change",
   ],
 };

@@ -60,7 +60,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
             .map((item) => {
               const result = transformMain(fs.readFileSync(item.file, "utf-8"));
               return `{ 
-                path: '${item.path.replace("/docs/", "")}', 
+                path: '${item.path.replace(config.base + "/", "")}', 
                 component: import('${path.join(
                   process.cwd(),
                   "./node_modules/vite-plugin-vue-docs/dist/template/content.vue"
@@ -72,7 +72,8 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
             })
             .join(",")}]
         });`;
-        code += `router.push('${config.base}');`;
+        code += `const reloadPath = localStorage.getItem('vue-docs-reload-path');
+        reloadPath ? router.push(reloadPath) : router.push('${config.base}');`;
         return code;
       }
       return null;
