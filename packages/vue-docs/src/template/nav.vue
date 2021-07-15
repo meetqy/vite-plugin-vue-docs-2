@@ -27,5 +27,7 @@ export default {
   },
 };
 </script>
-
-<style></style>
+<style>
+.a1626328426828 {
+}
+</style>

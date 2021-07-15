@@ -5,6 +5,7 @@ import DocsRoute from "./route";
 import { transformMain } from "./main";
 import path from "path";
 import * as fs from "fs";
+import route from "./route";
 
 // 可自定义的配置
 export interface UserConfig {
@@ -47,10 +48,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
         const routes = Route.toArray();
         code += `router.addRoute({
           path: '${config.base}',
-          component: import('${path.join(
-            process.cwd(),
-            "./node_modules/vite-plugin-vue-docs/dist/template/layout.vue"
-          )}'),
+          component: import("vite-plugin-vue-docs/dist/template/layout.vue"),
           props: {
             content: {
               nav: ${JSON.stringify(routes)}
@@ -61,10 +59,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
               const result = transformMain(fs.readFileSync(item.file, "utf-8"));
               return `{ 
                 path: '${item.path.replace(config.base + "/", "")}', 
-                component: import('${path.join(
-                  process.cwd(),
-                  "./node_modules/vite-plugin-vue-docs/dist/template/content.vue"
-                )}'),
+                component: import("vite-plugin-vue-docs/dist/template/content.vue"),
                 props: {
                   content: ${JSON.stringify(result?.content)}
                 }
@@ -72,17 +67,19 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
             })
             .join(",")}]
         });`;
+
         code += `const reloadPath = localStorage.getItem('vue-docs-reload-path');
         reloadPath ? router.push(reloadPath) : router.push('${config.base}');`;
         return code;
       }
+
       return null;
     },
 
     config() {
       return {
         server: {
-          // open: config.open ? config.base : false,
+          open: config.open ? config.base : false,
           force: true,
         },
       };
@@ -96,11 +93,34 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
         Route.add(item);
       });
 
+      function hmr(filename: string) {
+        const nav = path.join(
+          process.cwd(),
+          `./node_modules/vite-plugin-vue-docs/dist/template/${filename}.vue`
+        );
+
+        fs.writeFileSync(
+          nav,
+          fs
+            .readFileSync(nav, "utf-8")
+            .replace(/<style>.*?<\/style>/, `<style>.a${Date.now()}</style>`)
+        );
+      }
+
       //
       watcher
-        .on("add", (path) => Route.add(path))
-        .on("change", (path) => Route.change(path))
-        .on("unlink", (path) => Route.remove(path));
+        .on("add", (path) => {
+          Route.add(path);
+          hmr("nav");
+        })
+        .on("change", (path) => {
+          Route.change(path);
+          hmr("content");
+        })
+        .on("unlink", (path) => {
+          Route.remove(path);
+          hmr("nav");
+        });
     },
   };
 }
