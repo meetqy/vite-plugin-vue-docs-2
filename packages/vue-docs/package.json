@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "yarn tsup --watch & yarn watch:template",
-    "build": "rm -rf dist && yarn test && yarn tsup && yarn cp:template",
+    "build": "rm -rf dist && yarn tsup && yarn test && yarn cp:template",
     "tsup": "tsup src/index.ts --dts",
     "patch": "yarn build && npm version patch",
     "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template'",
