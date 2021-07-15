@@ -4,6 +4,7 @@ import fg from "fast-glob";
 import DocsRoute from "./route";
 import { transformMain } from "./main";
 import path from "path";
+import * as fs from "fs";
 
 // 可自定义的配置
 export interface UserConfig {
@@ -57,12 +58,17 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
           },
           children: [${routes
             .map((item) => {
+              const result = transformMain(fs.readFileSync(item.file, "utf-8"));
               return `{ 
                 path: '${item.path.replace("/docs/", "")}', 
                 component: import('${path.join(
                   process.cwd(),
                   "./node_modules/vite-plugin-vue-docs/dist/template/content.vue"
-                )}')}`;
+                )}'),
+                props: {
+                  content: ${JSON.stringify(result?.content)}
+                }
+              }`;
             })
             .join(",")}]
         });`;
