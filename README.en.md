@@ -95,9 +95,9 @@ export default {
 | Features                                                   | Status       |
 | ---------------------------------------------------------- | ------------ |
 | Packaged into a static web page                            | ⏳ Planning  |
-| Page jump history mode &#124;&#124; hash mode              | ⏳ Planning  |
 | Configurable document website                              | ⏳ Planning  |
-| Modified files are directly hot-updated without F5 refresh | ⏳ Planning  |
+| Page jump history mode &#124;&#124; hash mode              | 👷 Progressing  |
+| Modified files are directly hot-updated without F5 refresh | 🚀 Completed  |
 | Support parsing `slot`                                     | 🚀 Completed |
 | Support parsing `ref`                                      | 🚀 Completed |
 | Support `defineComponent()` writing method                 | 🚀 Completed |

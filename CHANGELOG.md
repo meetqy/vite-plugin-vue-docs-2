@@ -3,6 +3,12 @@
 ### Feature
 
 * 新增`transformMain`方法,可将vue转换为html文档
+* `hmr`文件改动无需 `F5`刷新
+
+### Perf
+
+* `hbs`模板改为`vue`模板
+* 服务器控制路由改为`vue-router`
 
 # v0.0.11, v0.1.0
 

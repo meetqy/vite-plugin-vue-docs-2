@@ -62,7 +62,6 @@
     "cheerio": "^1.0.0-rc.10",
     "comment-parser": "^1.1.5",
     "fast-glob": "^3.2.7",
-    "handlebars": "^4.7.7",
     "humps": "^2.0.1",
     "vue-router": "4"
   },
