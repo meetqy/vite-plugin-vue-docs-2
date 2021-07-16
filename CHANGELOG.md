@@ -1,5 +1,9 @@
 # v0.1.4
 
+### Feature
+
+* 新增demo展示
+
 ### Perf
 
 * 优化`jest badge`生成

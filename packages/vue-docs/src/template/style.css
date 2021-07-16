@@ -1,5 +1,12 @@
 /* 样式来源: https://youzan.github.io/vant-weapp/#/home */
 
+.source-code {
+  margin-top: 24px;
+  width: 100%;
+  border-top: 1px solid #f5f5f5;
+  padding-top: 24px;
+}
+
 body {
   min-width: 1100px;
   overflow-x: auto;

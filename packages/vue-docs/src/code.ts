@@ -2,6 +2,9 @@ export function createContentCode(componentIs?: string): string | null {
   const demo = `<div class="card">
       <h3>Demo</h3>
       <component is="${componentIs}"></component>
+      <div class="source-code">
+        <p style="text-align: center"><span style="cursor: pointer">展开代码</span></p>
+      </div>
    </div>`;
 
   return `<section>
