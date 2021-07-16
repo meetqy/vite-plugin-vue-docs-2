@@ -59,7 +59,7 @@ class DocsRoute {
     routes.map((key) => {
       const name = key.split("/");
       arr.push({
-        path: "/docs" + key,
+        path: this.config.base + key,
         name: name[name.length - 1],
         file: this.route[key],
       });

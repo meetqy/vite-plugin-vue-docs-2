@@ -58,7 +58,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
             if (fs.existsSync(demoFile)) {
               code += `import ${demoComponentName} from '${demoFile}';`;
               code += `app.use(function(Vue) {
-                Vue.component('CuButtonDemo', CuButtonDemo)
+                Vue.component('${demoComponentName}', ${demoComponentName})
               });`;
             } else {
               demoComponentName = "";
@@ -79,7 +79,6 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
           })
           .join(",");
 
-        // component: import("vite-plugin-vue-docs/dist/template/content.vue"),
         code += `${config.vueRoute}.addRoute({
           path: '${config.base}',
           component: import("vite-plugin-vue-docs/dist/template/layout.vue"),
@@ -139,7 +138,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
         })
         .on("change", (path) => {
           Route.change(path);
-          hmr("content");
+          // hmr("content");
         })
         .on("unlink", (path) => {
           Route.remove(path);

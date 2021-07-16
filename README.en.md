@@ -78,18 +78,20 @@ export default {
 - 👷 means functions in progress
 - ⏳ means functions in planning
 
-| Features                                                   | Status       |
-| ---------------------------------------------------------- | ------------ |
-| Packaged into a static web page                            | ⏳ Planning  |
-| Configurable document website                              | ⏳ Planning  |
-| View examples online                              | ⏳ Planning  |
-| Page jump history mode &#124;&#124; hash mode              | 👷 Progressing  |
-| Modified files are directly hot-updated without F5 refresh | 🚀 Completed  |
-| Support parsing `slot`                                     | 🚀 Completed |
-| Support parsing `ref`                                      | 🚀 Completed |
-| Support `defineComponent()` writing method                 | 🚀 Completed |
-| Support `type` multiple types                              | 🚀 Completed |
-| Automatically generate routing                             | 🚀 Completed |
+| Features                                                   | Status         |
+| ---------------------------------------------------------- | -------------- |
+| Packaged into a static web page                            | ⏳ Planning    |
+| Configurable document website                              | ⏳ Planning    |
+| View examples online                                       | ⏳ Planning    |
+| Compatible`组合式API`                                      | ⏳ Planning    |
+| Compatible`<script setup>`                                 | ⏳ Planning    |
+| Page jump history mode &#124;&#124; hash mode              | 👷 Progressing |
+| Modified files are directly hot-updated without F5 refresh | 🚀 Completed   |
+| Support parsing `slot`                                     | 🚀 Completed   |
+| Support parsing `ref`                                      | 🚀 Completed   |
+| Support `defineComponent()` writing method                 | 🚀 Completed   |
+| Support `type` multiple types                              | 🚀 Completed   |
+| Automatically generate routing                             | 🚀 Completed   |
 
 ## changlog
 

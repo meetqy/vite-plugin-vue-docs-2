@@ -18,7 +18,6 @@ vite 插件 - 自动生成 vue 组件文档
 - ui 采用了<a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>的样式
 - 核心方法覆盖率达到了 92.86%
 
-
 ## 使用
 
 使用方式参考 [@vue-docs/example](./packages/example/README.md)
@@ -36,14 +35,13 @@ yarn dev
 
 ## 语法
 
-* `emits`,`props`，在vue中有对应的写法，所以只需要在写法上加上注释，插件就会自动解析。
-* `slots`也是自动生成，如需增加说明，只需在`<slot>`标签的上一行增加注释。
+- `emits`,`props`，在 vue 中有对应的写法，所以只需要在写法上加上注释，插件就会自动解析。
+- `slots`也是自动生成，如需增加说明，只需在`<slot>`标签的上一行增加注释。
 
 ### ref
 
-`ref` 一般调用的是methods当中的某一些方法，所以需要在方法上面加上`@vue-docs-ref`标识，并使用多行注释的方式。
-注释规范参照[JavaScript编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
-
+`ref` 一般调用的是 methods 当中的某一些方法，所以需要在方法上面加上`@vue-docs-ref`标识，并使用多行注释的方式。
+注释规范参照[JavaScript 编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
 
 ```js
 export default {
@@ -76,7 +74,7 @@ export default {
 
 ## 计划
 
-- 🚀 表示已经实现的功能 
+- 🚀 表示已经实现的功能
 - 👷 表示进行中的功能
 - ⏳ 表示规划中的功能
 
@@ -84,7 +82,9 @@ export default {
 | -------------------------------------------- | --------- |
 | 打包成静态网页                               | ⏳ 规划中 |
 | 可配置文档网站                               | ⏳ 规划中 |
-| 在线查看实例                               | ⏳ 规划中 |
+| 在线查看实例                                 | ⏳ 规划中 |
+| 兼容组合式 API                               | ⏳ 规划中 |
+| 兼容`<script setup>`                         | ⏳ 规划中 |
 | 页面跳转 history 模式 &#124;&#124; hash 模式 | 👷 进行中 |
 | 修改文件直接热更新，无须 F5 刷新             | 🚀 已完成 |
 | 支持解析`slot`                               | 🚀 已完成 |
