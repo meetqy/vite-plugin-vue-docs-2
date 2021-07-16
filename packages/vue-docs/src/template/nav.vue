@@ -1,5 +1,5 @@
 <template>
-  <div class="van-doc-nav" style="top: 64px; bottom: 0px">
+  <div class="van-doc-nav" style="top: 64px; bottom: 0">
     <div class="van-doc-nav__group">
       <div class="van-doc-nav__title">项目名称</div>
       <div class="van-doc-nav__item" v-for="item in navs" :key="item.path">

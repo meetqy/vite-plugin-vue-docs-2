@@ -1,4 +1,5 @@
-<template>
+export function createContentCode(): string | null {
+  return `<template>
   <section>
     <h1>{{ content.name }}</h1>
     <template v-for="type in ['props', 'emits', 'methods']" :key="type">
@@ -40,3 +41,5 @@ export default {
   },
 };
 </script>
+`;
+}

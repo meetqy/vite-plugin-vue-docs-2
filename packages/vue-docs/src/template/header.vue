@@ -15,7 +15,7 @@
               <img src="https://b.yzcdn.cn/vant/logo/github.svg" alt="" />
             </a>
 
-            <a href="van-doc-header__link"> 更新日志 </a>
+            <a class="van-doc-header__link"> 更新日志 </a>
           </li>
         </ul>
       </div>

@@ -2,7 +2,7 @@
 
 ![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)
 ![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
-![jest coverage](./packages/vue-docs/badges/badge-statements.svg)
+![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
 
 vite plugin-automatically generate vue component documentation
 
@@ -28,6 +28,7 @@ For usage, refer to [@vue docs/example](./packages/example/README.md)
 
 ```shell
 git clone https://github.com/meetqy/vite-plugin-vue-docs.git
+yarn
 yarn setup
 yarn dev
 ```
@@ -81,6 +82,7 @@ export default {
 | ---------------------------------------------------------- | ------------ |
 | Packaged into a static web page                            | ⏳ Planning  |
 | Configurable document website                              | ⏳ Planning  |
+| View examples online                              | ⏳ Planning  |
 | Page jump history mode &#124;&#124; hash mode              | 👷 Progressing  |
 | Modified files are directly hot-updated without F5 refresh | 🚀 Completed  |
 | Support parsing `slot`                                     | 🚀 Completed |

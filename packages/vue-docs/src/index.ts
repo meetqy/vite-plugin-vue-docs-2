@@ -5,7 +5,6 @@ import DocsRoute from "./route";
 import { transformMain } from "./main";
 import path from "path";
 import * as fs from "fs";
-import route from "./route";
 
 // 可自定义的配置
 export interface UserConfig {
@@ -95,6 +94,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
         Route.add(item);
       });
 
+      // 原理: 更新template里面的内容，可以触发vue-router的hmr
       function hmr(filename: string) {
         const nav = path.join(
           process.cwd(),

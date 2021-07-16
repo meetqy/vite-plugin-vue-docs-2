@@ -2,7 +2,7 @@
 
 ![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)
 ![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
-![jest coverage](./packages/vue-docs/badges/badge-statements.svg)
+![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
 
 vite 插件 - 自动生成 vue 组件文档
 
@@ -29,6 +29,7 @@ vite 插件 - 自动生成 vue 组件文档
 
 ```shell
 git clone https://github.com/meetqy/vite-plugin-vue-docs.git
+yarn
 yarn setup
 yarn dev
 ```
@@ -83,6 +84,7 @@ export default {
 | -------------------------------------------- | --------- |
 | 打包成静态网页                               | ⏳ 规划中 |
 | 可配置文档网站                               | ⏳ 规划中 |
+| 在线查看实例                               | ⏳ 规划中 |
 | 页面跳转 history 模式 &#124;&#124; hash 模式 | 👷 进行中 |
 | 修改文件直接热更新，无须 F5 刷新             | 🚀 已完成 |
 | 支持解析`slot`                               | 🚀 已完成 |

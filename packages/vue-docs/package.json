@@ -16,7 +16,8 @@
     "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template'",
     "cp:template": "copyfiles -f src/template/* dist/template",
     "test:dev": "jest --watch",
-    "test": "jest --coverage && jest-coverage-badges --output './badges'"
+    "test": "jest --coverage && yarn make-badges",
+    "make-badges": "istanbul-badges-readme --readmeDir='../../'"
   },
   "repository": {
     "type": "git",
@@ -44,8 +45,8 @@
     "@types/node": "^15.12.5",
     "babel-jest": "^27.0.6",
     "copyfiles": "^2.4.1",
+    "istanbul-badges-readme": "^1.4.0",
     "jest": "^27.0.6",
-    "jest-coverage-badges": "^1.1.2",
     "nodemon": "^2.0.9",
     "tsup": "^4.12.0",
     "typescript": "^4.3.4",
@@ -67,9 +68,7 @@
   },
   "jest": {
     "coverageReporters": [
-      "json-summary",
-      "text",
-      "lcov"
+      "json-summary"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
