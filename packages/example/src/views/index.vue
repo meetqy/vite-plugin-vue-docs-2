@@ -1,14 +1,14 @@
 <template>
   <div>
-    <HelloWorld name="12313" normal="21321"></HelloWorld>
+    <cu-button>这是一个Button</cu-button>
   </div>
 </template>
 
 <script>
-import HelloWorld from "../components/HelloWorld.vue";
+import CuButton from "../components/CuButton.vue";
 export default {
   name: "index",
-  components: { HelloWorld },
+  components: { CuButton },
 };
 </script>
 

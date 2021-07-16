@@ -5,6 +5,8 @@ import DocsRoute from "./route";
 import { transformMain } from "./main";
 import path from "path";
 import * as fs from "fs";
+import { createContentCode } from "./code";
+import { toPascalCase } from "./utils";
 
 // 可自定义的配置
 export interface UserConfig {
@@ -48,6 +50,36 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
     transform(code, id) {
       if (id.endsWith("main.ts")) {
         const routes = Route.toArray();
+
+        const childrenCode = routes
+          .map((item) => {
+            const demoFile = item.file.replace(".vue", ".demo.vue");
+            let demoComponentName = toPascalCase(item.name + "-demo");
+            if (fs.existsSync(demoFile)) {
+              code += `import ${demoComponentName} from '${demoFile}';`;
+              code += `app.use(function(Vue) {
+                Vue.component('CuButtonDemo', CuButtonDemo)
+              });`;
+            } else {
+              demoComponentName = "";
+            }
+
+            const result = transformMain(fs.readFileSync(item.file, "utf-8"));
+            return `{ 
+              path: '${item.path.replace(config.base + "/", "")}', 
+              component: {
+                template: \`${createContentCode(`${demoComponentName}`)}\`,
+                data() {
+                  return {
+                    content: ${JSON.stringify(result?.content)}
+                  }
+                }
+              },
+            }`;
+          })
+          .join(",");
+
+        // component: import("vite-plugin-vue-docs/dist/template/content.vue"),
         code += `${config.vueRoute}.addRoute({
           path: '${config.base}',
           component: import("vite-plugin-vue-docs/dist/template/layout.vue"),
@@ -56,18 +88,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
               nav: ${JSON.stringify(routes)}
             }
           },
-          children: [${routes
-            .map((item) => {
-              const result = transformMain(fs.readFileSync(item.file, "utf-8"));
-              return `{ 
-                path: '${item.path.replace(config.base + "/", "")}', 
-                component: import("vite-plugin-vue-docs/dist/template/content.vue"),
-                props: {
-                  content: ${JSON.stringify(result?.content)}
-                }
-              }`;
-            })
-            .join(",")}]
+          children: [${childrenCode}]
         });`;
 
         code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)})`;
@@ -91,7 +112,9 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
 
       const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
       files.map((item) => {
-        Route.add(item);
+        if (!item.includes("demo")) {
+          Route.add(item);
+        }
       });
 
       // 原理: 更新template里面的内容，可以触发vue-router的hmr

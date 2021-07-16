@@ -7,3 +7,7 @@ export function toLine(str: string): string {
     })
     .replace(/^\/-/, "/");
 }
+
+export function toPascalCase(str: string): string {
+  return humps.pascalize(str);
+}

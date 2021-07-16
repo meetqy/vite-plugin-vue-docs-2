@@ -1,8 +1,15 @@
-export function createContentCode(): string | null {
-  return `<template>
-  <section>
+export function createContentCode(componentIs?: string): string | null {
+  const demo = `<div class="card">
+      <h3>Demo</h3>
+      <component is="${componentIs}"></component>
+   </div>`;
+
+  return `<section>
     <h1>{{ content.name }}</h1>
-    <template v-for="type in ['props', 'emits', 'methods']" :key="type">
+    
+    ${componentIs ? demo : ""}
+    
+    <template v-for="type in ['props', 'emits', 'slots', 'methods']" :key="type">
       <div class="card" v-if="content[type]">
         <h3>{{ content[type].h3 }}</h3>
         <table>
@@ -31,15 +38,5 @@ export function createContentCode(): string | null {
       </div>
     </template>
   </section>
-</template>
-
-<script>
-export default {
-  name: "CustomContent",
-  props: {
-    content: Object,
-  },
-};
-</script>
 `;
 }

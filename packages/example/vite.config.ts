@@ -8,4 +8,9 @@ export default defineConfig({
     host: "0.0.0.0",
   },
   plugins: [vue(), vueDocs()],
+  resolve: {
+    alias: {
+      vue: "vue/dist/vue.esm-bundler.js",
+    },
+  },
 });
