@@ -1,6 +1,7 @@
 <template>
   <div>
     <router-link to="/setup">setup</router-link>
+    <router-link to="/docs">to docs</router-link>
     <router-view></router-view>
   </div>
 </template>
