@@ -5,7 +5,7 @@
 ![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
 [![example deploy](https://github.com/meetqy/vite-plugin-vue-docs/actions/workflows/deploy.yml/badge.svg)](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
-vite 插件 - 自动生成 vue 组件文档
+解析`.vue`文件，自动生成对应文档。
 
 [在线体验](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
@@ -13,7 +13,7 @@ vite 插件 - 自动生成 vue 组件文档
 
 ![preview](./preview.png)
 
-## 特点
+## 优势
 
 - 支持热更新
 - 快速启动，依赖于 vite，无需另起服务

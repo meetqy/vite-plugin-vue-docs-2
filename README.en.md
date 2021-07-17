@@ -5,7 +5,7 @@
 ![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
 [![example deploy](https://github.com/meetqy/vite-plugin-vue-docs/actions/workflows/deploy.yml/badge.svg)](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
-vite plugin-automatically generate vue component documentation
+Parse `.vue` files and automatically generate corresponding documents.
 
 [Online Website](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
