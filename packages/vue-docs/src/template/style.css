@@ -45,6 +45,14 @@ a {
   text-decoration: none;
 }
 
+.van-doc {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+  z-index: 999;
+}
+
 .van-doc-row {
   width: 100%;
 }

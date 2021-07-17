@@ -3,6 +3,7 @@
 ### Bugfix
 
 * 修复 [#3, F5刷新返回首页](https://github.com/meetqy/vite-plugin-vue-docs/issues/3) 
+* 修复 /docs页面被用户内容所覆盖
 
 # v0.1.4
 
