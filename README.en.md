@@ -1,10 +1,13 @@
 # vite-plugin-vue-docs
 
-![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)
+[![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)](https://www.npmjs.com/package/vite-plugin-vue-docs)
 ![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
 ![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
+[![example deploy](https://github.com/meetqy/vite-plugin-vue-docs/actions/workflows/deploy.yml/badge.svg)](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
 vite plugin-automatically generate vue component documentation
+
+[Online Website](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
 **English** | [中文](./README.md)
 
@@ -15,6 +18,7 @@ vite plugin-automatically generate vue component documentation
 - Support hot update
 - Quick start, rely on vite, no need to start another service
 - Automatically generated component navigation
+- `Demo` View online 
 - ui adopts the style of <a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>
 - Core method coverage reached 92.86%
 

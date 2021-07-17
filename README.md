@@ -1,10 +1,13 @@
 # vite-plugin-vue-docs
 
-![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)
+[![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)](https://www.npmjs.com/package/vite-plugin-vue-docs)
 ![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
 ![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
+[![example deploy](https://github.com/meetqy/vite-plugin-vue-docs/actions/workflows/deploy.yml/badge.svg)](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
 vite 插件 - 自动生成 vue 组件文档
+
+[在线体验](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
 [English](./README.md) | **中文**
 
@@ -15,6 +18,7 @@ vite 插件 - 自动生成 vue 组件文档
 - 支持热更新
 - 快速启动，依赖于 vite，无需另起服务
 - 自动生成组件导航
+- `Demo`在线查看
 - ui 采用了<a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>的样式
 - 核心方法覆盖率达到了 92.86%
 
