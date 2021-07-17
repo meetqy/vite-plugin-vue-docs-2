@@ -8,7 +8,7 @@
   },
   "scripts": {
     "setup": "lerna bootstrap && lerna link --force-local",
-    "clean": "lerna clean",
+    "clean": "lerna clean && rm -rf node_modules",
     "build": "lerna run build",
     "dev": "lerna run dev",
     "prepare": "husky install",

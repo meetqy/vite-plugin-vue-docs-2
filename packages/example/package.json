@@ -16,7 +16,7 @@
     "nodemon": "^2.0.7",
     "typescript": "^4.3.2",
     "vite": "^2.3.8",
-    "vite-plugin-vue-docs": "^0.0.8"
+    "vite-plugin-vue-docs": "^0.1.4"
   },
   "publishConfig": {
     "access": "public"

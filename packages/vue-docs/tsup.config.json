@@ -9,8 +9,8 @@
     "../package.json",
     "copyfiles",
     "fast-glob",
-    "@highlightjs/vue-plugin",
-    "highlight.js"
+    "highlight.js",
+    "vue3-highlightjs"
   ],
   "format": [
     "esm",

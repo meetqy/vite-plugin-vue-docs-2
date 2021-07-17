@@ -7,6 +7,7 @@ import path from "path";
 import * as fs from "fs";
 import { createContentRoute } from "./code";
 import { toPascalCase } from "./utils";
+import Pkg from "../package.json";
 
 // 可自定义的配置
 export interface UserConfig {
@@ -50,6 +51,11 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
     transform(code, id) {
       if (id.endsWith("main.ts")) {
         const routes = Route.toArray();
+
+        code += `import VueHighlightJS from 'vue3-highlightjs';
+        import 'highlight.js/styles/atom-one-light.css';`;
+
+        code += `app.use(VueHighlightJS);`;
 
         // content
         const childrenCode = routes
@@ -110,7 +116,13 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
     },
 
     async configureServer(server: ViteDevServer) {
-      const { watcher } = server;
+      const { watcher, httpServer } = server;
+
+      httpServer?.on("listening", () => {
+        setTimeout(() => {
+          console.log(`  ${Pkg.name} ${Pkg.version} route at: \n\n  /docs`);
+        });
+      });
 
       const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
       files.map((item) => {
