@@ -18,7 +18,7 @@ vite plugin-automatically generate vue component documentation
 - Support hot update
 - Quick start, rely on vite, no need to start another service
 - Automatically generated component navigation
-- `Demo` View online 
+- `Demo` View online
 - ui adopts the style of <a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>
 - Core method coverage reached 92.86%
 
@@ -82,19 +82,20 @@ export default {
 - 👷 means functions in progress
 - ⏳ means functions in planning
 
-| Features                                                   | Status         |
-| ---------------------------------------------------------- | -------------- |
-| Packaged into a static web page                            | ⏳ Planning    |
-| Configurable document website                              | ⏳ Planning    |
-| Compatible`<script setup>`                                 | ⏳ Planning    |
-| Page jump history mode &#124;&#124; hash mode              | 👷 Progressing |
-| View examples online                                       | 🚀 Completed    |
-| Modified files are directly hot-updated without F5 refresh | 🚀 Completed   |
-| Support parsing `slot`                                     | 🚀 Completed   |
-| Support parsing `ref`                                      | 🚀 Completed   |
-| Support `defineComponent()` writing method                 | 🚀 Completed   |
-| Support `type` multiple types                              | 🚀 Completed   |
-| Automatically generate routing                             | 🚀 Completed   |
+| Features                                                   | Status       |
+| ---------------------------------------------------------- | ------------ |
+| Packaged into a static web page                            | ⏳ Planning  |
+| Configurable document website                              | ⏳ Planning  |
+| Compatible`<script setup>`                                 | ⏳ Planning  |
+| View source code                                           | ⏳ Planning  |
+| Page jump history mode &#124;&#124; hash mode              | 🚀 Completed |
+| View examples online                                       | 🚀 Completed |
+| Modified files are directly hot-updated without F5 refresh | 🚀 Completed |
+| Support parsing `slot`                                     | 🚀 Completed |
+| Support parsing `ref`                                      | 🚀 Completed |
+| Support `defineComponent()` writing method                 | 🚀 Completed |
+| Support `type` multiple types                              | 🚀 Completed |
+| Automatically generate routing                             | 🚀 Completed |
 
 ## changlog
 
