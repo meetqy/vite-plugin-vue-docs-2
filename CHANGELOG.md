@@ -3,6 +3,7 @@
 ### Perf
 
 * `example`在线部署
+* 在线demo查看代码美化
 
 ### Bugfix
 
