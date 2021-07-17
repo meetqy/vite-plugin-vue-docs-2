@@ -1,6 +1,6 @@
 {
   "name": "@vue-docs/example",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "scripts": {
     "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec 'vite'",
     "serve": "vite preview"
