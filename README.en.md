@@ -82,9 +82,9 @@ export default {
 | ---------------------------------------------------------- | -------------- |
 | Packaged into a static web page                            | ⏳ Planning    |
 | Configurable document website                              | ⏳ Planning    |
-| View examples online                                       | ⏳ Planning    |
 | Compatible`组合式API`                                      | ⏳ Planning    |
 | Compatible`<script setup>`                                 | ⏳ Planning    |
+| View examples online                                       | 👷 Progressing    |
 | Page jump history mode &#124;&#124; hash mode              | 👷 Progressing |
 | Modified files are directly hot-updated without F5 refresh | 🚀 Completed   |
 | Support parsing `slot`                                     | 🚀 Completed   |
