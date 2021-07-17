@@ -10,11 +10,15 @@ export interface Route {
 class DocsRoute {
   route: { [key: string]: string };
   config: Config;
+  baseRoute: string;
   private static _instance: DocsRoute;
 
   private constructor(config: Config) {
     this.route = {};
     this.config = config;
+    this.baseRoute = this.config.viteConfig?.base
+      ? this.config.viteConfig?.base.replace(/\/$/, "") + this.config.base
+      : this.config.base;
   }
 
   static instance(config?: Config): DocsRoute {

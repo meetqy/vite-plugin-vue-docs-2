@@ -3,7 +3,7 @@
   "version": "0.1.4",
   "scripts": {
     "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec 'vite'",
-    "build": "vite build",
+    "build": "cross-env BASE_URL=/vite-plugin-vue-docs/ vite build",
     "serve": "vite preview"
   },
   "dependencies": {
@@ -14,6 +14,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",
     "@vue/compiler-sfc": "^3.0.5",
+    "cross-env": "^7.0.3",
     "nodemon": "^2.0.7",
     "typescript": "^4.3.2",
     "vite": "^2.3.8",

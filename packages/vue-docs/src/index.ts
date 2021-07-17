@@ -1,4 +1,4 @@
-import type { Plugin } from "vite";
+import type { Plugin, UserConfig } from "vite";
 import { ViteDevServer } from "vite";
 import fg from "fast-glob";
 import DocsRoute from "./route";
@@ -6,34 +6,34 @@ import { transformMain } from "./main";
 import path from "path";
 import * as fs from "fs";
 import { createContentRoute } from "./code";
-import { toPascalCase } from "./utils";
+import { getBaseUrl, toPascalCase } from "./utils";
 import Pkg from "../package.json";
 
 // 可自定义的配置
-export interface UserConfig {
+export interface CustomConfig {
   // 文档路由地址
-  base?: string;
+  base: string;
   // 组件路径 相对于 src
-  componentDir?: string;
+  componentDir: string;
   // 打开浏览器
   open?: boolean;
   // router实例名称
   vueRoute?: string;
+  // vite
+  viteConfig?: UserConfig;
 }
 
-export interface Config extends UserConfig {
+export interface Config extends CustomConfig {
   // 组件绝对路径
   root: string;
-
   // 组件正则匹配
   fileExp: RegExp;
 }
 
-export default function vueDocs(rawOptions?: UserConfig): Plugin {
+export default function vueDocs(rawOptions?: CustomConfig): Plugin {
   const config: Config = {
     base: "/docs",
     componentDir: "/components",
-    open: false,
     root: "",
     vueRoute: "router",
     fileExp: RegExp(""),
@@ -58,10 +58,10 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
       });
     },
 
-    config() {
+    config(viteConfig) {
+      config.viteConfig = viteConfig;
       return {
         server: {
-          open: config.open ? config.base : false,
           force: true,
         },
       };
@@ -130,7 +130,9 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
 
       httpServer?.on("listening", () => {
         setTimeout(() => {
-          console.log(`  ${Pkg.name} ${Pkg.version} route at: \n\n  /docs`);
+          console.log(
+            `  ${Pkg.name} ${Pkg.version} route at: \n\n  ${config.base} \n`
+          );
         });
       });
 
