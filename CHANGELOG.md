@@ -2,7 +2,7 @@
 
 ### Feature
 
-* 新增demo展示
+* 在线展示demo
 
 ### Perf
 
