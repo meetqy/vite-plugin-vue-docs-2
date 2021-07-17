@@ -5,7 +5,7 @@ import DocsRoute from "./route";
 import { transformMain } from "./main";
 import path from "path";
 import * as fs from "fs";
-import { createContentCode } from "./code";
+import { createContentRoute } from "./code";
 import { toPascalCase } from "./utils";
 
 // 可自定义的配置
@@ -55,7 +55,9 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
           .map((item) => {
             const demoFile = item.file.replace(".vue", ".demo.vue");
             let demoComponentName = toPascalCase(item.name + "-demo");
+            let demoComponentCode = "";
             if (fs.existsSync(demoFile)) {
+              demoComponentCode = fs.readFileSync(demoFile, "utf-8");
               code += `import ${demoComponentName} from '${demoFile}';`;
               code += `app.use(function(Vue) {
                 Vue.component('${demoComponentName}', ${demoComponentName})
@@ -65,17 +67,14 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
             }
 
             const result = transformMain(fs.readFileSync(item.file, "utf-8"));
-            return `{ 
-              path: '${item.path.replace(config.base + "/", "")}', 
-              component: {
-                template: \`${createContentCode(`${demoComponentName}`)}\`,
-                data() {
-                  return {
-                    content: ${JSON.stringify(result?.content)}
-                  }
-                }
-              },
-            }`;
+
+            return createContentRoute(
+              item,
+              config,
+              demoComponentName,
+              result?.content || null,
+              demoComponentCode
+            );
           })
           .join(",");
 

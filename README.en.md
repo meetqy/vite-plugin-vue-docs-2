@@ -84,8 +84,8 @@ export default {
 | Configurable document website                              | ⏳ Planning    |
 | Compatible`组合式API`                                      | ⏳ Planning    |
 | Compatible`<script setup>`                                 | ⏳ Planning    |
-| View examples online                                       | 👷 Progressing    |
 | Page jump history mode &#124;&#124; hash mode              | 👷 Progressing |
+| View examples online                                       | 🚀 Completed    |
 | Modified files are directly hot-updated without F5 refresh | 🚀 Completed   |
 | Support parsing `slot`                                     | 🚀 Completed   |
 | Support parsing `ref`                                      | 🚀 Completed   |

@@ -1,9 +1,44 @@
-export function createContentCode(componentIs?: string): string | null {
+import { Route } from "./route";
+import { Config } from "./index";
+import { RenderData } from "./type";
+
+// 创建组件详情路由
+export function createContentRoute(
+  route: Route,
+  config: Config,
+  componentIs: string,
+  content: RenderData | null,
+  sourceCode?: string
+): string {
+  return `{
+    path: '${route.path.replace(config.base + "/", "")}',
+    component: {
+      template: \`${createCode(componentIs, sourceCode)}\`,
+      data() {
+        return {
+          content: ${content && JSON.stringify(content)},
+          showSourceCode: false
+        }
+      },
+      methods: {
+        
+      }
+    }
+  }`;
+}
+
+function createCode(componentIs?: string, sourceCode?: string): string | null {
+  sourceCode = sourceCode?.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const demo = `<div class="card">
       <h3>Demo</h3>
       <component is="${componentIs}"></component>
+      <pre v-show="showSourceCode"><code class="language-vue">${sourceCode}</code></pre>
       <div class="source-code">
-        <p style="text-align: center"><span style="cursor: pointer">展开代码</span></p>
+        <p style="text-align: center">
+            <span style="cursor: pointer" @click="showSourceCode=!showSourceCode">
+                {{showSourceCode ? '收起' : '展开'}}代码
+            </span>
+        </p>
       </div>
    </div>`;
 
