@@ -5,6 +5,7 @@ import * as path from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/vite-plugin-vue-docs/",
   server: {
     host: "0.0.0.0",
   },
