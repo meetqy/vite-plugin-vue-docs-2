@@ -17,7 +17,7 @@ jobs:
         with:
             node-version: 14.x
 
-       yarn cache
+      # yarn cache
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn config get cacheFolder)"
@@ -30,15 +30,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - name: build exmaple
+        run: |
+          yarn
+          yarn setup
+          yarn build
 
-
-      - name: Merge main -> devlop
-        uses: devmasx/merge-branch@v1.3.1
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
-          type: now
-          from_branch: main
-          target_branch: devlop
-          github_token: ${{ github.token }}
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./packages/example/dist # The folder the action should deploy.
+
+
 
 
 
