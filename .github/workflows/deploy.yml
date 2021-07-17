@@ -41,6 +41,7 @@ jobs:
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: ./packages/example/dist # The folder the action should deploy.
+          clean: true
 
 
 
