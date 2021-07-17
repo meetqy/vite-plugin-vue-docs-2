@@ -32,7 +32,7 @@ function createCode(componentIs?: string, sourceCode?: string): string | null {
   const demo = `<div class="card">
       <h3>Demo</h3>
       <component is="${componentIs}"></component>
-      <pre v-highlightjs v-show="showSourceCode"><code style="border-radius: 20px;padding: 16px 20px" class="javascript">${sourceCode}</code></pre>
+      <pre v-highlightjs v-show="showSourceCode"><code style="display: inline-block;width: 100%;border-radius: 20px;padding: 16px 20px;box-sizing: border-box" class="javascript">${sourceCode}</code></pre>
       <div class="source-code">
         <p style="text-align: center">
             <span style="cursor: pointer" @click="showSourceCode=!showSourceCode">

@@ -1,9 +1,14 @@
 # v0.1.5
 
+### Perf
+
+* `example`在线部署
+
 ### Bugfix
 
 * 修复 [#3, F5刷新返回首页](https://github.com/meetqy/vite-plugin-vue-docs/issues/3) 
 * 修复 /docs页面被用户内容所覆盖
+* 修复 `vite build`打包没有路由
 
 # v0.1.4
 

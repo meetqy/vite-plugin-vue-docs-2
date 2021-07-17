@@ -48,6 +48,25 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
   return {
     name: "vite-plugin-vue-docs",
     enforce: "pre",
+
+    async buildStart() {
+      const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
+      files.map((item) => {
+        if (!item.includes("demo")) {
+          Route.add(item);
+        }
+      });
+    },
+
+    config() {
+      return {
+        server: {
+          open: config.open ? config.base : false,
+          force: true,
+        },
+      };
+    },
+
     transform(code, id) {
       if (id.endsWith("main.ts")) {
         const routes = Route.toArray();
@@ -106,15 +125,6 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
       return null;
     },
 
-    config() {
-      return {
-        server: {
-          open: config.open ? config.base : false,
-          force: true,
-        },
-      };
-    },
-
     async configureServer(server: ViteDevServer) {
       const { watcher, httpServer } = server;
 
@@ -122,13 +132,6 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
         setTimeout(() => {
           console.log(`  ${Pkg.name} ${Pkg.version} route at: \n\n  /docs`);
         });
-      });
-
-      const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
-      files.map((item) => {
-        if (!item.includes("demo")) {
-          Route.add(item);
-        }
       });
 
       // 原理: 更新template里面的内容，可以触发vue-router的hmr

@@ -3,6 +3,7 @@
   "version": "0.1.4",
   "scripts": {
     "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec 'vite'",
+    "build": "vite build",
     "serve": "vite preview"
   },
   "dependencies": {
