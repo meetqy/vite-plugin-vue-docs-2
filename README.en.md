@@ -82,7 +82,6 @@ export default {
 | ---------------------------------------------------------- | -------------- |
 | Packaged into a static web page                            | ⏳ Planning    |
 | Configurable document website                              | ⏳ Planning    |
-| Compatible`组合式API`                                      | ⏳ Planning    |
 | Compatible`<script setup>`                                 | ⏳ Planning    |
 | Page jump history mode &#124;&#124; hash mode              | 👷 Progressing |
 | View examples online                                       | 🚀 Completed    |

@@ -1,3 +1,9 @@
+# v0.1.5
+
+### Bugfix
+
+* 修复 [#3, F5刷新返回首页](https://github.com/meetqy/vite-plugin-vue-docs/issues/3) 
+
 # v0.1.4
 
 ### Feature

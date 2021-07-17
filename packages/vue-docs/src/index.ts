@@ -51,11 +51,14 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
       if (id.endsWith("main.ts")) {
         const routes = Route.toArray();
 
+        // content
         const childrenCode = routes
           .map((item) => {
             const demoFile = item.file.replace(".vue", ".demo.vue");
             let demoComponentName = toPascalCase(item.name + "-demo");
             let demoComponentCode = "";
+
+            // 导入demo
             if (fs.existsSync(demoFile)) {
               demoComponentCode = fs.readFileSync(demoFile, "utf-8");
               code += `import ${demoComponentName} from '${demoFile}';`;
@@ -78,9 +81,10 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
           })
           .join(",");
 
+        // layout
         code += `${config.vueRoute}.addRoute({
           path: '${config.base}',
-          component: import("vite-plugin-vue-docs/dist/template/layout.vue"),
+          component: () => import("vite-plugin-vue-docs/dist/template/layout.vue"),
           props: {
             content: {
               nav: ${JSON.stringify(routes)}
@@ -89,7 +93,7 @@ export default function vueDocs(rawOptions?: UserConfig): Plugin {
           children: [${childrenCode}]
         });`;
 
-        code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)})`;
+        code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)}, 50)`;
         return code;
       }
 

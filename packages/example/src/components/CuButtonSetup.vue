@@ -1,25 +1,41 @@
 <template>
   <div>
-    <button class="el-button" :class="`el-button--${type}`">
+    <button class="el-button" :class="`el-button--${type}`" @click="fun(type)">
       <!-- 文本内容 -->
       <slot></slot>
     </button>
   </div>
 </template>
 
-<script lang="ts" setup>
-import { defineProps } from "vue";
+<script lang="ts">
+import { defineComponent } from "vue";
 
-const props = defineProps({
-  // 尺寸
-  size: {
-    type: String,
-    default: "medium",
+export default defineComponent({
+  name: "CuButtonSetup",
+  emits: [
+    // 这是一个send
+    "send",
+  ],
+  props: {
+    // 尺寸
+    size: {
+      type: String,
+      default: "medium",
+    },
+    // 类型
+    type: {
+      type: String,
+      default: "default",
+    },
   },
-  // 类型
-  type: {
-    type: String,
-    default: "default",
+  setup(props, { emit }) {
+    function fun(type: string) {
+      emit("send", type);
+    }
+
+    return {
+      fun,
+    };
   },
 });
 </script>
