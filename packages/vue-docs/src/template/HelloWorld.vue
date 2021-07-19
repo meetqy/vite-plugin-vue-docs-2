@@ -32,7 +32,7 @@
       <p>解析<code>.vue</code>文件，自动生成对应文档。</p>
     </div>
     <div class="card">
-      <h3 id="you-shi">优势</h3>
+      <h3 id="you-shi">特点</h3>
       <ul>
         <li>支持热更新</li>
         <li>快速启动，依赖于 vite，无需另起服务</li>
