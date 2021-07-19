@@ -2,7 +2,7 @@ import { Route } from "./route";
 import { Config } from "./index";
 import { RenderData } from "./type";
 
-// 创建组件详情路由
+// 创建 组件详情 路由
 export function createContentRoute(
   route: Route,
   config: Config,
@@ -28,11 +28,15 @@ export function createContentRoute(
 }
 
 function createCode(componentIs?: string, sourceCode?: string): string | null {
-  sourceCode = sourceCode?.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  sourceCode = sourceCode
+    ?.replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/{/g, "&#123;")
+    .replace(/}/g, "&#125");
   const demo = `<div class="card">
       <h3>Demo</h3>
       <component is="${componentIs}"></component>
-      <pre v-highlightjs v-show="showSourceCode"><code style="display: inline-block;width: 100%;border-radius: 20px;padding: 16px 20px;box-sizing: border-box" class="javascript">${sourceCode}</code></pre>
+      <pre v-highlightjs v-show="showSourceCode"><code class="language-js">${sourceCode}</code></pre>
       <div class="source-code">
         <p style="text-align: center">
             <span style="cursor: pointer" @click="showSourceCode=!showSourceCode">
@@ -77,4 +81,22 @@ function createCode(componentIs?: string, sourceCode?: string): string | null {
     </template>
   </section>
 `;
+}
+
+export function createNavRoute(routes: Route[], config: Config): [] {
+  const nav = [];
+
+  if (config.showUse) {
+    nav.push({
+      data: [{ path: config.base, name: "README" }],
+      title: "使用指南",
+    });
+  }
+
+  nav.push({
+    data: routes,
+    title: "项目名称",
+  });
+
+  return nav;
 }

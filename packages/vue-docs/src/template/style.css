@@ -233,7 +233,8 @@ a {
 
 .van-doc-content li > code,
 .van-doc-content p > code,
-.van-doc-content table code {
+.van-doc-content table code,
+.van-doc-content a > code{
   display: inline;
   margin: 0 2px;
   padding: 2px 5px;
@@ -487,4 +488,78 @@ a {
   -webkit-transform: scaleY(0);
   transform: scaleY(0);
   opacity: 0;
+}
+code {
+  position: relative;
+  display: block;
+  padding: 16px 20px;
+  overflow-x: auto;
+  color: #58727e;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: 'Source Code Pro', 'Monaco', 'Inconsolata', monospace;
+  line-height: 26px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background-color: #f8f8f8;
+  border-radius: 20px;
+}
+pre {
+  margin: 20px 0 0;
+}
+pre + p {
+  margin-top: 20px;
+}
+
+.hljs-subst {
+  color: #58727e;
+}
+.hljs-string,
+.hljs-meta,
+.hljs-symbol,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-addition {
+  color: #4fc08d;
+}
+.hljs-comment,
+.hljs-quote {
+  color: #999;
+}
+.hljs-params,
+.hljs-keyword,
+.hljs-attribute {
+  color: #8080ff;
+}
+.hljs-deletion,
+.hljs-variable,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal,
+.hljs-bullet,
+.hljs-link {
+  color: #eb6f6f;
+}
+.hljs-attr,
+.hljs-selector-tag,
+.hljs-title,
+.hljs-section,
+.hljs-built_in,
+.hljs-doctag,
+.hljs-type,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-strong {
+  color: #4994df;
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.van-doc-intro {
+  padding-top: 20px;
+  text-align: center;
+}
+.van-doc-intro p {
+  margin-bottom: 20px;
 }

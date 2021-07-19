@@ -63,7 +63,6 @@
     "cheerio": "^1.0.0-rc.10",
     "comment-parser": "^1.1.5",
     "fast-glob": "^3.2.7",
-    "highlight.js": "^11.1.0",
     "humps": "^2.0.1",
     "vue-router": "4",
     "vue3-highlightjs": "^1.0.5"

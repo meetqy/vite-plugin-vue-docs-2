@@ -1,5 +1,5 @@
 import { Config } from "./index";
-import { toLine } from "./utils";
+import { getBaseUrl, toLine } from "./utils";
 
 export interface Route {
   name: string;
@@ -16,9 +16,7 @@ class DocsRoute {
   private constructor(config: Config) {
     this.route = {};
     this.config = config;
-    this.baseRoute = this.config.viteConfig?.base
-      ? this.config.viteConfig?.base.replace(/\/$/, "") + this.config.base
-      : this.config.base;
+    this.baseRoute = getBaseUrl(this.config);
   }
 
   static instance(config?: Config): DocsRoute {

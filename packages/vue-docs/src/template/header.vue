@@ -2,9 +2,9 @@
   <div class="van-doc-header">
     <div class="van-doc-row">
       <div class="van-doc-header__top">
-        <a class="van-doc-header__logo">
-          <span>Vue Docs</span>
-        </a>
+        <router-link class="van-doc-header__logo" to="/docs">
+          <span class="van-doc-header__logo"> Vue Docs </span>
+        </router-link>
         <ul class="van-doc-header__top-nav">
           <li class="van-doc-header__top-nav-item">
             <a

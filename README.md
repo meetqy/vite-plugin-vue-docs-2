@@ -13,7 +13,7 @@
 
 ![preview](./preview.png)
 
-## 优势
+### 优势
 
 - 支持热更新
 - 快速启动，依赖于 vite，无需另起服务
@@ -22,13 +22,45 @@
 - ui 采用了<a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>的样式
 - 核心方法覆盖率达到了 92.86%
 
-## 使用
+### 使用
 
-使用方式参考 [@vue-docs/example](./packages/example/README.md)
+#### 安装
 
-> ^0.1.3 依赖 `vue-router`
+```shell
+yarn add vite-plugin-vue-docs -D
+```
 
-## example
+#### 配置 vite-config.js
+
+```js
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueDocs from 'vite-plugin-vue-docs';
+
+export default defineConfig({
+    plugins: [vue(), vueDocs()],
+    resolve: {
+        alias: {
+            // 必须添加这一行，否则无法使用
+            vue: 'vue/dist/vue.esm-bundler.js',
+        },
+    },
+});
+```
+
+详细使用方法可参考 [@vue-docs/example](./packages/example/README.md)
+
+### config 配置参数
+
+| 参数         | 说用                                                         |
+| ------------ | ------------------------------------------------------------ |
+| base         | 文档路由地址                                                 |
+| componentDir | 组件路径 相对于 src                                          |
+| vueRoute     | router 实例名称, eg: `const route = createRoute()`填写 route |
+
+> ^0.1.3 依赖 _vue-router_
+
+### example
 
 ```shell
 git clone https://github.com/meetqy/vite-plugin-vue-docs.git
@@ -37,12 +69,12 @@ yarn setup
 yarn dev
 ```
 
-## 语法
+### 语法
 
 - `emits`,`props`，在 vue 中有对应的写法，所以只需要在写法上加上注释，插件就会自动解析。
 - `slots`也是自动生成，如需增加说明，只需在`<slot>`标签的上一行增加注释。
 
-### ref
+#### ref
 
 `ref` 一般调用的是 methods 当中的某一些方法，所以需要在方法上面加上`@vue-docs-ref`标识，并使用多行注释的方式。
 注释规范参照[JavaScript 编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
@@ -67,16 +99,16 @@ export default {
 };
 ```
 
-### 参数说明
+#### 参数说明
 
-| 名称          | 说明              | 必填      |
-| ------------- | ----------------- | --------- |
-| @vue-docs-ref | 通过`ref`调用标识 | **true**  |
-| @description  | 描述信息          | **false** |
-| @param        | 参数              | **false** |
-| @return       | 返回值            | **false** |
+| 名称          | 说明              | 必填    |
+| ------------- | ----------------- | ------- |
+| @vue-docs-ref | 通过`ref`调用标识 | _true_  |
+| @description  | 描述信息          | _false_ |
+| @param        | 参数              | _false_ |
+| @return       | 返回值            | _false_ |
 
-## 计划
+### 计划
 
 - 🚀 表示已经实现的功能
 - 👷 表示进行中的功能

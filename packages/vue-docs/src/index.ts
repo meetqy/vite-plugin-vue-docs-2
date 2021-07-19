@@ -5,8 +5,8 @@ import DocsRoute from "./route";
 import { transformMain } from "./main";
 import path from "path";
 import * as fs from "fs";
-import { createContentRoute } from "./code";
-import { getBaseUrl, toPascalCase } from "./utils";
+import { createContentRoute, createNavRoute } from "./code";
+import { toPascalCase } from "./utils";
 import Pkg from "../package.json";
 
 // 可自定义的配置
@@ -15,12 +15,10 @@ export interface CustomConfig {
   base: string;
   // 组件路径 相对于 src
   componentDir: string;
-  // 打开浏览器
-  open?: boolean;
   // router实例名称
   vueRoute?: string;
-  // vite
-  viteConfig?: UserConfig;
+  // 显示使用指南
+  showUse?: boolean;
 }
 
 export interface Config extends CustomConfig {
@@ -28,6 +26,8 @@ export interface Config extends CustomConfig {
   root: string;
   // 组件正则匹配
   fileExp: RegExp;
+  // vite
+  viteConfig?: UserConfig;
 }
 
 export default function vueDocs(rawOptions?: CustomConfig): Plugin {
@@ -37,6 +37,7 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     root: "",
     vueRoute: "router",
     fileExp: RegExp(""),
+    showUse: true,
     ...rawOptions,
   };
 
@@ -71,40 +72,45 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
       if (id.endsWith("main.ts")) {
         const routes = Route.toArray();
 
-        code += `import VueHighlightJS from 'vue3-highlightjs';
-        import 'highlight.js/styles/atom-one-light.css';`;
-
+        // VueHighlightJS
+        code += `import VueHighlightJS from 'vue3-highlightjs';`;
         code += `app.use(VueHighlightJS);`;
 
         // content
-        const childrenCode = routes
-          .map((item) => {
-            const demoFile = item.file.replace(".vue", ".demo.vue");
-            let demoComponentName = toPascalCase(item.name + "-demo");
-            let demoComponentCode = "";
+        const childrenCode = routes.map((item) => {
+          const demoFile = item.file.replace(".vue", ".demo.vue");
+          let demoComponentName = toPascalCase(item.name + "-demo");
+          let demoComponentCode = "";
 
-            // 导入demo
-            if (fs.existsSync(demoFile)) {
-              demoComponentCode = fs.readFileSync(demoFile, "utf-8");
-              code += `import ${demoComponentName} from '${demoFile}';`;
-              code += `app.use(function(Vue) {
+          // 导入demo
+          if (fs.existsSync(demoFile)) {
+            demoComponentCode = fs.readFileSync(demoFile, "utf-8");
+            code += `import ${demoComponentName} from '${demoFile}';`;
+            code += `app.use(function(Vue) {
                 Vue.component('${demoComponentName}', ${demoComponentName})
               });`;
-            } else {
-              demoComponentName = "";
-            }
+          } else {
+            demoComponentName = "";
+          }
 
-            const result = transformMain(fs.readFileSync(item.file, "utf-8"));
+          const result = transformMain(fs.readFileSync(item.file, "utf-8"));
 
-            return createContentRoute(
-              item,
-              config,
-              demoComponentName,
-              result?.content || null,
-              demoComponentCode
-            );
-          })
-          .join(",");
+          return createContentRoute(
+            item,
+            config,
+            demoComponentName,
+            result?.content || null,
+            demoComponentCode
+          );
+        });
+
+        if (config.showUse) {
+          // add HelloWorld
+          childrenCode.push(`{
+            path: '',
+            component: import("vite-plugin-vue-docs/dist/template/HelloWorld.vue")
+          }`);
+        }
 
         // layout
         code += `${config.vueRoute}.addRoute({
@@ -112,10 +118,10 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
           component: () => import("vite-plugin-vue-docs/dist/template/layout.vue"),
           props: {
             content: {
-              nav: ${JSON.stringify(routes)}
+              nav: ${JSON.stringify(createNavRoute(routes, config))}
             }
           },
-          children: [${childrenCode}]
+          children: [${childrenCode.join(",")}]
         });`;
 
         code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)}, 50)`;
