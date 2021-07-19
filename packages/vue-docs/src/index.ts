@@ -120,13 +120,13 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
           // add HelloWorld
           childrenCode.push(`{
             path: '',
-            component: import("vite-plugin-vue-docs/dist/template/HelloWorld.vue")
+            component: () => import("vite-plugin-vue-docs/dist/template/HelloWorld.vue")
           }`);
 
           // add ChangeLog
           childrenCode.push(`{
-            path: '/${config.base}/changelog',
-            component: import("vite-plugin-vue-docs/dist/template/ChangeLog.vue")
+            path: '${config.base}/changelog',
+            component: () => import("vite-plugin-vue-docs/dist/template/ChangeLog.vue")
           }`);
         }
 

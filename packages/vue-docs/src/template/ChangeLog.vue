@@ -2,6 +2,13 @@
   <section>
     <h1>更新日志</h1>
     <div class="card">
+      <h3 id="v0.1.7">v0.1.7</h3>
+      <h4 id="bugfix">Bugfix</h4>
+      <ul>
+        <li>修复<code>使用指南</code>内容区域打包后不显示</li>
+      </ul>
+    </div>
+    <div class="card">
       <h3 id="v0.1.6">v0.1.6</h3>
       <h4 id="feature">Feature</h4>
       <ul>
@@ -13,7 +20,7 @@
       <ul>
         <li><code>transformMain</code>方法改为<code>vueToJsonData</code></li>
       </ul>
-      <h4 id="bugfix">Bugfix</h4>
+      <h4 id="bugfix-1">Bugfix</h4>
       <ul>
         <li>修复 demo 代码中<code>{{}}</code>包裹的变量解析失败</li>
       </ul>
@@ -25,7 +32,7 @@
         <li><code>example</code>在线部署</li>
         <li>在线 demo 查看代码美化</li>
       </ul>
-      <h4 id="bugfix-1">Bugfix</h4>
+      <h4 id="bugfix-2">Bugfix</h4>
       <ul>
         <li>
           修复
@@ -53,7 +60,7 @@
     </div>
     <div class="card">
       <h3 id="v0.1.3">v0.1.3</h3>
-      <h4 id="bugfix-2">BugFix</h4>
+      <h4 id="bugfix-3">BugFix</h4>
       <ul>
         <li>修复路径跳转</li>
         <li>修复<code>vue-router</code>实例名称不为<code>router</code>报错</li>
@@ -74,7 +81,7 @@
     </div>
     <div class="card">
       <h3 id="v0.0.11-v0.1.0">v0.0.11, v0.1.0</h3>
-      <h4 id="bugfix-3">BugFix</h4>
+      <h4 id="bugfix-4">BugFix</h4>
       <ul>
         <li>修复<code>Cannot find module **</code>#2</li>
       </ul>
@@ -93,7 +100,7 @@
       <ul>
         <li>新增<code>Slot</code>解析</li>
       </ul>
-      <h4 id="bugfix-4">Bugfix</h4>
+      <h4 id="bugfix-5">Bugfix</h4>
       <ul>
         <li>修复开发环境 example 不能监听.hbs 模板文件改动</li>
         <li>修复组件名称不显示</li>
@@ -109,7 +116,7 @@
       <ul>
         <li>新增<code>ref method</code>解析</li>
       </ul>
-      <h4 id="bugfix-5">Bugfix</h4>
+      <h4 id="bugfix-6">Bugfix</h4>
       <ul>
         <li>fix: 终端文档端口号显示错误 #1</li>
       </ul>
@@ -120,7 +127,7 @@
     </div>
     <div class="card">
       <h3 id="v0.0.7">v0.0.7</h3>
-      <h4 id="bugfix-6">BugFix</h4>
+      <h4 id="bugfix-7">BugFix</h4>
       <ul>
         <li><code>Emits</code>模板渲染不显示</li>
         <li><code>ts</code>在传参时定义类型报错</li>
@@ -133,7 +140,7 @@
     </div>
     <div class="card">
       <h3 id="v0.0.6">v0.0.6</h3>
-      <h4 id="bugfix-7">Bugfix</h4>
+      <h4 id="bugfix-8">Bugfix</h4>
       <ul>
         <li>修复<code>props: {type: [string, number]}</code>解析失败 bug</li>
         <li>修复<code>emits: ["click"]</code>没写注释解析失败 bug</li>
@@ -172,7 +179,7 @@
         <li>类型解析支持多种类型 <code>name: [string, number]</code></li>
         <li>新增组件名称显示 <code>xxx-xxx</code></li>
       </ul>
-      <h4 id="bugfix-8">Bugfix</h4>
+      <h4 id="bugfix-9">Bugfix</h4>
       <ul>
         <li>index.d.ts 路径错误问题</li>
         <li>参数与变量名冲突导致报错</li>
@@ -193,7 +200,7 @@
         <li>新增可配置路由前缀</li>
         <li>可监听文件修改/新增/删除</li>
       </ul>
-      <h4 id="bugfix-9">Bugfix</h4>
+      <h4 id="bugfix-10">Bugfix</h4>
       <ul>
         <li>删除文件路由依然存在</li>
       </ul>
@@ -203,7 +210,7 @@
 
 <script>
 export default {
-  name: "ChangeLog.vue",
+  name: "ChangeLog",
 };
 </script>
 
