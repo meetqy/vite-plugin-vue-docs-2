@@ -1,1 +1,0 @@
-import{_ as n}from"./index.4d6710c7.js";import{c as t,a as o,w as s,r as a,o as e,b as r}from"./vendor.0823f3cd.js";const u={name:"index",components:{CuButton:n}},d=r("这是一个Button");u.render=function(n,r,u,c,f,i){const l=a("cu-button");return e(),t("div",null,[o(l,null,{default:s((()=>[d])),_:1})])};export default u;
