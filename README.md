@@ -7,7 +7,7 @@
 
 解析`.vue`文件，自动生成对应文档。
 
-[在线体验](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
+<a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='__blank'>在线体验</a>
 
 [English](./README.md) | **中文**
 
