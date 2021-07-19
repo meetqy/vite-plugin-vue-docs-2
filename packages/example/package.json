@@ -1,6 +1,6 @@
 {
   "name": "@vue-docs/example",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "scripts": {
     "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec 'vite'",
     "build": "cross-env BASE_URL=/vite-plugin-vue-docs/ vite build",
@@ -18,7 +18,7 @@
     "nodemon": "^2.0.7",
     "typescript": "^4.3.2",
     "vite": "^2.3.8",
-    "vite-plugin-vue-docs": "^0.1.6"
+    "vite-plugin-vue-docs": "^0.1.7"
   },
   "publishConfig": {
     "access": "public"
