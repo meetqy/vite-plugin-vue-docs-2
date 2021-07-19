@@ -7,7 +7,7 @@
 
 Parse `.vue` files and automatically generate corresponding documents.
 
-<a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='__blank'>在线体验</a>
+<a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
 
 **English** | [中文](./README.md)
 
