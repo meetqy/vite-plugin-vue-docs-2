@@ -1,6 +1,6 @@
 <template>
   <div class="van-doc">
-    <custom-header></custom-header>
+    <custom-header :header="header"></custom-header>
     <custom-nav :navs="content.nav"></custom-nav>
     <div class="van-doc-container van-doc-row">
       <div class="van-doc-content van-doc-content--common">
@@ -17,6 +17,10 @@ export default {
   components: { CustomNav, CustomHeader },
   props: {
     content: {
+      type: Object,
+      default: () => {},
+    },
+    header: {
       type: Object,
       default: () => {},
     },

@@ -1,9 +1,31 @@
 # vite-plugin-vue-docs
 
-[![npm version](https://img.shields.io/npm/v/vite-plugin-vue-docs)](https://www.npmjs.com/package/vite-plugin-vue-docs)
-![license](https://img.shields.io/npm/l/vite-plugin-vue-docs)
-![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
-[![example deploy](https://github.com/meetqy/vite-plugin-vue-docs/actions/workflows/deploy.yml/badge.svg)](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
+<p class="card-version">
+  <a
+    href="https://www.npmjs.com/package/vite-plugin-vue-docs"
+    target="_blank"
+    ><img
+      src="https://img.shields.io/npm/v/vite-plugin-vue-docs"
+      alt="npm version"
+  /></a>
+  <a href="javascript:"
+    ><img
+      src="https://img.shields.io/npm/l/vite-plugin-vue-docs"
+      alt="license"
+  /></a>
+  <a href="javascript:"
+    ><img
+      src="https://img.shields.io/badge/statements-79.66%25-red.svg"
+      alt="Statements"
+  /></a>
+  <a
+    href="https://meetqy.github.io/vite-plugin-vue-docs/#/docs"
+    target="_blank"
+    ><img
+      src="https://github.com/meetqy/vite-plugin-vue-docs/actions/workflows/deploy.yml/badge.svg"
+      alt="example deploy"
+  /></a>
+</p>
 
 解析`.vue`文件，自动生成对应文档。
 
@@ -33,18 +55,18 @@ yarn add vite-plugin-vue-docs -D
 #### 配置 vite-config.js
 
 ```js
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import vueDocs from 'vite-plugin-vue-docs';
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueDocs from "vite-plugin-vue-docs";
 
 export default defineConfig({
-    plugins: [vue(), vueDocs()],
-    resolve: {
-        alias: {
-            // 必须添加这一行，否则无法使用
-            vue: 'vue/dist/vue.esm-bundler.js',
-        },
+  plugins: [vue(), vueDocs()],
+  resolve: {
+    alias: {
+      // 必须添加这一行，否则无法使用
+      vue: "vue/dist/vue.esm-bundler.js",
     },
+  },
 });
 ```
 
@@ -52,11 +74,22 @@ export default defineConfig({
 
 ### config 配置参数
 
-| 参数         | 说用                                                         |
-| ------------ | ------------------------------------------------------------ |
-| base         | 文档路由地址                                                 |
-| componentDir | 组件路径 相对于 src                                          |
-| vueRoute     | router 实例名称, eg: `const route = createRoute()`填写 route |
+| 参数         | 说用                                                         | 默认值       |
+| ------------ | ------------------------------------------------------------ | ------------ |
+| base         | 文档路由地址                                                 | \/docs       |
+| componentDir | 组件路径 相对于 src                                          | \/components |
+| vueRoute     | router 实例名称, eg: `const route = createRoute()`填写 route | router       |
+| showUse      | 是否显示使用指南                                             | true         |
+| header       | 导航栏配置                                                   | ConfigHeader |
+
+#### header
+
+```js
+header: {
+  // 默认值为 当前packge.json中的name字段
+  title: "vue docs";
+}
+```
 
 > ^0.1.3 依赖 _vue-router_
 

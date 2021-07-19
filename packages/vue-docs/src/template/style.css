@@ -234,7 +234,7 @@ a {
 .van-doc-content li > code,
 .van-doc-content p > code,
 .van-doc-content table code,
-.van-doc-content a > code{
+.van-doc-content a > code {
   display: inline;
   margin: 0 2px;
   padding: 2px 5px;
@@ -461,6 +461,10 @@ a {
   display: inline-block;
   vertical-align: middle;
 }
+.van-doc-header__logo sub {
+  margin-left: 5px;
+  color: #fff;
+}
 .van-doc-header__logo img {
   width: 28px;
   margin-right: 12px;
@@ -497,7 +501,7 @@ code {
   color: #58727e;
   font-weight: 400;
   font-size: 14px;
-  font-family: 'Source Code Pro', 'Monaco', 'Inconsolata', monospace;
+  font-family: "Source Code Pro", "Monaco", "Inconsolata", monospace;
   line-height: 26px;
   white-space: pre-wrap;
   word-wrap: break-word;

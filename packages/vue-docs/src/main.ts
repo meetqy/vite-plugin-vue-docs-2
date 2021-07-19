@@ -13,7 +13,7 @@ import { toLine } from "./utils";
 import { Component, Emit, Method, Prop, RenderData } from "./type";
 
 // 返回code信息
-export function transformMain(
+export function vueToJsonData(
   code: string
 ): { content: RenderData; component: Component } | null {
   const { descriptor, errors } = parse(code);

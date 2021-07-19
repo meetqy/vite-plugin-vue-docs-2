@@ -2,7 +2,7 @@ import type { Plugin, UserConfig } from "vite";
 import { ViteDevServer } from "vite";
 import fg from "fast-glob";
 import DocsRoute from "./route";
-import { transformMain } from "./main";
+import { vueToJsonData } from "./main";
 import path from "path";
 import * as fs from "fs";
 import { createContentRoute, createNavRoute } from "./code";
@@ -19,6 +19,12 @@ export interface CustomConfig {
   vueRoute?: string;
   // 显示使用指南
   showUse?: boolean;
+  // header
+  header?: ConfigHeader;
+}
+
+interface ConfigHeader {
+  title?: string;
 }
 
 export interface Config extends CustomConfig {
@@ -31,6 +37,9 @@ export interface Config extends CustomConfig {
 }
 
 export default function vueDocs(rawOptions?: CustomConfig): Plugin {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const userPkg = require(`${process.cwd()}/package.json`);
+
   const config: Config = {
     base: "/docs",
     componentDir: "/components",
@@ -38,6 +47,9 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     vueRoute: "router",
     fileExp: RegExp(""),
     showUse: true,
+    header: {
+      title: userPkg.name,
+    },
     ...rawOptions,
   };
 
@@ -87,13 +99,13 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
             demoComponentCode = fs.readFileSync(demoFile, "utf-8");
             code += `import ${demoComponentName} from '${demoFile}';`;
             code += `app.use(function(Vue) {
-                Vue.component('${demoComponentName}', ${demoComponentName})
-              });`;
+              Vue.component('${demoComponentName}', ${demoComponentName})
+            });`;
           } else {
             demoComponentName = "";
           }
 
-          const result = transformMain(fs.readFileSync(item.file, "utf-8"));
+          const result = vueToJsonData(fs.readFileSync(item.file, "utf-8"));
 
           return createContentRoute(
             item,
@@ -110,6 +122,12 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
             path: '',
             component: import("vite-plugin-vue-docs/dist/template/HelloWorld.vue")
           }`);
+
+          // add ChangeLog
+          childrenCode.push(`{
+            path: '/${config.base}/changelog',
+            component: import("vite-plugin-vue-docs/dist/template/ChangeLog.vue")
+          }`);
         }
 
         // layout
@@ -117,6 +135,7 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
           path: '${config.base}',
           component: () => import("vite-plugin-vue-docs/dist/template/layout.vue"),
           props: {
+            header: ${JSON.stringify(config.header)},
             content: {
               nav: ${JSON.stringify(createNavRoute(routes, config))}
             }
@@ -174,4 +193,4 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
   };
 }
 
-export { transformMain };
+export { vueToJsonData };

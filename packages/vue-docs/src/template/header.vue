@@ -3,8 +3,9 @@
     <div class="van-doc-row">
       <div class="van-doc-header__top">
         <router-link class="van-doc-header__logo" to="/docs">
-          <span class="van-doc-header__logo"> Vue Docs </span>
+          <span>{{ header.title }} </span>
         </router-link>
+
         <ul class="van-doc-header__top-nav">
           <li class="van-doc-header__top-nav-item">
             <a
@@ -22,4 +23,10 @@
     </div>
   </div>
 </template>
-<script></script>
+<script>
+export default {
+  props: {
+    header: Object,
+  },
+};
+</script>

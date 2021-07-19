@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h1 style="margin-bottom: 0">vite-plugin-vue-docs</h1>
+    <h1>vite-plugin-vue-docs</h1>
     <p class="card-version">
       <a
         href="https://www.npmjs.com/package/vite-plugin-vue-docs"
@@ -80,16 +80,19 @@
           <tr>
             <th>参数</th>
             <th>说用</th>
+            <th>默认值</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>base</td>
             <td>文档路由地址</td>
+            <td>/docs</td>
           </tr>
           <tr>
             <td>componentDir</td>
             <td>组件路径 相对于 src</td>
+            <td>/components</td>
           </tr>
           <tr>
             <td>vueRoute</td>
@@ -97,9 +100,26 @@
               router 实例名称, eg: <code>const route = createRoute()</code>填写
               route
             </td>
+            <td>router</td>
+          </tr>
+          <tr>
+            <td>showUse</td>
+            <td>是否显示使用指南</td>
+            <td>true</td>
+          </tr>
+          <tr>
+            <td>header</td>
+            <td>导航栏配置</td>
+            <td>ConfigHeader</td>
           </tr>
         </tbody>
       </table>
+      <h4 id="header">header</h4>
+      <pre><code class="language-js">header: {
+  <span class="hljs-comment">// 默认值为 当前packge.json中的name字段</span>
+  <span class="hljs-attr">title</span>: <span class="hljs-string">'vue docs'</span>;
+}
+</code></pre>
       <blockquote>
         <p>^0.1.3 依赖 <em>vue-router</em></p>
       </blockquote>
@@ -199,6 +219,10 @@ export default {
   display: inline-block;
   height: 20px;
   margin: 3px;
+}
+
+h1 {
+  margin-bottom: 0 !important;
 }
 
 .card-version img {
