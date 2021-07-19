@@ -1,6 +1,6 @@
 {
   "name": "@vue-docs/website",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "scripts": {
     "serve": "vite preview"
   },
@@ -14,7 +14,7 @@
     "@vue/compiler-sfc": "^3.0.5",
     "codemirror": "^5.62.0",
     "vite": "^2.4.2",
-    "vite-plugin-vue-docs": "^0.1.5"
+    "vite-plugin-vue-docs": "^0.1.6"
   },
   "license": "MIT",
   "publishConfig": {
