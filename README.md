@@ -165,4 +165,4 @@ export default {
 
 ## changlog
 
-[版本日志](./CHANGELOG.md)
+[更新日志](https://meetqy.github.io/vite-plugin-vue-docs/#/docs/changelog)

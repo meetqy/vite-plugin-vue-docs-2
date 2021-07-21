@@ -99,4 +99,4 @@ export default {
 
 ## changlog
 
-[Version log](./CHANGELOG.md)
+[Version Log](https://meetqy.github.io/vite-plugin-vue-docs/#/docs/changelog)
