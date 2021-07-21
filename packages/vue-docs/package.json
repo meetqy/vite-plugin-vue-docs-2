@@ -10,14 +10,13 @@
   ],
   "scripts": {
     "dev": "yarn tsup --watch & yarn watch:template",
-    "build": "rm -rf dist && yarn tsup && yarn test && yarn cp:template",
+    "build": "rm -rf dist && yarn tsup && yarn test && yarn cp:template && yarn create:vue",
+    "create:vue": "node scripts/md.js",
     "tsup": "tsup src/index.ts --dts",
-    "patch": "yarn build && npm version patch",
     "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template'",
     "cp:template": "copyfiles -f src/template/* dist/template",
     "test:dev": "jest --watch",
-    "test": "jest --coverage && yarn make-badges",
-    "make-badges": "istanbul-badges-readme --readmeDir='../../'"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -45,12 +44,13 @@
     "@types/node": "^15.12.5",
     "babel-jest": "^27.0.6",
     "copyfiles": "^2.4.1",
-    "istanbul-badges-readme": "^1.4.0",
     "jest": "^27.0.6",
     "nodemon": "^2.0.9",
     "tsup": "^4.12.0",
     "typescript": "^4.3.4",
-    "vite": "^2.3.8"
+    "vite": "^2.3.8",
+    "highlight.js": "^10.3.2",
+    "markdown-it": "^12.1.0"
   },
   "peerDependencies": {
     "vite": "^2.3.8",

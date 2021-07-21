@@ -2,6 +2,10 @@
 
 ### v0.1.8
 
+#### Feature
+
+* 新增脚本更加`README`，`CHANGELOG`自动生成使用指南
+
 #### Perf
 
 * `example` 打包优化
