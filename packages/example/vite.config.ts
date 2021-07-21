@@ -16,4 +16,21 @@ export default defineConfig({
       "@": path.resolve(__dirname, "/src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("highlight.js")) {
+            if (id.includes("languages")) {
+              return `hljs-languages-${
+                id.split("languages/")[1].split(".js")[0]
+              }`;
+            } else {
+              return "hljs";
+            }
+          }
+        },
+      },
+    },
+  },
 });
