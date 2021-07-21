@@ -36,28 +36,28 @@ export interface RenderData {
     h3: string;
     table: {
       headers: string[];
-      rows: Prop.key[];
+      rows: Array[keyof Prop];
     };
   };
   emits?: {
     h3: string;
     table: {
       headers: string[];
-      rows: Emit.key[];
+      rows: Array[keyof Emit];
     };
   };
   methods?: {
     h3: string;
     table: {
       headers: string[];
-      rows: Method.key[];
+      rows: Array[keyof Emit];
     };
   };
   slots?: {
     h3: string;
     table: {
       headers: string[];
-      rows: Slot.key[];
+      rows: Array[keyof Slot];
     };
   };
 }
