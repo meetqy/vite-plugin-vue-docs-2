@@ -1,1 +1,2 @@
-**/*.d.ts
+packages/example/src/shims-vue.d.ts
+packages/example/src/vite-env.d.ts
