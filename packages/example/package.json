@@ -3,6 +3,7 @@
   "version": "0.1.7",
   "scripts": {
     "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec 'vite'",
+    "dev1": "vite",
     "build": "cross-env BASE_URL=/vite-plugin-vue-docs/ vite build",
     "serve": "vite preview"
   },
