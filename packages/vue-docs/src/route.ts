@@ -1,14 +1,23 @@
 import { Config } from "./index";
 import { getBaseUrl, toLine } from "./utils";
+import { RenderData } from "./type";
 
 export interface Route {
   name: string;
   path: string;
   file: string;
+  data?: RenderData | null;
+  demo?: Demo | null;
+}
+
+export interface Demo {
+  file: string;
+  name: string;
+  code?: string;
 }
 
 class DocsRoute {
-  route: { [key: string]: string };
+  route: { [key: string]: Route };
   config: Config;
   baseRoute: string;
   private static _instance: DocsRoute;
@@ -38,34 +47,39 @@ class DocsRoute {
     return null;
   }
 
-  add(file: string): void {
+  add(file: string, data?: RenderData, demo?: Demo | null): void {
     const routeName = this.getRouteNameByFile(file);
     if (routeName) {
-      this.route[routeName] = file;
+      const name = routeName.split("/");
+      this.route[routeName] = {
+        path: this.config.base + routeName,
+        name: name[name.length - 1],
+        file,
+        data,
+        demo,
+      };
     }
   }
 
-  change(file: string): void {
-    this.add(file);
+  change(file: string, data?: RenderData, demo?: Demo | null): void {
+    const routeName = this.getRouteNameByFile(file) || "";
+    const item = this.route[routeName];
+    if (item) {
+      data && (item.data = data);
+      demo && (item.demo = demo);
+    }
   }
 
-  get(routeName?: string): { [key: string]: string } | string {
+  get(routeName?: string): { [key: string]: Route } | Route {
     if (routeName) return this.route[routeName];
     return this.route;
   }
 
   toArray(): Route[] {
-    const routes = Object.keys(this.route);
-    const arr: Route[] = [];
-
-    routes.map((key) => {
-      const name = key.split("/");
-      arr.push({
-        path: this.config.base + key,
-        name: name[name.length - 1],
-        file: this.route[key],
-      });
-    });
+    const arr = [];
+    for (const key in this.route) {
+      arr.push(this.route[key]);
+    }
 
     return arr;
   }

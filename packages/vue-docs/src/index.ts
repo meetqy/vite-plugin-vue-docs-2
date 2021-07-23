@@ -1,11 +1,11 @@
-import type { Plugin, UserConfig } from "vite";
+import type { HmrContext, Plugin, UserConfig } from "vite";
 import { ViteDevServer } from "vite";
 import fg from "fast-glob";
-import DocsRoute from "./route";
+import DocsRoute, { Demo } from "./route";
 import { vueToJsonData } from "./main";
 import path from "path";
 import * as fs from "fs";
-import { createContentRoute, createNavRoute } from "./code";
+import { createNavRoute } from "./code";
 import { toPascalCase } from "./utils";
 import Pkg from "../package.json";
 
@@ -64,9 +64,20 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
 
     async buildStart() {
       const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
-      files.map((item) => {
-        if (!item.includes("demo")) {
-          Route.add(item);
+      files.map((file) => {
+        const demo: Demo = {
+          file: "",
+          name: "",
+        };
+        const routeName = Route.getRouteNameByFile(file) || "";
+        const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
+        if (!file.includes("demo")) {
+          demo.file = file.replace(".vue", ".demo.vue");
+          if (fs.existsSync(demo.file)) {
+            demo.name = toPascalCase(routeName.split("/")[1] + "-demo");
+          }
+
+          Route.add(file, result?.content, demo.name ? demo : null);
         }
       });
     },
@@ -83,37 +94,37 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     transform(code, id) {
       if (id.endsWith("main.ts")) {
         const routes = Route.toArray();
+        // 引入content
+        code += `import VueDocsContent from "vite-plugin-vue-docs/dist/template/content.vue";`;
+        code += `import Hoc from "vite-plugin-vue-docs/dist/template/hoc.js";`;
 
         // VueHighlightJS
         code += `import VueHighlightJS from 'vue3-highlightjs';`;
         code += `app.use(VueHighlightJS);`;
+        code += `const VueDocsData = {"name":"el-aside","slots":{"h3":"Slots","table":{"headers":["名称","说明","返回参数"],"rows":[["default","-","-"]]}},"props":{"h3":"Props","table":{"headers":["参数","说明","填"],"rows":[["width"," 你好","string","300px","false"]]}}};`;
 
         // content
         const childrenCode = routes.map((item) => {
-          const demoFile = item.file.replace(".vue", ".demo.vue");
-          let demoComponentName = toPascalCase(item.name + "-demo");
-          let demoComponentCode = "";
+          const { demo } = item;
 
           // 导入demo
-          if (fs.existsSync(demoFile)) {
-            demoComponentCode = fs.readFileSync(demoFile, "utf-8");
-            code += `import ${demoComponentName} from '${demoFile}';`;
+          if (demo && fs.existsSync(demo.file)) {
+            demo.code = fs.readFileSync(demo.file, "utf-8");
+            code += `import ${demo.name} from '${demo.file}';`;
             code += `app.use(function(Vue) {
-              Vue.component('${demoComponentName}', ${demoComponentName})
+              Vue.component('${demo.name}', ${demo.name})
             });`;
-          } else {
-            demoComponentName = "";
           }
 
-          const result = vueToJsonData(fs.readFileSync(item.file, "utf-8"));
-
-          return createContentRoute(
-            item,
-            config,
-            demoComponentName,
-            result?.content || null,
-            demoComponentCode
-          );
+          return `{
+            path: '${item.path.replace(config.base + "/", "")}',
+            component: () => Hoc(VueDocsContent),
+            props: {
+              content: VueDocsData,
+              componentIs: '${demo?.name || ""}',
+              demoCode: \`${demo?.code || ""}\`
+            }
+          }`;
         });
 
         if (config.showUse) {
@@ -150,6 +161,10 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
       return null;
     },
 
+    handleHotUpdate(ctx: HmrContext) {
+      console.log(ctx.modules);
+    },
+
     async configureServer(server: ViteDevServer) {
       const { watcher, httpServer } = server;
 
@@ -161,33 +176,18 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
         });
       });
 
-      // 原理: 更新template里面的内容，可以触发vue-router的hmr
-      function hmr(filename: string) {
-        const nav = path.join(
-          process.cwd(),
-          `./node_modules/vite-plugin-vue-docs/dist/template/${filename}.vue`
-        );
-
-        fs.writeFileSync(
-          nav,
-          fs
-            .readFileSync(nav, "utf-8")
-            .replace(/<style>.*?<\/style>/, `<style>.a${Date.now()}</style>`)
-        );
-      }
-
       watcher
         .on("add", (path) => {
-          Route.add(path);
-          hmr("nav");
+          const result = vueToJsonData(path);
+          Route.add(path, result?.content);
         })
         .on("change", (path) => {
-          Route.change(path);
-          // hmr("content");
+          const result = vueToJsonData(fs.readFileSync(path, "utf-8"));
+          console.log(JSON.stringify(result?.content));
+          Route.change(path, result?.content);
         })
         .on("unlink", (path) => {
           Route.remove(path);
-          hmr("nav");
         });
     },
   };
