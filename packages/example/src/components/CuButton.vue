@@ -11,7 +11,7 @@
 export default {
   name: "CuButton",
   props: {
-    // 尺寸
+    // 尺寸 123
     size: {
       type: String,
       default: "medium",
