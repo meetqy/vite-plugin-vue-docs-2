@@ -1,13 +1,13 @@
-import type { HmrContext, Plugin, UserConfig } from "vite";
+import type { Plugin, UserConfig } from "vite";
 import { ViteDevServer } from "vite";
 import fg from "fast-glob";
 import DocsRoute, { Demo } from "./route";
 import { vueToJsonData } from "./main";
-import path from "path";
 import * as fs from "fs";
 import { createNavRoute } from "./code";
 import { toPascalCase } from "./utils";
 import Pkg from "../package.json";
+import { hmrClient } from "./hmr";
 
 // 可自定义的配置
 export interface CustomConfig {
@@ -69,8 +69,9 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
           file: "",
           name: "",
         };
-        const routeName = Route.getRouteNameByFile(file) || "";
+        const routeName = Route.getRoutePathByFile(file) || "";
         const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
+
         if (!file.includes("demo")) {
           demo.file = file.replace(".vue", ".demo.vue");
           if (fs.existsSync(demo.file)) {
@@ -94,14 +95,9 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     transform(code, id) {
       if (id.endsWith("main.ts")) {
         const routes = Route.toArray();
-        // 引入content
-        code += `import VueDocsContent from "vite-plugin-vue-docs/dist/template/content.vue";`;
-        code += `import Hoc from "vite-plugin-vue-docs/dist/template/hoc.js";`;
-
         // VueHighlightJS
         code += `import VueHighlightJS from 'vue3-highlightjs';`;
         code += `app.use(VueHighlightJS);`;
-        code += `const VueDocsData = {"name":"el-aside","slots":{"h3":"Slots","table":{"headers":["名称","说明","返回参数"],"rows":[["default","-","-"]]}},"props":{"h3":"Props","table":{"headers":["参数","说明","填"],"rows":[["width"," 你好","string","300px","false"]]}}};`;
 
         // content
         const childrenCode = routes.map((item) => {
@@ -117,10 +113,11 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
           }
 
           return `{
-            path: '${item.path.replace(config.base + "/", "")}',
-            component: () => Hoc(VueDocsContent),
+            path: '${item.path.replace(/\//, "")}',
+            name: '${Route.getRouteNameByFile(item.file)}',
+            component: () => import("vite-plugin-vue-docs/dist/template/content.vue"),
             props: {
-              content: VueDocsData,
+              content: ${JSON.stringify(item.data)},
               componentIs: '${demo?.name || ""}',
               demoCode: \`${demo?.code || ""}\`
             }
@@ -154,19 +151,23 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
           children: [${childrenCode.join(",")}]
         });`;
 
-        code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)}, 50)`;
+        code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)}, 50);`;
+
+        // hmr
+        code += `if (import.meta.hot) {
+          ${hmrClient.update(config)};
+          ${hmrClient.add(config)};
+        }`;
+
         return code;
       }
 
       return null;
     },
 
-    handleHotUpdate(ctx: HmrContext) {
-      console.log(ctx.modules);
-    },
-
     async configureServer(server: ViteDevServer) {
-      const { watcher, httpServer } = server;
+      const { watcher, httpServer, ws } = server;
+      Route.initWs(server);
 
       httpServer?.on("listening", () => {
         setTimeout(() => {
@@ -176,18 +177,19 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
         });
       });
 
+      // hmr
       watcher
-        .on("add", (path) => {
-          const result = vueToJsonData(path);
-          Route.add(path, result?.content);
+        .on("add", (file) => {
+          const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
+
+          Route.add(file, result?.content);
         })
-        .on("change", (path) => {
-          const result = vueToJsonData(fs.readFileSync(path, "utf-8"));
-          console.log(JSON.stringify(result?.content));
-          Route.change(path, result?.content);
+        .on("change", (file) => {
+          const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
+          Route.change(file, result?.content);
         })
         .on("unlink", (path) => {
-          Route.remove(path);
+          console.log("remove", path);
         });
     },
   };

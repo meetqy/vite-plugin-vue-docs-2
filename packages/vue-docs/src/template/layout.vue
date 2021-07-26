@@ -1,7 +1,7 @@
 <template>
   <div class="van-doc">
     <custom-header :header="header"></custom-header>
-    <custom-nav :navs="content.nav"></custom-nav>
+    <custom-nav :navs="result.nav"></custom-nav>
     <div class="van-doc-container van-doc-row">
       <div class="van-doc-content van-doc-content--common">
         <router-view></router-view>
@@ -25,6 +25,21 @@ export default {
       default: () => {},
     },
   },
+
+  computed: {
+    result() {
+      const route = this.$route;
+      console.log(route);
+      if (route.params && route.params.content) {
+        return JSON.parse(route.params.content || {});
+      }
+
+      if (this.content) return this.content;
+
+      return {};
+    },
+  },
+
   data() {
     return {
       nav: [],

@@ -32,7 +32,12 @@ export function createNavRoute(
 
   // 组件路由
   nav.push({
-    data: routes,
+    data: routes.map((item) => {
+      return {
+        ...item,
+        path: base + item.path,
+      };
+    }),
     title: "组件",
   });
 

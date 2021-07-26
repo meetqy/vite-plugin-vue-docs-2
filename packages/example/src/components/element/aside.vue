@@ -9,7 +9,7 @@ export default {
   name: "ElAside",
   componentName: "ElAside",
   props: {
-    // 你好671212321
+    // 宽度12
     width: {
       type: String,
       default: "300px",

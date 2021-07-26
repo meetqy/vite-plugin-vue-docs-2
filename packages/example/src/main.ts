@@ -12,6 +12,25 @@ const router = createRouter({
 
 const app = createApp(App);
 
+if (import.meta.hot) {
+  import.meta.hot.on("special-add", (data) => {
+    console.log(data);
+    // router.addRoute("/docs", {
+    //   path,
+    //   name,
+    //   component: () => import("vite-plugin-vue-docs/dist/template/content.vue"),
+    //   props: {
+    //     content: JSON.stringify(content),
+    //   },
+    // });
+  });
+
+  import.meta.hot.on("special-remove", (data) => {
+    const { path } = data;
+    router.removeRoute(path);
+  });
+}
+
 app.use(router);
 
 app.mount("#app");
