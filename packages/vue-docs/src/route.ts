@@ -18,12 +18,6 @@ export interface Demo {
   code?: string;
 }
 
-enum wsType {
-  add,
-  update,
-  remove,
-}
-
 class DocsRoute {
   route: { [key: string]: Route };
   config: Config;

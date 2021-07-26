@@ -13,21 +13,24 @@ const router = createRouter({
 const app = createApp(App);
 
 if (import.meta.hot) {
-  import.meta.hot.on("special-add", (data) => {
-    console.log(data);
-    // router.addRoute("/docs", {
-    //   path,
-    //   name,
-    //   component: () => import("vite-plugin-vue-docs/dist/template/content.vue"),
-    //   props: {
-    //     content: JSON.stringify(content),
-    //   },
-    // });
+  import.meta.hot.on("special-remove", (data) => {
+    console.log("remove", data);
   });
 
-  import.meta.hot.on("special-remove", (data) => {
-    const { path } = data;
-    router.removeRoute(path);
+  import.meta.hot.on("special-add", (data) => {
+    console.log("add", data);
+  });
+
+  import.meta.hot.on("special-update", (data) => {
+    console.log("update", data);
+    const { path, name } = data;
+    router.push({
+      path,
+      name,
+      params: {
+        content: JSON.stringify(data),
+      },
+    });
   });
 }
 

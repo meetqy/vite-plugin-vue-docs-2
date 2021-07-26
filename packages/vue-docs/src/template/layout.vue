@@ -1,7 +1,7 @@
 <template>
   <div class="van-doc">
     <custom-header :header="header"></custom-header>
-    <custom-nav :navs="result.nav"></custom-nav>
+    <custom-nav :navs="result"></custom-nav>
     <div class="van-doc-container van-doc-row">
       <div class="van-doc-content van-doc-content--common">
         <router-view></router-view>
@@ -16,7 +16,7 @@ import CustomHeader from "./header.vue";
 export default {
   components: { CustomNav, CustomHeader },
   props: {
-    content: {
+    routes: {
       type: Object,
       default: () => {},
     },
@@ -29,12 +29,11 @@ export default {
   computed: {
     result() {
       const route = this.$route;
-      console.log(route);
-      if (route.params && route.params.content) {
-        return JSON.parse(route.params.content || {});
+      if (route.params && route.params.routes) {
+        return JSON.parse(route.params.routes || {});
       }
 
-      if (this.content) return this.content;
+      if (this.routes) return this.routes;
 
       return {};
     },

@@ -94,6 +94,7 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
 
     transform(code, id) {
       if (id.endsWith("main.ts")) {
+        console.log("transform", id);
         const routes = Route.toArray();
         // VueHighlightJS
         code += `import VueHighlightJS from 'vue3-highlightjs';`;
@@ -141,12 +142,11 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
         // layout
         code += `${config.vueRoute}.addRoute({
           path: '${config.base}',
+          name: "docs",
           component: () => import("vite-plugin-vue-docs/dist/template/layout.vue"),
           props: {
             header: ${JSON.stringify(config.header)},
-            content: {
-              nav: ${JSON.stringify(createNavRoute(routes, config))}
-            }
+            routes: ${JSON.stringify(createNavRoute(routes, config))}
           },
           children: [${childrenCode.join(",")}]
         });`;
@@ -154,10 +154,9 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
         code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)}, 50);`;
 
         // hmr
-        code += `if (import.meta.hot) {
-          ${hmrClient.update(config)};
-          ${hmrClient.add(config)};
-        }`;
+        // code += `if (import.meta.hot) {
+        //   ${hmrClient.update(config)};
+        // }`;
 
         return code;
       }
@@ -188,8 +187,8 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
           const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
           Route.change(file, result?.content);
         })
-        .on("unlink", (path) => {
-          console.log("remove", path);
+        .on("unlink", (file) => {
+          Route.remove(file);
         });
     },
   };

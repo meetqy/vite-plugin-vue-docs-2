@@ -43,12 +43,16 @@ export const hmrServer = {
 export const hmrClient = {
   update(config: Config): string {
     return `import.meta.hot.on("special-update", (data) => {
-      const { content, name, path } = data;
+      const { content, name, path, routes } = data;
       ${config.vueRoute}.push({
         path,
         name,
         params: {
-          content: JSON.stringify(content),
+          content: JSON.stringify({
+            name,
+            path,
+            content,
+          }),
         },
       });
     })`;
@@ -57,8 +61,8 @@ export const hmrClient = {
   add(config: Config): string {
     return `import.meta.hot.on("special-add", (data) => {
         const { content, name, path } = data;
-        ${config.vueRoute}.addRoute("/docs", {
-          path,
+        ${config.vueRoute}.addRoute("docs", {
+          path: path.replace(/\\//, ''),
           name,
           component: () => import("vite-plugin-vue-docs/dist/template/content.vue"),
           params: {
@@ -66,7 +70,7 @@ export const hmrClient = {
           },
         });
         
-        setTimeout(() => {${config.vueRoute}.push('/docs')}, 50);
+        setTimeout(() => {${config.vueRoute}.push('${config.base}'+path)}, 50);
       })`;
   },
 
