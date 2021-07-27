@@ -122,9 +122,9 @@ class DocsRoute {
     return this.route;
   }
 
-  change(file: string) {
+  change(file: string): void {
     const routePath = this.getRoutePathByFile(file);
-    if (!routePath) return null;
+    if (!routePath) return;
     const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
     this.route[routePath].data = result?.content;
     this.handleCacheFile(this.route[routePath]);

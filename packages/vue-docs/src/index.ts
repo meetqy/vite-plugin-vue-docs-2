@@ -5,6 +5,7 @@ import DocsRoute from "./route";
 import { MODULE_NAME, MODULE_NAME_VIRTUAL } from "./constants";
 import path from "path";
 import { hmr } from "./hmr";
+import * as fs from "fs";
 
 // 可自定义的配置
 export interface CustomConfig {
@@ -53,12 +54,16 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     fileExp: RegExp(""),
     showUse: true,
     userProjectDir: userProjectDir,
-    cacheDir: path.join(userProjectDir, ".docs-cache"),
+    cacheDir: path.join(userProjectDir, ".cache-vue-docs"),
     header: {
       title: userPkg.name,
     },
     ...rawOptions,
   };
+
+  if (!fs.existsSync(config.cacheDir)) {
+    fs.mkdirSync(config.cacheDir);
+  }
 
   config.root = `${process.cwd()}/src${config.componentDir}`;
   config.fileExp = RegExp(`${config.componentDir}\\/.*?.vue$`);
