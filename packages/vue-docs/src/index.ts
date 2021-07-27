@@ -1,13 +1,11 @@
 import type { Plugin, UserConfig } from "vite";
 import { ViteDevServer } from "vite";
 import fg from "fast-glob";
-import DocsRoute, { Demo } from "./route";
 import { vueToJsonData } from "./main";
 import * as fs from "fs";
-import { createNavRoute } from "./code";
-import { toPascalCase } from "./utils";
 import Pkg from "../package.json";
-import { hmrClient } from "./hmr";
+import DocsRoute from "./route";
+import { MODULE_NAME } from "./constants";
 
 // 可自定义的配置
 export interface CustomConfig {
@@ -62,26 +60,15 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     name: "vite-plugin-vue-docs",
     enforce: "pre",
 
-    async buildStart() {
-      const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
-      files.map((file) => {
-        const demo: Demo = {
-          file: "",
-          name: "",
-        };
-        const routeName = Route.getRoutePathByFile(file) || "";
-        const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
-
-        if (!file.includes("demo")) {
-          demo.file = file.replace(".vue", ".demo.vue");
-          if (fs.existsSync(demo.file)) {
-            demo.name = toPascalCase(routeName.split("/")[1] + "-demo");
-          }
-
-          Route.add(file, result?.content, demo.name ? demo : null);
-        }
-      });
+    resolveId(id) {
+      console.log(id, MODULE_NAME);
+      return null;
     },
+
+    // load(id) {
+    //   // console.log(id);
+    //   return null;
+    // },
 
     config(viteConfig) {
       config.viteConfig = viteConfig;
@@ -92,80 +79,8 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
       };
     },
 
-    transform(code, id) {
-      if (id.endsWith("main.ts")) {
-        console.log("transform", id);
-        const routes = Route.toArray();
-        // VueHighlightJS
-        code += `import VueHighlightJS from 'vue3-highlightjs';`;
-        code += `app.use(VueHighlightJS);`;
-
-        // content
-        const childrenCode = routes.map((item) => {
-          const { demo } = item;
-
-          // 导入demo
-          if (demo && fs.existsSync(demo.file)) {
-            demo.code = fs.readFileSync(demo.file, "utf-8");
-            code += `import ${demo.name} from '${demo.file}';`;
-            code += `app.use(function(Vue) {
-              Vue.component('${demo.name}', ${demo.name})
-            });`;
-          }
-
-          return `{
-            path: '${item.path.replace(/\//, "")}',
-            name: '${Route.getRouteNameByFile(item.file)}',
-            component: () => import("vite-plugin-vue-docs/dist/template/content.vue"),
-            props: {
-              content: ${JSON.stringify(item.data)},
-              componentIs: '${demo?.name || ""}',
-              demoCode: \`${demo?.code || ""}\`
-            }
-          }`;
-        });
-
-        if (config.showUse) {
-          // add HelloWorld
-          childrenCode.push(`{
-            path: '',
-            component: () => import("vite-plugin-vue-docs/dist/template/HelloWorld.vue")
-          }`);
-
-          // add ChangeLog
-          childrenCode.push(`{
-            path: '${config.base}/changelog',
-            component: () => import("vite-plugin-vue-docs/dist/template/ChangeLog.vue")
-          }`);
-        }
-
-        // layout
-        code += `${config.vueRoute}.addRoute({
-          path: '${config.base}',
-          name: "docs",
-          component: () => import("vite-plugin-vue-docs/dist/template/layout.vue"),
-          props: {
-            header: ${JSON.stringify(config.header)},
-            routes: ${JSON.stringify(createNavRoute(routes, config))}
-          },
-          children: [${childrenCode.join(",")}]
-        });`;
-
-        code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)}, 50);`;
-
-        // hmr
-        // code += `if (import.meta.hot) {
-        //   ${hmrClient.update(config)};
-        // }`;
-
-        return code;
-      }
-
-      return null;
-    },
-
     async configureServer(server: ViteDevServer) {
-      const { watcher, httpServer, ws } = server;
+      const { watcher, httpServer } = server;
       Route.initWs(server);
 
       httpServer?.on("listening", () => {

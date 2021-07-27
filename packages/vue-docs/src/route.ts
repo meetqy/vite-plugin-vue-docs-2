@@ -81,8 +81,7 @@ class DocsRoute {
         demo,
       };
 
-      this.server?.ws &&
-        hmrServer.add(this.server.ws, this.route[routePath], this.toArray());
+      this.server?.ws && hmrServer.add(this.route[routePath], this);
     }
   }
 

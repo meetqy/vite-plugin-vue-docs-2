@@ -49,7 +49,7 @@ const TYPE_CLASSES_MAP = {
 export default {
   name: "ElAlert",
   props: {
-    // 这是标题
+    // 这是标题123456789
     title: {
       type: String,
       default: "",
