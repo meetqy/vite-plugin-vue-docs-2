@@ -1,11 +1,10 @@
 import type { Plugin, UserConfig } from "vite";
-import { ViteDevServer } from "vite";
 import fg from "fast-glob";
 import { vueToJsonData } from "./main";
-import * as fs from "fs";
-import Pkg from "../package.json";
 import DocsRoute from "./route";
-import { MODULE_NAME } from "./constants";
+import { MODULE_NAME, MODULE_NAME_VIRTUAL } from "./constants";
+import path from "path";
+import { hmr } from "./hmr";
 
 // 可自定义的配置
 export interface CustomConfig {
@@ -30,13 +29,21 @@ export interface Config extends CustomConfig {
   root: string;
   // 组件正则匹配
   fileExp: RegExp;
+  // 缓存路径
+  cacheDir: string;
   // vite
   viteConfig?: UserConfig;
+  templateDir?: string;
+  // 用户项目地址
+  userProjectDir: string;
 }
 
 export default function vueDocs(rawOptions?: CustomConfig): Plugin {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const userPkg = require(`${process.cwd()}/package.json`);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const pkg = require(`${path.join(__dirname, "../package.json")}`);
+  const userProjectDir = process.cwd();
 
   const config: Config = {
     base: "/docs",
@@ -45,6 +52,8 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     vueRoute: "router",
     fileExp: RegExp(""),
     showUse: true,
+    userProjectDir: userProjectDir,
+    cacheDir: path.join(userProjectDir, ".docs-cache"),
     header: {
       title: userPkg.name,
     },
@@ -53,23 +62,13 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
 
   config.root = `${process.cwd()}/src${config.componentDir}`;
   config.fileExp = RegExp(`${config.componentDir}\\/.*?.vue$`);
+  config.templateDir = `${pkg.name}/dist/template`;
 
   const Route = DocsRoute.instance(config);
 
   return {
     name: "vite-plugin-vue-docs",
     enforce: "pre",
-
-    resolveId(id) {
-      console.log(id, MODULE_NAME);
-      return null;
-    },
-
-    // load(id) {
-    //   // console.log(id);
-    //   return null;
-    // },
-
     config(viteConfig) {
       config.viteConfig = viteConfig;
       return {
@@ -79,32 +78,37 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
       };
     },
 
-    async configureServer(server: ViteDevServer) {
-      const { watcher, httpServer } = server;
-      Route.initWs(server);
+    resolveId(id) {
+      return id.includes(MODULE_NAME) ? MODULE_NAME_VIRTUAL : null;
+    },
 
-      httpServer?.on("listening", () => {
-        setTimeout(() => {
-          console.log(
-            `  ${Pkg.name} ${Pkg.version} route at: \n\n  ${config.base} \n`
-          );
-        });
+    async load(id) {
+      if (id !== MODULE_NAME_VIRTUAL) return null;
+      const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
+      files.map((item) => {
+        if (!item.includes("demo")) {
+          Route.add(item);
+        }
       });
 
-      // hmr
-      watcher
-        .on("add", (file) => {
-          const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
+      return Route.toClientCode();
+    },
 
-          Route.add(file, result?.content);
-        })
-        .on("change", (file) => {
-          const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
-          Route.change(file, result?.content);
-        })
-        .on("unlink", (file) => {
-          Route.remove(file);
-        });
+    transform(_code, id) {
+      if (!/vue&type=route/.test(id)) {
+        if (id === MODULE_NAME_VIRTUAL) {
+          // console.log(_code);
+        }
+        return;
+      }
+      return {
+        code: "export default {}",
+        map: null,
+      };
+    },
+
+    configureServer(server) {
+      hmr(server, config, Route);
     },
   };
 }

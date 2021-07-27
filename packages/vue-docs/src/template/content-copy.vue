@@ -51,11 +51,32 @@
 
 <script>
 export default {
+  props: {
+    content: Object,
+    demoCode: String,
+    componentIs: String,
+  },
+
+  computed: {
+    result() {
+      const route = this.$route;
+      if (route.params && route.params.content) {
+        const { content } = JSON.parse(route.params.content || {});
+        console.log("content update", JSON.parse(route.params.content || {}));
+        return content;
+      }
+
+      console.log("content load", this.content);
+      if (this.content) return this.content;
+
+      return {};
+    },
+  },
+
   data() {
     return {
       types: ["props", "emits", "slots", "methods"],
       showDemo: false,
-      // @vite-plugin-vue-docs content
     };
   },
 };

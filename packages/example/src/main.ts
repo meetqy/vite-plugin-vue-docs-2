@@ -8,10 +8,11 @@ console.log(routes);
 
 const router = createRouter({
   history: createWebHashHistory(import.meta.env.BASE_URL),
-  routes: [
-    { path: "/", component: () => import("./views/index.vue") },
-    { path: "/setup", component: () => import("./views/setup.vue") },
-  ],
+  routes,
+  // routes: [
+  //   { path: "/", component: () => import("./views/index.vue") },
+  //   { path: "/setup", component: () => import("./views/setup.vue") },
+  // ],
 });
 
 const app = createApp(App);

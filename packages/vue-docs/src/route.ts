@@ -1,13 +1,16 @@
-import { Config } from "./index";
+import { Config, vueToJsonData } from "./index";
 import { getBaseUrl, toLine, toPascalCase } from "./utils";
 import { RenderData } from "./type";
 import { ViteDevServer } from "vite";
-import { hmrServer } from "./hmr";
+import * as fs from "fs";
+import path from "path";
 
+// 子组件
 export interface Route {
   name: string;
   path: string;
   file: string;
+  component: string;
   data?: RenderData | null;
   demo?: Demo | null;
 }
@@ -19,6 +22,7 @@ export interface Demo {
 }
 
 class DocsRoute {
+  // key: routePath
   route: { [key: string]: Route };
   config: Config;
   baseRoute: string;
@@ -69,31 +73,61 @@ class DocsRoute {
     return null;
   }
 
-  add(file: string, data?: RenderData, demo?: Demo | null): void {
-    const routePath = this.getRoutePathByFile(file);
-    const routeName = this.getRouteNameByFile(file) || "";
-    if (routePath) {
-      this.route[routePath] = {
-        path: routePath,
-        name: routeName,
-        file,
-        data,
-        demo,
-      };
+  handleCacheFile(route: Route): string {
+    const cacheDir = path.join(this.config.cacheDir, route.name + ".vue");
+    const tmpContent = fs.readFileSync(
+      path.join(__dirname, "./template/content.vue"),
+      "utf-8"
+    );
+    const cacheData = tmpContent.replace(
+      `// @vite-plugin-vue-docs content`,
+      `result: ${JSON.stringify(route.data)}`
+    );
 
-      this.server?.ws && hmrServer.add(this.route[routePath], this);
-    }
+    fs.writeFileSync(cacheDir, cacheData);
+    return cacheDir;
   }
 
-  change(file: string, data?: RenderData, demo?: Demo | null): void {
-    const routeName = this.getRoutePathByFile(file) || "";
-    const item = this.route[routeName];
-    if (item && (data || demo)) {
-      data && (item.data = data);
-      demo && (item.demo = demo);
+  add(file: string): { [key: string]: Route } {
+    const routePath = this.getRoutePathByFile(file);
+    if (!routePath) return this.route;
 
-      this.server?.ws && hmrServer.update(this.server.ws, item);
+    const routeName = this.getRouteNameByFile(file) || "";
+    const demoFile = file.replace(".vue", ".demo.vue");
+
+    const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
+
+    const route: Route = {
+      path: routePath,
+      name: routeName,
+      file,
+      component: "",
+      data: result?.content,
+    };
+
+    const cacheDir = this.handleCacheFile(route);
+
+    route.component = `() => import('${cacheDir}')`;
+
+    if (fs.existsSync(demoFile)) {
+      route.demo = {
+        file: demoFile,
+        name: toPascalCase(routeName + "-demo"),
+        code: fs.readFileSync(demoFile, "utf-8"),
+      };
     }
+
+    this.route[routePath] = route;
+
+    return this.route;
+  }
+
+  change(file: string) {
+    const routePath = this.getRoutePathByFile(file);
+    if (!routePath) return null;
+    const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
+    this.route[routePath].data = result?.content;
+    this.handleCacheFile(this.route[routePath]);
   }
 
   toArray(): Route[] {
@@ -105,12 +139,32 @@ class DocsRoute {
     return arr;
   }
 
+  toClientCode(): string {
+    const arr = [];
+    for (const key in this.route) {
+      const route = this.route[key];
+      const json = {
+        path: route.path,
+        name: route.name,
+        component: route.component,
+        props: {
+          content: route.data,
+        },
+      };
+      arr.push(
+        JSON.stringify(json).replace(/"\(\) => .*?\)"/, function (str) {
+          return str.replace(/"/g, "");
+        })
+      );
+    }
+
+    return `const routes = [${arr.join(",")}];export default routes`;
+  }
+
   remove(file: string): void {
     const routeName = this.getRoutePathByFile(file);
     if (routeName) {
-      this.server?.ws &&
-        hmrServer.remove(this.server.ws, this.route[routeName], this.toArray());
-      delete this.route[routeName];
+      this.server?.ws && delete this.route[routeName];
     }
   }
 }

@@ -55,7 +55,35 @@ export default {
     return {
       types: ["props", "emits", "slots", "methods"],
       showDemo: false,
-      // @vite-plugin-vue-docs content
+      result: {
+        name: "el-alert",
+        slots: {
+          h3: "Slots",
+          table: {
+            headers: ["名称", "说明", "返回参数"],
+            rows: [
+              ["title", "-", "-"],
+              ["default", "-", "-"],
+            ],
+          },
+        },
+        props: {
+          h3: "Props",
+          table: {
+            headers: ["参数", "说明", "类型", "默认值", "必填"],
+            rows: [
+              ["title", "-", "string", "-", "false"],
+              ["description", "-", "string", "-", "false"],
+              ["type", "-", "string", "info", "false"],
+              ["closable", "-", "boolean", "-", "false"],
+              ["close-text", "-", "string", "-", "false"],
+              ["show-icon", "-", "boolean", "-", "false"],
+              ["center", "-", "boolean", "-", "false"],
+              ["effect", "-", "string", "light", "false"],
+            ],
+          },
+        },
+      },
     };
   },
 };

@@ -8,6 +8,7 @@ export default defineConfig({
   base: process.env.BASE_URL || "/vite-plugin-vue-docs/",
   server: {
     host: "0.0.0.0",
+    port: 5000,
   },
   plugins: [vue(), vueDocs()],
   resolve: {
