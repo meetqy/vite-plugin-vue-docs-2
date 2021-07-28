@@ -14,7 +14,7 @@
     "build": "rm -rf dist && yarn tsup && yarn test && yarn cp:template && yarn create:vue",
     "create:vue": "node scripts/md.js",
     "tsup": "tsup src/index.ts --dts",
-    "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template'",
+    "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template && yarn create:vue'",
     "cp:template": "copyfiles -f src/template/* dist/template",
     "test:dev": "jest --watch",
     "test": "jest --coverage"

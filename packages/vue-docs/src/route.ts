@@ -21,6 +21,14 @@ export interface Demo {
   code?: string;
 }
 
+export interface NavRoute {
+  title: string;
+  data: {
+    path: string;
+    name: string;
+  }[];
+}
+
 class DocsRoute {
   // key: routePath
   route: { [key: string]: Route };
@@ -79,10 +87,13 @@ class DocsRoute {
       path.join(__dirname, "./template/content.vue"),
       "utf-8"
     );
+    const oldContent = fs.readFileSync(cacheDir, "utf-8");
     const cacheData = tmpContent.replace(
       `// @vite-plugin-vue-docs content`,
       `result: ${JSON.stringify(route.data)}`
     );
+
+    if (oldContent === cacheData) return cacheDir;
 
     fs.writeFileSync(cacheDir, cacheData);
     return cacheDir;
@@ -144,7 +155,7 @@ class DocsRoute {
     for (const key in this.route) {
       const route = this.route[key];
       const json = {
-        path: route.path,
+        path: route.path.replace(/\//, ""),
         name: route.name,
         component: route.component,
         props: {
@@ -158,7 +169,44 @@ class DocsRoute {
       );
     }
 
-    return `const routes = [${arr.join(",")}];export default routes`;
+    arr.push(`{
+      path: 'changelog',
+      name: "ChangeLog",
+      component: () => import('${this.config.templateDir}/ChangeLog.vue')
+    }`);
+
+    arr.push(`{
+      path: '',
+      name: "HelloWorld",
+      component: () => import('${this.config.templateDir}/HelloWorld.vue')
+    }`);
+
+    this.createLayoutCache();
+
+    const layout = `[{
+      path: '/docs',
+      component: () => import('${this.config.cacheDir}/layout.vue'),
+      children: [${arr.join(",")}]
+    }]`;
+
+    return `const routes = ${layout};export default routes`;
+  }
+
+  createLayoutCache(): void {
+    const layoutDir = path.join(__dirname, "./template/layout.vue");
+    const navs = this.toNavRoute(this.toArray(), this.config);
+    const layout = fs
+      .readFileSync(`${layoutDir}`, "utf-8")
+      .replace(
+        "// @vite-plugin-vue-docs layout header",
+        `header: ${JSON.stringify(this.config.header)},`
+      )
+      .replace(
+        "// @vite-plugin-vue-docs layout nav",
+        `navs: ${JSON.stringify(navs)},`
+      );
+
+    fs.writeFileSync(this.config.cacheDir + "/layout.vue", layout);
   }
 
   remove(file: string): void {
@@ -166,6 +214,38 @@ class DocsRoute {
     if (routeName) {
       this.server?.ws && delete this.route[routeName];
     }
+  }
+
+  toNavRoute(): NavRoute[] {
+    const navs: NavRoute[] = [];
+
+    const config = this.config;
+    const routes = this.toArray();
+
+    if (config.showUse) {
+      navs.push({
+        data: [
+          { path: config.base, name: "使用说明" },
+          {
+            path: config.base + "/changelog",
+            name: "更新日志",
+          },
+        ],
+        title: "使用指南",
+      });
+    }
+
+    // 组件路由
+    navs.push({
+      data: routes.map((item) => {
+        return {
+          ...item,
+          path: config.base + item.path,
+        };
+      }),
+      title: "组件",
+    });
+    return navs;
   }
 }
 

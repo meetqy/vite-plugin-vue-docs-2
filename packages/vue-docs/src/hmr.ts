@@ -20,25 +20,11 @@ export function hmr(
   config: Config,
   route: DocsRoute
 ): void {
-  const { ws, watcher } = server;
+  const { watcher } = server;
 
   watcher.on("change", (file) => {
     if (file.includes(config.root)) {
-      const result = route.change(file);
-      ws.send({
-        type: "custom",
-        event: "special-update",
-        data: {
-          content: result,
-        },
-      });
-      // if (result) {
-      //   getPagesVirtualModule(server);
-      //
-      //   ws.send({
-      //     type: "full-reload",
-      //   });
-      // }
+      route.change(file);
     }
   });
 }

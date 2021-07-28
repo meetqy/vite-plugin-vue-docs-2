@@ -49,7 +49,7 @@ const TYPE_CLASSES_MAP = {
 export default {
   name: "ElAlert",
   props: {
-    //
+    // 你好啊
     title: {
       type: String,
       default: "",

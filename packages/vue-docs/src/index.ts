@@ -34,6 +34,7 @@ export interface Config extends CustomConfig {
   cacheDir: string;
   // vite
   viteConfig?: UserConfig;
+  // 模板路径
   templateDir?: string;
   // 用户项目地址
   userProjectDir: string;
