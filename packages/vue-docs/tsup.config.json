@@ -10,7 +10,8 @@
     "copyfiles",
     "fast-glob",
     "highlight.js",
-    "vue3-highlightjs"
+    "vue3-highlightjs",
+    "debug"
   ],
   "format": [
     "esm",

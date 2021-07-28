@@ -20,11 +20,32 @@ export function hmr(
   config: Config,
   route: DocsRoute
 ): void {
-  const { watcher } = server;
+  const { watcher, ws } = server;
+
+  function fullReload() {
+    route.clean();
+    getPagesVirtualModule(server);
+    ws.send({
+      type: "full-reload",
+    });
+  }
 
   watcher.on("change", (file) => {
     if (file.includes(config.root)) {
+      console.log("change", file);
       route.change(file);
+    }
+  });
+
+  watcher.on("add", (file) => {
+    if (file.includes(config.root)) {
+      fullReload();
+    }
+  });
+
+  watcher.on("unlink", (file) => {
+    if (file.includes(config.root)) {
+      fullReload();
     }
   });
 }

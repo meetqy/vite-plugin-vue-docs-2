@@ -87,7 +87,12 @@ class DocsRoute {
       path.join(__dirname, "./template/content.vue"),
       "utf-8"
     );
-    const oldContent = fs.readFileSync(cacheDir, "utf-8");
+
+    let oldContent = "";
+    if (fs.existsSync(cacheDir)) {
+      oldContent = fs.readFileSync(cacheDir, "utf-8");
+    }
+
     const cacheData = tmpContent.replace(
       `// @vite-plugin-vue-docs content`,
       `result: ${JSON.stringify(route.data)}`
@@ -129,7 +134,6 @@ class DocsRoute {
     }
 
     this.route[routePath] = route;
-
     return this.route;
   }
 
@@ -139,6 +143,7 @@ class DocsRoute {
     const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
     this.route[routePath].data = result?.content;
     this.handleCacheFile(this.route[routePath]);
+    // this.handleLayoutCache();
   }
 
   toArray(): Route[] {
@@ -162,6 +167,7 @@ class DocsRoute {
           content: route.data,
         },
       };
+
       arr.push(
         JSON.stringify(json).replace(/"\(\) => .*?\)"/, function (str) {
           return str.replace(/"/g, "");
@@ -181,20 +187,28 @@ class DocsRoute {
       component: () => import('${this.config.templateDir}/HelloWorld.vue')
     }`);
 
-    this.createLayoutCache();
-
     const layout = `[{
       path: '/docs',
       component: () => import('${this.config.cacheDir}/layout.vue'),
-      children: [${arr.join(",")}]
+      children: [${arr.join(",").replace(/\n+/g, "")}]
     }]`;
+
+    this.handleLayoutCache();
 
     return `const routes = ${layout};export default routes`;
   }
 
-  createLayoutCache(): void {
+  handleLayoutCache(): void {
     const layoutDir = path.join(__dirname, "./template/layout.vue");
-    const navs = this.toNavRoute(this.toArray(), this.config);
+    const oldDir = this.config.cacheDir + "/layout.vue";
+
+    let oldData = "";
+    if (fs.existsSync(oldDir)) {
+      oldData = fs.readFileSync(oldDir, "utf-8");
+    }
+
+    const navs = this.toNavRoute();
+    // 不使用模板引擎，直接使用标志的方式替换掉
     const layout = fs
       .readFileSync(`${layoutDir}`, "utf-8")
       .replace(
@@ -206,14 +220,9 @@ class DocsRoute {
         `navs: ${JSON.stringify(navs)},`
       );
 
-    fs.writeFileSync(this.config.cacheDir + "/layout.vue", layout);
-  }
+    if (oldData === layout) return;
 
-  remove(file: string): void {
-    const routeName = this.getRoutePathByFile(file);
-    if (routeName) {
-      this.server?.ws && delete this.route[routeName];
-    }
+    fs.writeFileSync(oldDir, layout);
   }
 
   toNavRoute(): NavRoute[] {
@@ -247,10 +256,10 @@ class DocsRoute {
     });
     return navs;
   }
-}
 
-export function Route(config?: Config): DocsRoute {
-  return DocsRoute.instance(config);
+  clean(): void {
+    this.route = {};
+  }
 }
 
 export default DocsRoute;
