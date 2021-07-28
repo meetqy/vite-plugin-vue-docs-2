@@ -8,7 +8,7 @@ import {
   getEmitsByArray,
   getMethodsByObject,
   getSlotsByTemplate,
-} from "./handle";
+} from "./ast";
 import { toLine } from "./utils";
 import { Component, Emit, Method, Prop, RenderData } from "./type";
 

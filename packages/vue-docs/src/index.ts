@@ -5,7 +5,7 @@ import DocsRoute from "./route";
 import { MODULE_NAME, MODULE_NAME_VIRTUAL } from "./constants";
 import path from "path";
 import { hmr } from "./hmr";
-import fse from "fs-extra";
+import Cache from "./cache";
 
 // 可自定义的配置
 export interface CustomConfig {
@@ -62,14 +62,12 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     ...rawOptions,
   };
 
-  // 检测缓存目录是否存在
-  fse.emptyDirSync(config.cacheDir);
-
   config.root = `${process.cwd()}/src${config.componentDir}`;
   config.fileExp = RegExp(`${config.componentDir}\\/.*?.vue$`);
   config.templateDir = `${pkg.name}/dist/template`;
 
   const Route = DocsRoute.instance(config);
+  Cache.createDir(config);
 
   return {
     name: "vite-plugin-vue-docs",
@@ -96,17 +94,11 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
         }
       });
 
-      // console.log("load", id);
-
       return Route.toClientCode();
     },
 
     transform(_code, id) {
-      // console.log("transform", id);
       if (!/vue&type=route/.test(id)) {
-        if (id === MODULE_NAME_VIRTUAL) {
-          // console.log(_code);
-        }
         return;
       }
       return {

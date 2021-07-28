@@ -22,5 +22,7 @@ export function getBaseUrl(config: Config): string {
 }
 
 export const debug = {
-  route: Debug("vite-plugin-vue-docs: route"),
+  route: Debug("vue-docs:route"),
+  cache: Debug("vue-docs:cache"),
+  hmr: Debug("vue-docs:hmr"),
 };

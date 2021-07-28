@@ -3,7 +3,7 @@ import { getBaseUrl, toLine, toPascalCase } from "./utils";
 import { RenderData } from "./type";
 import { ViteDevServer } from "vite";
 import * as fs from "fs";
-import path from "path";
+import Cache from "./cache";
 
 // 子组件
 export interface Route {
@@ -55,8 +55,6 @@ class DocsRoute {
     this.server = server;
   }
 
-  // 验证文件路径是否符合要求
-  // 返回正确的routeName
   getRoutePathByFile(file: string): string | null {
     if (this.config.fileExp.test(file)) {
       const path = file.replace(this.config.root, "").replace(".vue", "");
@@ -81,29 +79,6 @@ class DocsRoute {
     return null;
   }
 
-  handleCacheFile(route: Route): string {
-    const cacheDir = path.join(this.config.cacheDir, route.name + ".vue");
-    const tmpContent = fs.readFileSync(
-      path.join(__dirname, "./template/content.vue"),
-      "utf-8"
-    );
-
-    let oldContent = "";
-    if (fs.existsSync(cacheDir)) {
-      oldContent = fs.readFileSync(cacheDir, "utf-8");
-    }
-
-    const cacheData = tmpContent.replace(
-      `// @vite-plugin-vue-docs content`,
-      `result: ${JSON.stringify(route.data)}`
-    );
-
-    if (oldContent === cacheData) return cacheDir;
-
-    fs.writeFileSync(cacheDir, cacheData);
-    return cacheDir;
-  }
-
   add(file: string): { [key: string]: Route } {
     const routePath = this.getRoutePathByFile(file);
     if (!routePath) return this.route;
@@ -121,7 +96,7 @@ class DocsRoute {
       data: result?.content,
     };
 
-    const cacheDir = this.handleCacheFile(route);
+    const cacheDir = Cache.childFile(this.config, route);
 
     route.component = `() => import('${cacheDir}')`;
 
@@ -142,8 +117,7 @@ class DocsRoute {
     if (!routePath) return;
     const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
     this.route[routePath].data = result?.content;
-    this.handleCacheFile(this.route[routePath]);
-    // this.handleLayoutCache();
+    Cache.childFile(this.config, this.route[routePath]);
   }
 
   toArray(): Route[] {
@@ -193,39 +167,12 @@ class DocsRoute {
       children: [${arr.join(",").replace(/\n+/g, "")}]
     }]`;
 
-    this.handleLayoutCache();
+    Cache.createLayout(this.config, this);
 
     return `const routes = ${layout};export default routes`;
   }
 
-  handleLayoutCache(): void {
-    const layoutDir = path.join(__dirname, "./template/layout.vue");
-    const oldDir = this.config.cacheDir + "/layout.vue";
-
-    let oldData = "";
-    if (fs.existsSync(oldDir)) {
-      oldData = fs.readFileSync(oldDir, "utf-8");
-    }
-
-    const navs = this.toNavRoute();
-    // 不使用模板引擎，直接使用标志的方式替换掉
-    const layout = fs
-      .readFileSync(`${layoutDir}`, "utf-8")
-      .replace(
-        "// @vite-plugin-vue-docs layout header",
-        `header: ${JSON.stringify(this.config.header)},`
-      )
-      .replace(
-        "// @vite-plugin-vue-docs layout nav",
-        `navs: ${JSON.stringify(navs)},`
-      );
-
-    if (oldData === layout) return;
-
-    fs.writeFileSync(oldDir, layout);
-  }
-
-  toNavRoute(): NavRoute[] {
+  toNavRouteData(): NavRoute[] {
     const navs: NavRoute[] = [];
 
     const config = this.config;
@@ -259,6 +206,7 @@ class DocsRoute {
 
   clean(): void {
     this.route = {};
+    Cache.clean(this.config);
   }
 }
 

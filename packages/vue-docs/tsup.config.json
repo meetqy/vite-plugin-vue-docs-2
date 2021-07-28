@@ -11,7 +11,8 @@
     "fast-glob",
     "highlight.js",
     "vue3-highlightjs",
-    "debug"
+    "debug",
+    "fs-extra"
   ],
   "format": [
     "esm",

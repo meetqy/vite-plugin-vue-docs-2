@@ -1,5 +1,5 @@
 import { parse } from "@vue/compiler-sfc";
-import { getSlotsByTemplate } from "../src/handle";
+import { getSlotsByTemplate } from "../src/ast";
 import { slot1, slot2, slot3, slot4, slot5, slot6 } from "./data/slots";
 
 test("test getSlotsByTemplate slot 1", () => {

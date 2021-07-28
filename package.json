@@ -42,7 +42,8 @@
   },
   "lint-staged": {
     "*.ts": [
-      "yarn lint"
+      "yarn lint",
+      "cd packages/vue-docs && yarn test"
     ],
     "*.{ts,js,vue}": "yarn fix"
   },
