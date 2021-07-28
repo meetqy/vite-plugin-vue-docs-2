@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { defineComponent } from "./utils";
 
 export const methods1 = defineComponent(`methods: {

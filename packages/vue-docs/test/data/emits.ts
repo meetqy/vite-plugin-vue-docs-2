@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { defineComponent } from "./utils";
 
 export const emits1 = defineComponent(`emits: [

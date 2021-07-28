@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { exportDefault } from "./utils";
 
 export const slot1 = exportDefault(
