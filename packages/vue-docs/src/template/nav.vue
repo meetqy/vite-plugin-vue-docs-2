@@ -22,7 +22,3 @@ export default {
   },
 };
 </script>
-<style>
-.a1626328426828 {
-}
-</style>

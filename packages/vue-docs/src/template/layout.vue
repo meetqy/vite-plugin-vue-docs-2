@@ -1,7 +1,7 @@
 <template>
   <div class="van-doc">
     <custom-header :header="header"></custom-header>
-    <custom-nav :navs="content.nav"></custom-nav>
+    <custom-nav :navs="navs"></custom-nav>
     <div class="van-doc-container van-doc-row">
       <div class="van-doc-content van-doc-content--common">
         <router-view></router-view>
@@ -11,28 +11,17 @@
 </template>
 
 <script>
-import CustomNav from "./nav.vue";
-import CustomHeader from "./header.vue";
+import CustomNav from "vite-plugin-vue-docs/dist/template/nav.vue";
+import CustomHeader from "vite-plugin-vue-docs/dist/template/header.vue";
+import "vite-plugin-vue-docs/dist/template/style.css";
+
 export default {
-  components: { CustomNav, CustomHeader },
-  props: {
-    content: {
-      type: Object,
-      default: () => {},
-    },
-    header: {
-      type: Object,
-      default: () => {},
-    },
-  },
+  components: { CustomHeader, CustomNav },
   data() {
     return {
-      nav: [],
+      // @vite-plugin-vue-docs layout nav
+      // @vite-plugin-vue-docs layout header
     };
   },
 };
 </script>
-
-<style>
-@import "./style.css";
-</style>

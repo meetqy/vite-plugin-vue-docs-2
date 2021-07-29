@@ -7,7 +7,7 @@
     "url": "git+https://github.com/meetqy/vite-plugin-vue-docs.git"
   },
   "scripts": {
-    "setup": "lerna bootstrap && lerna link --force-local",
+    "setup": "yarn && lerna bootstrap && lerna link --force-local",
     "clean": "lerna clean && rm -rf node_modules",
     "build": "lerna run build",
     "dev": "lerna run dev",
@@ -43,7 +43,7 @@
   "lint-staged": {
     "*.ts": [
       "yarn lint",
-      "lerna run test --since -- ls -la"
+      "cd packages/vue-docs && yarn test"
     ],
     "*.{ts,js,vue}": "yarn fix"
   },

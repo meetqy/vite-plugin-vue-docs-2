@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { defineComponent, exportDefault } from "./utils";
 
 export const normal1 = defineComponent(`emits: [

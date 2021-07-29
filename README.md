@@ -71,6 +71,37 @@ export default defineConfig({
 });
 ```
 
+#### 修改`main`文件
+
+```js
+import { createApp } from "vue";
+import App from "./App.vue";
+import { createRouter, createWebHashHistory } from "vue-router";
+// 引入虚拟package
+import { routes, initVueDocsDemo } from "virtual:vite-plugin-vue-docs";
+
+const router = createRouter({
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  routes,
+});
+
+const app = createApp(App);
+
+app.use(function (Vue) {
+  // 导入demo组件
+  initVueDocsDemo(Vue);
+});
+app.use(router);
+
+app.mount("#app");
+```
+
+#### \[可选\]在 `vite-env.d.ts` 新增
+
+``` js
+/// <reference types="vite-plugin-vue-docs/client" />
+```
+
 详细使用方法可参考 [@vue-docs/example](./packages/example/README.md)
 
 ### config 配置参数
@@ -150,10 +181,10 @@ export default {
 
 | 功能                                         | 状态      |
 | -------------------------------------------- | --------- |
-| 打包成静态网页                               | ⏳ 规划中 |
 | 可配置文档网站                               | ⏳ 规划中 |
 | 兼容`<script setup>`                         | ⏳ 规划中 |
-| 可查看源代码                                 | ⏳ 规划中 |
+| 可查看源代码                                 | 👷 进行中 |
+| 打包成静态网页                               | 🚀 已完成 |
 | 页面跳转 history 模式 &#124;&#124; hash 模式 | 🚀 已完成 |
 | 在线查看实例                                 | 🚀 已完成 |
 | 修改文件直接热更新，无须 F5 刷新             | 🚀 已完成 |

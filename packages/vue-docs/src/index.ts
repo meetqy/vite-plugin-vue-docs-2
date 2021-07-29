@@ -1,13 +1,11 @@
 import type { Plugin, UserConfig } from "vite";
-import { ViteDevServer } from "vite";
 import fg from "fast-glob";
-import DocsRoute from "./route";
 import { vueToJsonData } from "./main";
+import DocsRoute from "./route";
+import { MODULE_NAME, MODULE_NAME_VIRTUAL } from "./constants";
 import path from "path";
-import * as fs from "fs";
-import { createContentRoute, createNavRoute } from "./code";
-import { toPascalCase } from "./utils";
-import Pkg from "../package.json";
+import { hmr } from "./hmr";
+import Cache from "./cache";
 
 // 可自定义的配置
 export interface CustomConfig {
@@ -32,13 +30,22 @@ export interface Config extends CustomConfig {
   root: string;
   // 组件正则匹配
   fileExp: RegExp;
+  // 缓存路径
+  cacheDir: string;
   // vite
   viteConfig?: UserConfig;
+  // 模板路径
+  templateDir?: string;
+  // 用户项目地址
+  userProjectDir: string;
 }
 
 export default function vueDocs(rawOptions?: CustomConfig): Plugin {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const userPkg = require(`${process.cwd()}/package.json`);
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const pkg = require(`${path.join(__dirname, "../package.json")}`);
+  const userProjectDir = process.cwd();
 
   const config: Config = {
     base: "/docs",
@@ -47,6 +54,8 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     vueRoute: "router",
     fileExp: RegExp(""),
     showUse: true,
+    userProjectDir: userProjectDir,
+    cacheDir: path.join(userProjectDir, ".cache-vue-docs"),
     header: {
       title: userPkg.name,
     },
@@ -55,22 +64,14 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
 
   config.root = `${process.cwd()}/src${config.componentDir}`;
   config.fileExp = RegExp(`${config.componentDir}\\/.*?.vue$`);
+  config.templateDir = `${pkg.name}/dist/template`;
 
   const Route = DocsRoute.instance(config);
+  Cache.createDir(config);
 
   return {
     name: "vite-plugin-vue-docs",
     enforce: "pre",
-
-    async buildStart() {
-      const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
-      files.map((item) => {
-        if (!item.includes("demo")) {
-          Route.add(item);
-        }
-      });
-    },
-
     config(viteConfig) {
       config.viteConfig = viteConfig;
       return {
@@ -80,115 +81,41 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
       };
     },
 
-    transform(code, id) {
-      if (id.endsWith("main.ts")) {
-        const routes = Route.toArray();
+    resolveId(id) {
+      return id.includes(MODULE_NAME) ? MODULE_NAME_VIRTUAL : null;
+    },
 
-        // VueHighlightJS
+    async load(id) {
+      if (id !== MODULE_NAME_VIRTUAL) return null;
+      const files = await fg([".editorconfig", `${config.root}/**/*.vue`]);
+      files.map((item) => {
+        if (!item.includes("demo")) {
+          Route.add(item);
+        }
+      });
+
+      return Route.toClientCode();
+    },
+
+    transform(code, id) {
+      if (id.includes("main.ts") || id.includes("main.js")) {
         code += `import VueHighlightJS from 'vue3-highlightjs';`;
         code += `app.use(VueHighlightJS);`;
-
-        // content
-        const childrenCode = routes.map((item) => {
-          const demoFile = item.file.replace(".vue", ".demo.vue");
-          let demoComponentName = toPascalCase(item.name + "-demo");
-          let demoComponentCode = "";
-
-          // 导入demo
-          if (fs.existsSync(demoFile)) {
-            demoComponentCode = fs.readFileSync(demoFile, "utf-8");
-            code += `import ${demoComponentName} from '${demoFile}';`;
-            code += `app.use(function(Vue) {
-              Vue.component('${demoComponentName}', ${demoComponentName})
-            });`;
-          } else {
-            demoComponentName = "";
-          }
-
-          const result = vueToJsonData(fs.readFileSync(item.file, "utf-8"));
-
-          return createContentRoute(
-            item,
-            config,
-            demoComponentName,
-            result?.content || null,
-            demoComponentCode
-          );
-        });
-
-        if (config.showUse) {
-          // add HelloWorld
-          childrenCode.push(`{
-            path: '',
-            component: () => import("vite-plugin-vue-docs/dist/template/HelloWorld.vue")
-          }`);
-
-          // add ChangeLog
-          childrenCode.push(`{
-            path: '${config.base}/changelog',
-            component: () => import("vite-plugin-vue-docs/dist/template/ChangeLog.vue")
-          }`);
-        }
-
-        // layout
-        code += `${config.vueRoute}.addRoute({
-          path: '${config.base}',
-          component: () => import("vite-plugin-vue-docs/dist/template/layout.vue"),
-          props: {
-            header: ${JSON.stringify(config.header)},
-            content: {
-              nav: ${JSON.stringify(createNavRoute(routes, config))}
-            }
-          },
-          children: [${childrenCode.join(",")}]
-        });`;
-
-        code += `setTimeout(() => {${config.vueRoute}.push(router.currentRoute.value.path)}, 50)`;
         return code;
       }
 
-      return null;
-    },
-
-    async configureServer(server: ViteDevServer) {
-      const { watcher, httpServer } = server;
-
-      httpServer?.on("listening", () => {
-        setTimeout(() => {
-          console.log(
-            `  ${Pkg.name} ${Pkg.version} route at: \n\n  ${config.base} \n`
-          );
-        });
-      });
-
-      // 原理: 更新template里面的内容，可以触发vue-router的hmr
-      function hmr(filename: string) {
-        const nav = path.join(
-          process.cwd(),
-          `./node_modules/vite-plugin-vue-docs/dist/template/${filename}.vue`
-        );
-
-        fs.writeFileSync(
-          nav,
-          fs
-            .readFileSync(nav, "utf-8")
-            .replace(/<style>.*?<\/style>/, `<style>.a${Date.now()}</style>`)
-        );
+      if (!/vue&type=route/.test(id)) {
+        return;
       }
 
-      watcher
-        .on("add", (path) => {
-          Route.add(path);
-          hmr("nav");
-        })
-        .on("change", (path) => {
-          Route.change(path);
-          // hmr("content");
-        })
-        .on("unlink", (path) => {
-          Route.remove(path);
-          hmr("nav");
-        });
+      return {
+        code: "export default {}",
+        map: null,
+      };
+    },
+
+    configureServer(server) {
+      hmr(server, config, Route);
     },
   };
 }
