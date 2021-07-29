@@ -19,7 +19,10 @@
   >
     <i class="el-icon-loading" v-if="loading"></i>
     <i :class="icon" v-if="icon && !loading"></i>
-    <span v-if="$slots.default"><slot></slot></span>
+    <span v-if="$slots.default">
+      <!-- 按钮内容 -->
+      <slot></slot>
+    </span>
   </button>
 </template>
 <script>
@@ -34,24 +37,34 @@ export default {
     },
   },
   props: {
+    // 类型
     type: {
       type: String,
       default: "default",
     },
+    // 尺寸
     size: String,
+    // 图标类名
     icon: {
       type: String,
       default: "",
     },
+    // 原生 type 属性
     nativeType: {
       type: String,
       default: "button",
     },
+    // 是否加载中状态
     loading: Boolean,
+    // 是否禁用状态
     disabled: Boolean,
+    // 是否朴素按钮
     plain: Boolean,
+    // 是否默认聚焦
     autofocus: Boolean,
+    // 是否圆角按钮
     round: Boolean,
+    // 是否圆形按钮
     circle: Boolean,
   },
   computed: {
