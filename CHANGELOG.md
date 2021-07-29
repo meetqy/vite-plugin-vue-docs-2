@@ -11,6 +11,10 @@
 * `vue-docs` 打包优化
 * `hmr`优化
 
+#### Bugfix
+
+* 新增一个组件，只更新添加了路由，页面是空的 [#5](https://github.com/meetqy/vite-plugin-vue-docs/issues/5)
+
 ### v0.1.7
 
 #### Bugfix
