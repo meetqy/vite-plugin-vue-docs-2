@@ -1,5 +1,5 @@
 import { Config, vueToJsonData } from "./index";
-import { getBaseUrl, toLine, toPascalCase } from "./utils";
+import { debug, getBaseUrl, toLine, toPascalCase } from "./utils";
 import { RenderData } from "./type";
 import { ViteDevServer } from "vite";
 import * as fs from "fs";
@@ -18,7 +18,7 @@ export interface Route {
 export interface Demo {
   file: string;
   name: string;
-  code?: string;
+  code: string;
 }
 
 export interface NavRoute {
@@ -56,8 +56,13 @@ class DocsRoute {
   }
 
   getRoutePathByFile(file: string): string | null {
-    if (this.config.fileExp.test(file)) {
-      const path = file.replace(this.config.root, "").replace(".vue", "");
+    let newFile = file;
+    if (file.includes("demo")) {
+      newFile = file.replace(".demo.vue", ".vue");
+    }
+
+    if (this.config.fileExp.test(newFile)) {
+      const path = newFile.replace(this.config.root, "").replace(".vue", "");
       return toLine(path);
     }
 
@@ -79,6 +84,14 @@ class DocsRoute {
     return null;
   }
 
+  getRouteDemo(route: Route, demoFile: string): Demo {
+    return {
+      file: demoFile,
+      name: route.name + "Demo",
+      code: fs.readFileSync(demoFile, "utf-8"),
+    };
+  }
+
   add(file: string): { [key: string]: Route } {
     const routePath = this.getRoutePathByFile(file);
     if (!routePath) return this.route;
@@ -95,6 +108,11 @@ class DocsRoute {
       component: "",
       data: result?.content,
     };
+
+    if (fs.existsSync(demoFile)) {
+      route.demo = this.getRouteDemo(route, demoFile);
+      debug.route("add demo %O", route.demo);
+    }
 
     const cacheDir = Cache.childFile(this.config, route);
 
@@ -114,9 +132,17 @@ class DocsRoute {
 
   change(file: string): void {
     const routePath = this.getRoutePathByFile(file);
-    if (!routePath) return;
-    const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
-    this.route[routePath].data = result?.content;
+    if (!routePath || !this.route[routePath]) return;
+    const route = this.route[routePath];
+
+    if (file.includes(".demo.vue")) {
+      route.demo = this.getRouteDemo(route, file);
+    } else {
+      const result = vueToJsonData(fs.readFileSync(file, "utf-8"));
+      debug.route("change %O", this.route[routePath]);
+      this.route[routePath].data = result?.content;
+    }
+
     Cache.childFile(this.config, this.route[routePath]);
   }
 
@@ -131,6 +157,8 @@ class DocsRoute {
 
   toClientCode(): string {
     const arr = [];
+    const demoImports = [];
+    const demoComponent = [];
     for (const key in this.route) {
       const route = this.route[key];
       const json = {
@@ -142,6 +170,12 @@ class DocsRoute {
         },
       };
 
+      if (route.demo) {
+        const demoName = route.demo.name;
+        demoImports.push(`import ${demoName} from "${route.demo.file}"`);
+        demoComponent.push(`Vue.component('${demoName}', ${demoName})`);
+      }
+
       arr.push(
         JSON.stringify(json).replace(/"\(\) => .*?\)"/, function (str) {
           return str.replace(/"/g, "");
@@ -149,27 +183,40 @@ class DocsRoute {
       );
     }
 
-    arr.push(`{
-      path: 'changelog',
-      name: "ChangeLog",
-      component: () => import('${this.config.templateDir}/ChangeLog.vue')
-    }`);
+    arr.push(
+      `{path: "changelog",name: "ChangeLog",component: () => import('${this.config.templateDir}/ChangeLog.vue')}`
+    );
 
-    arr.push(`{
-      path: '',
-      name: "HelloWorld",
-      component: () => import('${this.config.templateDir}/HelloWorld.vue')
-    }`);
+    arr.push(
+      `{path: "",name: "HelloWorld",component: () => import('${this.config.templateDir}/HelloWorld.vue')}`
+    );
 
     const layout = `[{
       path: '/docs',
       component: () => import('${this.config.cacheDir}/layout.vue'),
-      children: [${arr.join(",").replace(/\n+/g, "")}]
+      children: [${arr.join(",\n").replace(/\s+/g, "")}]
     }]`;
 
     Cache.createLayout(this.config, this);
 
-    return `const routes = ${layout};export default routes`;
+    debug.route("demo imports %O", demoImports);
+    debug.route("demo component %O", demoComponent);
+
+    let code = `export const routes = ${layout.replace(/\s+|\n+/g, "")};\n`;
+    code += `${
+      demoImports.length <= 1
+        ? demoImports.join(";") + ";\n"
+        : demoImports.join(";\n")
+    }`;
+
+    code += `export function initVueDocsDemo(Vue) {${
+      demoComponent.length <= 1
+        ? demoComponent.join(",") + "\n"
+        : demoComponent.join(";\n")
+    }};`.replace(/\n+/g, "");
+    code += `export default routes;`;
+
+    return code;
   }
 
   toNavRouteData(): NavRoute[] {
@@ -180,6 +227,7 @@ class DocsRoute {
 
     if (config.showUse) {
       navs.push({
+        title: "使用指南",
         data: [
           { path: config.base, name: "使用说明" },
           {
@@ -187,19 +235,18 @@ class DocsRoute {
             name: "更新日志",
           },
         ],
-        title: "使用指南",
       });
     }
 
     // 组件路由
     navs.push({
+      title: "组件",
       data: routes.map((item) => {
         return {
-          ...item,
+          name: item.name,
           path: config.base + item.path,
         };
       }),
-      title: "组件",
     });
     return navs;
   }

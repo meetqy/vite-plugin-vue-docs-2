@@ -2,21 +2,7 @@
   <section>
     <h1>{{ result.name }}</h1>
 
-    <!--    <div class="card" v-if="componentIs">-->
-    <!--      <h3>Demo</h3>-->
-    <!--      <component :is="componentIs"></component>-->
-    <!--      <pre-->
-    <!--        v-highlightjs-->
-    <!--        v-show="showDemo"-->
-    <!--      ><code class="language-js">{{ demoCode }}</code></pre>-->
-    <!--      <div class="source-code">-->
-    <!--        <p style="text-align: center">-->
-    <!--          <span style="cursor: pointer" @click="showDemo = !showDemo">-->
-    <!--            {{ showDemo ? "收起" : "展开" }}代码-->
-    <!--          </span>-->
-    <!--        </p>-->
-    <!--      </div>-->
-    <!--    </div>-->
+    <!-- @vite-plugin-vue-docs content template demo -->
 
     <template v-for="type in types" :key="type">
       <div class="card" v-if="result[type]">
@@ -55,7 +41,8 @@ export default {
     return {
       types: ["props", "emits", "slots", "methods"],
       showDemo: false,
-      // @vite-plugin-vue-docs content
+      showSourceCode: false,
+      // @vite-plugin-vue-docs content result
     };
   },
 };

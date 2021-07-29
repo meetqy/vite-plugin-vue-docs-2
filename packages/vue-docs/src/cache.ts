@@ -18,6 +18,8 @@ function createLayout(config: Config, route: DocsRoute): void {
   }
 
   const navs = route.toNavRouteData();
+  debug.cache("createLayout component %O", navs[1].data);
+  debug.cache("createLayout use %O", navs[0].data);
   // 不使用模板引擎，直接使用标志的方式替换掉
   const layout = fs
     .readFileSync(`${layoutDir}`, "utf-8")
@@ -42,6 +44,7 @@ function clean(config: Config): void {
 function childFile(config: Config, route: Route): string {
   const cacheDir = path.join(config.cacheDir, route.name + ".vue");
   debug.cache("childFile %s", cacheDir);
+
   const tmpContent = fs.readFileSync(
     path.join(__dirname, "./template/content.vue"),
     "utf-8"
@@ -52,10 +55,34 @@ function childFile(config: Config, route: Route): string {
     oldContent = fs.readFileSync(cacheDir, "utf-8");
   }
 
-  const cacheData = tmpContent.replace(
-    `// @vite-plugin-vue-docs content`,
+  let cacheData = tmpContent.replace(
+    `// @vite-plugin-vue-docs content result`,
     `result: ${JSON.stringify(route.data)}`
   );
+
+  if (route.demo) {
+    const demo = route.demo;
+    const demoCode = demo.code
+      ?.replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/{/g, "&#123;")
+      .replace(/}/g, "&#125");
+    cacheData = cacheData.replace(
+      `<!-- @vite-plugin-vue-docs content template demo -->`,
+      `<div class="card">
+      <h3>Demo</h3>
+      <${demo.name} />
+      <pre v-highlightjs v-show="showSourceCode"><code class="language-js">${demoCode}</code></pre>
+      <div class="source-code">
+        <p style="text-align: center">
+            <span style="cursor: pointer" @click="showSourceCode=!showSourceCode">
+                {{showSourceCode ? '收起' : '展开'}}代码
+            </span>
+        </p>
+      </div>
+   </div>`
+    );
+  }
 
   if (oldContent === cacheData) return cacheDir;
 

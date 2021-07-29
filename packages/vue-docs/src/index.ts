@@ -97,10 +97,17 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
       return Route.toClientCode();
     },
 
-    transform(_code, id) {
+    transform(code, id) {
+      if (id.includes("main.ts") || id.includes("main.js")) {
+        code += `import VueHighlightJS from 'vue3-highlightjs';`;
+        code += `app.use(VueHighlightJS);`;
+        return code;
+      }
+
       if (!/vue&type=route/.test(id)) {
         return;
       }
+
       return {
         code: "export default {}",
         map: null,
