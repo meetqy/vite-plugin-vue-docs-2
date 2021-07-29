@@ -53,7 +53,7 @@
 yarn add vite-plugin-vue-docs -D
 ```
 
-#### 配置 vite-config.js
+#### 配置 **vite-config.js**
 
 ```js
 import { defineConfig } from "vite";
@@ -71,7 +71,7 @@ export default defineConfig({
 });
 ```
 
-#### 修改`main`文件
+#### 修改 **main** 文件
 
 ```js
 import { createApp } from "vue";
@@ -96,7 +96,7 @@ app.use(router);
 app.mount("#app");
 ```
 
-#### \[可选\]在 `vite-env.d.ts` 新增
+#### \[可选\]在 **vite-env.d.ts** 新增
 
 ``` js
 /// <reference types="vite-plugin-vue-docs/client" />
