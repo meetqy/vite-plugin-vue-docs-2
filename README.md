@@ -27,7 +27,7 @@
   /></a>
 </p>
 
-### 介绍
+## 介绍
 
 解析`.vue`文件，自动生成对应文档。
 
@@ -37,7 +37,7 @@
 
 ![preview](./preview.png)
 
-### 特点
+## 特点
 
 - 支持热更新
 - 快速启动，依赖于 vite，无需另起服务
@@ -46,7 +46,7 @@
 - ui 采用了<a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>的样式
 - 核心方法覆盖率达到了 92.86%
 
-### 运行 example
+## 运行 example
 
 ```shell
 git clone https://github.com/meetqy/vite-plugin-vue-docs.git
@@ -55,15 +55,15 @@ yarn setup
 yarn dev
 ```
 
-### 使用
+## 使用
 
-#### 安装
+### 安装
 
 ```shell
 yarn add vite-plugin-vue-docs -D
 ```
 
-#### 配置 **vite-config.js**
+### 配置 **vite-config.js**
 
 ```js
 import { defineConfig } from "vite";
@@ -81,7 +81,7 @@ export default defineConfig({
 });
 ```
 
-#### 修改 **main.{ts|js}** 文件
+### 修改 **main.{ts|js}** 文件
 
 ```js
 import { createRouter } from "vue-router";
@@ -99,7 +99,7 @@ app.use(function (Vue) {
 });
 ```
 
-#### 引入类型文件
+### 引入类型文件
 
 ```js
 // vite-env.d.ts
@@ -108,7 +108,7 @@ app.use(function (Vue) {
 
 详细使用方法可参考 [@vue-docs/example](./packages/example/README.md)
 
-### 配置
+## 配置
 
 | 参数         | 说明                 |
 | ------------ | -------------------- |
@@ -118,13 +118,13 @@ app.use(function (Vue) {
 | showUse      | 静态网站显示使用指南 |
 | header       | 头部配置             |
 
-#### header
+### header
 
 | 参数  | 说明             |
 | ----- | ---------------- |
 | title | 网站 header 标题 |
 
-### 计划
+## 计划
 
 - 🚀 表示已经实现的功能
 - 👷 表示进行中的功能
