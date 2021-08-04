@@ -25,6 +25,11 @@ const root = process.cwd();
 const changelog = path.join(root, "../../CHANGELOG.md");
 const hello = path.join(root, "../../README.md");
 
+fs.writeFileSync(
+  "./README.md",
+  fs.readFileSync(hello, "utf-8").replace("![preview](./preview.png)", "")
+);
+
 createHtml(
   changelog,
   `<script>export default {name: 'ChangeLog'}</script>`,
