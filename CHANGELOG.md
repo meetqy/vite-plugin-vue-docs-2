@@ -1,4 +1,13 @@
 # 更新日志
+
+### v0.1.9
+
+#### Feature
+
+* example 新增demo `Badge`
+* example 新增demo `progress`
+* example 新增demo `tag`
+
 ### v0.1.8
 
 #### Feature
