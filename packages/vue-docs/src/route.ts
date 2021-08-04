@@ -23,10 +23,12 @@ export interface Demo {
 
 export interface NavRoute {
   title: string;
-  data: {
-    path: string;
-    name: string;
-  }[];
+  data: NavRouteData[];
+}
+
+export interface NavRouteData {
+  path: string;
+  name: string;
 }
 
 class DocsRoute {
@@ -38,9 +40,25 @@ class DocsRoute {
   private static _instance: DocsRoute;
 
   private constructor(config: Config) {
-    this.route = {};
     this.config = config;
     this.baseRoute = getBaseUrl(this.config);
+    this.route = {};
+    if (config.showUse) {
+      this.route = {
+        "@vite-plugin-vue-docs/readme": {
+          path: "/",
+          name: "VueDocsReadme-使用说明",
+          file: config.templateDir + "/Readme.vue",
+          component: `() => import('${config.templateDir}/Readme.vue')`,
+        },
+        "@vite-plugin-vue-docs/changelog": {
+          path: "/@vite-plugin-vue-docs/changelog",
+          name: "VueDocsChangeLog-更新日志",
+          file: config.templateDir + "/ChangeLog.vue",
+          component: `() => import('${config.templateDir}/ChangeLog.vue')`,
+        },
+      };
+    }
   }
 
   static instance(config?: Config): DocsRoute {
@@ -183,14 +201,6 @@ class DocsRoute {
       );
     }
 
-    arr.push(
-      `{path: "changelog",name: "ChangeLog",component: () => import('${this.config.templateDir}/ChangeLog.vue')}`
-    );
-
-    arr.push(
-      `{path: "",name: "HelloWorld",component: () => import('${this.config.templateDir}/HelloWorld.vue')}`
-    );
-
     const layout = `[{
       path: '/docs',
       component: () => import('${this.config.cacheDir}/layout.vue'),
@@ -227,29 +237,44 @@ class DocsRoute {
     const config = this.config;
     const routes = this.toArray();
 
-    if (config.showUse) {
+    const componentRoute: NavRouteData[] = [];
+    const defaultRoute: NavRouteData[] = [];
+
+    routes.map((item) => {
+      if (item.name.includes("VueDocs")) {
+        defaultRoute.push({
+          name: item.name.split("-")[1],
+          path: config.base + item.path,
+        });
+      } else {
+        componentRoute.push({
+          name: item.name,
+          path: config.base + item.path,
+        });
+      }
+    });
+
+    if (defaultRoute && defaultRoute.length > 0) {
       navs.push({
         title: "使用指南",
-        data: [
-          { path: config.base, name: "使用说明" },
-          {
-            path: config.base + "/changelog",
-            name: "更新日志",
-          },
-        ],
+        data: defaultRoute,
       });
     }
 
-    // 组件路由
     navs.push({
       title: "组件",
-      data: routes.map((item) => {
+      data: componentRoute,
+    });
+
+    debug.route(
+      "生成导航 %O",
+      routes.map((item) => {
         return {
           name: item.name,
           path: config.base + item.path,
         };
-      }),
-    });
+      })
+    );
     return navs;
   }
 

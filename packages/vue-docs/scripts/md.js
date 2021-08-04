@@ -38,13 +38,13 @@ createHtml(
 
 createHtml(
   hello,
-  `<script>export default {name: "HelloWorld"};</script>
+  `<script>export default {name: "Readme"};</script>
 <style scoped>
 .card-version a {display: inline-block;height: 20px;margin: 3px;}
 h1 {margin-bottom: 0 !important;}
 .card-version img {border-radius: 0;}
 </style>`,
-  "HelloWorld"
+  "Readme"
 );
 
 function createHtml(file, data, saveName) {
