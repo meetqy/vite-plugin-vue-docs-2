@@ -1,6 +1,6 @@
 {
   "name": "@vue-docs/example",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "scripts": {
     "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec 'cross-env DEBUG=vue-docs:* vite'",
     "dev1": "vite",
@@ -20,7 +20,7 @@
     "nodemon": "^2.0.7",
     "typescript": "^4.3.2",
     "vite": "^2.3.8",
-    "vite-plugin-vue-docs": "^0.1.9"
+    "vite-plugin-vue-docs": "^0.1.10"
   },
   "publishConfig": {
     "access": "public"
