@@ -1,5 +1,17 @@
 # 更新日志
 
+## v0.1.12
+
+### BugFix
+
+* 修复样式优先级影响布局bug
+
+## v0.1.11
+
+### Bugfix
+
+* 修复 `fs-extra` not found
+
 ## v0.1.10
 
 ### Bugfix
