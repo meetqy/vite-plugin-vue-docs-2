@@ -8,6 +8,10 @@
 * example 新增demo `progress`
 * example 新增demo `tag`
 
+### Pref
+
+* 生成文档脚本优化
+
 ## v0.1.8
 
 ### Feature
