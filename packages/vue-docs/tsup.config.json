@@ -12,7 +12,8 @@
     "highlight.js",
     "vue3-highlightjs",
     "debug",
-    "fs-extra"
+    "fs-extra",
+    "comment-parser/lib"
   ],
   "format": [
     "esm",

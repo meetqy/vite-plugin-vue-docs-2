@@ -7,7 +7,7 @@ import {
 } from "@babel/types";
 import { toLine } from "./utils";
 import { Emit, Prop, Method, Slot } from "./type";
-import { parse as commentParse } from "comment-parser/lib";
+import { parse as commentParse } from "comment-parser";
 import { SFCTemplateBlock } from "@vue/compiler-sfc";
 import * as cheerio from "cheerio";
 
