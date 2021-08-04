@@ -22,6 +22,7 @@ export interface CustomConfig {
 }
 
 interface ConfigHeader {
+  // 网站header标题
   title?: string;
 }
 
