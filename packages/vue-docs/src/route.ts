@@ -221,6 +221,15 @@ class DocsRoute {
 
     debug.route("demo import code %s", code);
 
+    debug.route(
+      "demo plugin",
+      `export function initVueDocsDemo(Vue) {${
+        demoComponent.length <= 1
+          ? demoComponent.join(",") + "\n"
+          : demoComponent.join(";\n")
+      }};`
+    );
+
     code += `export function initVueDocsDemo(Vue) {${
       demoComponent.length <= 1
         ? demoComponent.join(",") + "\n"
