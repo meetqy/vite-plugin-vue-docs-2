@@ -48,7 +48,6 @@
     "babel-jest": "^27.0.6",
     "copyfiles": "^2.4.1",
     "debug": "^4.3.2",
-    "fs-extra": "^10.0.0",
     "highlight.js": "^10.3.2",
     "jest": "^27.0.6",
     "markdown-it": "^12.1.0",
@@ -70,6 +69,7 @@
     "fast-glob": "^3.2.7",
     "humps": "^2.0.1",
     "vue-router": "4",
+    "fs-extra": "^10.0.0",
     "vue3-highlightjs": "^1.0.5"
   },
   "jest": {
