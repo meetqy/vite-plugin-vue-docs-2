@@ -206,8 +206,10 @@ class DocsRoute {
     code += `${
       demoImports.length <= 1
         ? demoImports.join(";") + ";\n"
-        : demoImports.join(";\n")
+        : demoImports.join(";\n") + ";\n"
     }`;
+
+    debug.route("demo import code %s", code);
 
     code += `export function initVueDocsDemo(Vue) {${
       demoComponent.length <= 1

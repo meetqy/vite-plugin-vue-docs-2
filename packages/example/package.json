@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "element-plus": "^1.0.2-beta.66",
     "vue": "^3.0.5",
     "vue-codemirror": "^4.0.6",
     "vue-router": "^4.0.10"
