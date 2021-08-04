@@ -57,8 +57,6 @@ yarn dev
 
 ## 使用
 
-### 安装
-
 ```shell
 yarn add vite-plugin-vue-docs -D
 ```
@@ -118,7 +116,7 @@ app.use(function (Vue) {
 | showUse      | 静态网站显示使用指南 |
 | header       | 头部配置             |
 
-### header
+## Header
 
 | 参数  | 说明             |
 | ----- | ---------------- |

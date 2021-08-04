@@ -45,7 +45,10 @@ h1 {margin-bottom: 0 !important;}
 function createHtml(file, data, saveName) {
   const result = md.render(fs.readFileSync(file, "utf-8").split("### 计划")[0]);
   const html = result
-    .replace(/<h3>/g, `</div><div class="card"><h3>`)
+    .replace(/h3/g, "h4")
+    .replace(/<h2>/g, '</div><div class="card"><h3>')
+    .replace(/<\/h2>/g, "</h3>")
+    // .replace(/<h3>/g, `</div><div class="card"><h3>`)
     .replace("</div>", "")
     .replace(`<p><img src="./preview.png" alt="preview"></p>`, "")
     .replace(
