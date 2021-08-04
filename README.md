@@ -89,10 +89,8 @@ const router = createRouter({
   routes,
 });
 
-app.use(function (Vue) {
-  // 导入demo组件
-  initVueDocsDemo(Vue);
-});
+// 导入demo组件
+app.use(initVueDocsDemo);
 ```
 
 ### 引入类型文件
