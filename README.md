@@ -139,6 +139,6 @@ app.use(initVueDocsDemo);
 | 支持`type`多种类型                           | 🚀 已完成 |
 | 自动生成路由                                 | 🚀 已完成 |
 
-## changlog
+## CHANGELOG
 
-[更新日志](https://meetqy.github.io/vite-plugin-vue-docs/#/docs/changelog)
+<a target="_blank" href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs/@vite-plugin-vue-docs/changelog'>更新日志</a>
