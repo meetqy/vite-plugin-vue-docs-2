@@ -31,7 +31,7 @@
 
 vite插件 - 自动生成vue组件文档网站。 <a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
 
-[English](./README.md) | **中文**
+[English](./README.en.md) | **中文**
 
 ![preview](./preview.jpg)
 
