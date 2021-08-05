@@ -80,13 +80,13 @@ For detailed usage, please refer to [@vue-docs/example](./packages/example/READM
 
 ## Config
 
-| Parameter    | Description                            |
-| ------------ | -------------------------------------- |
-| base         | Document routing address               |
-| componentDir | Component path relative to `src`       |
-| vueRoute     | Router instance name, default: `router` |
-| showUse      | Static website display guide           |
-| header       | Header config                          |
+| Parameter    | Description                      | Default       |
+| ------------ | -------------------------------- | ------------- |
+| base         | Document routing address         | `/docs`       |
+| componentDir | Component path relative to `src` | `/components` |
+| vueRoute     | Router instance name             | `router`      |
+| showUse      | Static website display guide     | `true`        |
+| header       | Header config                    | -             |
 
 ## Header
 
@@ -102,20 +102,20 @@ For detailed usage, please refer to [@vue-docs/example](./packages/example/READM
 
 - ⏳ Represents the function in the plan
 
-| Function                                                     | Status         |
-| ------------------------------------------------------------ | -------------- |
-| Configurable document website                                | ⏳ Planning    |
-| Compatible with `< script setup >`                           | ⏳ Planning    |
-| Compatible with 'composition API'                            | ⏳ Planning    |
-| You can view the source code                                 | 👷 Progress |
-| Package into static web pages                                | 🚀 Completed   |
-| The page jumps to history mode &#124&# 124; Hash mode        | 🚀 Completed   |
-| View instances Online                                        | 🚀 Completed   |
-| The modified file is directly hot updated without F5 refresh | 🚀 Completed   |
-| Support parsing ` slot '                                     | 🚀 Completed   |
-| Support parsing ` ref '                                      | 🚀 Completed   |
-| Multiple types of 'type' are supported                       | 🚀 Completed   |
-| Automatic route generation                                   | 🚀 Completed   |
+| Function                                                     | Status       |
+| ------------------------------------------------------------ | ------------ |
+| Configurable document website                                | ⏳ Planning  |
+| Compatible with `< script setup >`                           | ⏳ Planning  |
+| Compatible with 'composition API'                            | ⏳ Planning  |
+| You can view the source code                                 | 👷 Progress  |
+| Package into static web pages                                | 🚀 Completed |
+| The page jumps to history mode &#124&# 124; Hash mode        | 🚀 Completed |
+| View instances Online                                        | 🚀 Completed |
+| The modified file is directly hot updated without F5 refresh | 🚀 Completed |
+| Support parsing ` slot '                                     | 🚀 Completed |
+| Support parsing ` ref '                                      | 🚀 Completed |
+| Multiple types of 'type' are supported                       | 🚀 Completed |
+| Automatic route generation                                   | 🚀 Completed |
 
 ## CHANGELOG
 

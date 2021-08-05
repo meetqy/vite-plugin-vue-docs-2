@@ -29,7 +29,7 @@
 
 ## 介绍
 
-vite插件 - 自动生成vue组件文档网站。 <a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
+vite 插件 - 自动生成 vue 组件文档网站。 <a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
 
 [English](./README.en.md) | **中文**
 
@@ -104,13 +104,13 @@ app.use(initVueDocsDemo);
 
 ## 配置
 
-| 参数         | 说明                 |
-| ------------ | -------------------- |
-| base         | 文档路由地址         |
-| componentDir | 组件路径 相对于 src  |
-| vueRoute     | router 实例名称      |
-| showUse      | 静态网站显示使用指南 |
-| header       | 头部配置             |
+| 参数         | 说明                 | 默认值        |
+| ------------ | -------------------- | ------------- |
+| base         | 文档路由地址         | `/docs`       |
+| componentDir | 组件路径 相对于 src  | `/components` |
+| vueRoute     | router 实例名称      | `router`      |
+| showUse      | 静态网站显示使用指南 | `true`        |
+| header       | 头部配置             | -             |
 
 ## Header
 
