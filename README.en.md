@@ -5,7 +5,7 @@
 ![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
 [![example deploy](https://github.com/meetqy/vite-plugin-vue-docs/actions/workflows/deploy.yml/badge.svg)](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
-Vite plug-in - automatically generate Vue component documentation website. <a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
+Vite plugin - automatically generate Vue component documentation website. <a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
 
 **English** | [中文](./README.md)
 
