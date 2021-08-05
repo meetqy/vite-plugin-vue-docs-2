@@ -90,9 +90,9 @@ For detailed usage, please refer to [@vue-docs/example](./packages/example/READM
 
 ## Header
 
-| 参数  | 说明                 |
-| ----- | -------------------- |
-| title | Website header title |
+| Parameter | Description          | Default      |
+| --------- | -------------------- | ------------ |
+| title     | Website header title | Project name |
 
 ## Plan
 
