@@ -11,7 +11,7 @@ Parse `.vue` files and automatically generate corresponding documents.
 
 **English** | [中文](./README.md)
 
-![preview](./preview.png)
+![preview](./preview.jpg)
 
 ## Features
 

@@ -4,6 +4,7 @@ import { RenderData } from "./type";
 import { ViteDevServer } from "vite";
 import * as fs from "fs";
 import Cache from "./cache";
+import { string } from "fast-glob/out/utils";
 
 // 子组件
 export interface Route {
@@ -46,7 +47,7 @@ class DocsRoute {
     if (config.showUse) {
       this.route = {
         "@vite-plugin-vue-docs/readme": {
-          path: "/",
+          path: "",
           name: "VueDocsReadme-使用说明",
           file: config.templateDir + "/Readme.vue",
           component: `() => import('${config.templateDir}/Readme.vue')`,
@@ -129,7 +130,7 @@ class DocsRoute {
 
     if (fs.existsSync(demoFile)) {
       route.demo = this.getRouteDemo(route, demoFile);
-      debug.route("add demo %O", route.demo);
+      // debug.route("add demo %O", route.demo);
     }
 
     const cacheDir = Cache.childFile(this.config, route);
@@ -219,8 +220,6 @@ class DocsRoute {
         : demoImports.join(";\n") + ";\n"
     }`;
 
-    debug.route("demo import code %s", code);
-
     debug.route(
       "demo plugin",
       `export function initVueDocsDemo(Vue) {${
@@ -246,20 +245,25 @@ class DocsRoute {
     const config = this.config;
     const routes = this.toArray();
 
-    const componentRoute: NavRouteData[] = [];
     const defaultRoute: NavRouteData[] = [];
+    const componentRoutes: { [key: string]: NavRouteData[] | [] } = {};
 
     routes.map((item) => {
+      const path = config.base + item.path;
+      // 默认路由
       if (item.name.includes("VueDocs")) {
         defaultRoute.push({
           name: item.name.split("-")[1],
-          path: config.base + item.path,
+          path,
         });
       } else {
-        componentRoute.push({
+        const temp = path.split("/");
+        const d: NavRouteData[] = componentRoutes[temp[2]] || [];
+        d.push({
           name: item.name,
-          path: config.base + item.path,
+          path,
         });
+        componentRoutes[temp[2]] = d;
       }
     });
 
@@ -270,20 +274,27 @@ class DocsRoute {
       });
     }
 
-    navs.push({
-      title: "组件",
-      data: componentRoute,
-    });
+    const otherClassify: NavRoute = {
+      title: "未分类组件",
+      data: [],
+    };
 
-    debug.route(
-      "生成导航 %O",
-      routes.map((item) => {
-        return {
-          name: item.name,
-          path: config.base + item.path,
-        };
-      })
-    );
+    for (const key in componentRoutes) {
+      const data = componentRoutes[key];
+      if (data.length <= 1) {
+        otherClassify.data.push(data[0]);
+      } else {
+        navs.push({
+          title: key.toUpperCase(),
+          data: data,
+        });
+      }
+    }
+
+    navs.push(otherClassify);
+
+    debug.route("生成导航 %O", navs);
+
     return navs;
   }
 

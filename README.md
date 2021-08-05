@@ -33,7 +33,7 @@
 
 [English](./README.md) | **中文**
 
-![preview](./preview.png)
+![preview](./preview.jpg)
 
 ## 特点
 
