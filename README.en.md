@@ -78,13 +78,13 @@ app.use(initVueDocsDemo);
 
 For detailed usage, please refer to [@vue-docs/example](./packages/example/README.md)
 
-## 配置
+## Config
 
 | Parameter    | Description                            |
 | ------------ | -------------------------------------- |
 | base         | Document routing address               |
 | componentDir | Component path relative to `src`       |
-| vueRoute     | Router instance name, 默认值: `router` |
+| vueRoute     | Router instance name, default: `router` |
 | showUse      | Static website display guide           |
 | header       | Header config                          |
 
