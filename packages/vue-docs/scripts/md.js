@@ -56,6 +56,7 @@ function createHtml(file, data, saveName) {
     // .replace(/<h3>/g, `</div><div class="card"><h3>`)
     .replace("</div>", "")
     .replace(`<p><img src="./preview.png" alt="preview"></p>`, "")
+    .replace(`<p><img src="./preview.jpg" alt="preview"></p>`, "")
     .replace(
       `<p><a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a></p>`,
       ""

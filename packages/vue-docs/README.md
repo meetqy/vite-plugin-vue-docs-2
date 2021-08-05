@@ -29,11 +29,11 @@
 
 ## 介绍
 
-解析`.vue`文件，自动生成对应文档。<a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
+vite插件 - 自动生成vue组件文档网站。 <a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
 
-[English](./README.md) | **中文**
+[English](./README.en.md) | **中文**
 
-
+![preview](./preview.jpg)
 
 ## 特点
 
@@ -139,6 +139,6 @@ app.use(initVueDocsDemo);
 | 支持`type`多种类型                           | 🚀 已完成 |
 | 自动生成路由                                 | 🚀 已完成 |
 
-## changlog
+## CHANGELOG
 
-[更新日志](https://meetqy.github.io/vite-plugin-vue-docs/#/docs/changelog)
+<a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs/@vite-plugin-vue-docs/changelog' target="_blank">更新日志</a>
