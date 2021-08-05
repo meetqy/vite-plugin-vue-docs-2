@@ -5,9 +5,7 @@
 ![Statements](https://img.shields.io/badge/statements-79.66%25-red.svg)
 [![example deploy](https://github.com/meetqy/vite-plugin-vue-docs/actions/workflows/deploy.yml/badge.svg)](https://meetqy.github.io/vite-plugin-vue-docs/#/docs)
 
-Parse `.vue` files and automatically generate corresponding documents.
-
-<a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
+Vite plug-in - automatically generate Vue component documentation website. <a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a>
 
 **English** | [中文](./README.md)
 
@@ -22,13 +20,7 @@ Parse `.vue` files and automatically generate corresponding documents.
 - ui adopts the style of <a href='https://youzan.github.io/vant-weapp/#/home'>`vant-ui`</a>
 - Core method coverage reached 92.86%
 
-##Use
-
-For usage, refer to [@vue docs/example](./packages/example/README.md)
-
-> ^0.1.3 dependency `vue router`
-
-## example
+## Run example
 
 ```shell
 git clone https://github.com/meetqy/vite-plugin-vue-docs.git
@@ -37,66 +29,94 @@ yarn setup
 yarn dev
 ```
 
-## Syntax
+## Use
 
-- `emits`, `props`, and vue have corresponding wording, so just add a comment on the wording, and the plug-in will automatically parse it.
-- `slots` is also generated automatically. If you need to add a description, you only need to add a comment on the previous line of the `<slot>` tag.
-
-### ref
-
-`red` generally calls methods in certain methods, so you need to add the `@vue-docs-ref` mark to the method, and use multi-line comments.
-Annotation specification reference[JavaScript 编码规范-函数/方法注释](http://itmyhome.com/js/han_6570_fang_fa_zhu_shi.html)
-
-```js
-export default {
-  methods: {
-    /**
-     * @vue-docs-ref
-     * @description This is a say method
-     * @param {string} name
-     * @param {number} age
-     * @return {name: string, age: number}
-     */
-    say(name: string, age: number) {
-      return {
-        name,
-        age,
-      };
-    },
-  },
-};
+```shell
+yarn add vite-plugin-vue-docs -D
 ```
 
-### Parameter Description
+### To configure **vite-config.js**
 
-| Name          | Description                     | Required  |
-| ------------- | ------------------------------- | --------- |
-| @vue-docs-ref | Invoke identification via `ref` | **true**  |
-| @description  | Descriptive information         | **false** |
-| @param        | Parameters                      | **false** |
-| @return       | Return value                    | **false** |
+```js
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import vueDocs from "vite-plugin-vue-docs";
+
+export default defineConfig({
+  plugins: [vue(), vueDocs()],
+  resolve: {
+    alias: {
+      // This line must be added, otherwise it cannot be used
+      vue: "vue/dist/vue.esm-bundler.js",
+    },
+  },
+});
+```
+
+### Edit **main.{ts|js}**
+
+```js
+import { createRouter } from "vue-router";
+// Introducing virtual package
+import { routes, initVueDocsDemo } from "virtual:vite-plugin-vue-docs";
+
+const router = createRouter({
+  // ...
+  routes,
+});
+
+// Import demo components
+app.use(initVueDocsDemo);
+```
+
+### Import type file
+
+```js
+// vite-env.d.ts
+/// <reference types="vite-plugin-vue-docs/client" />
+```
+
+For detailed usage, please refer to [@vue-docs/example](./packages/example/README.md)
+
+## 配置
+
+| Parameter    | Description                            |
+| ------------ | -------------------------------------- |
+| base         | Document routing address               |
+| componentDir | Component path relative to `src`       |
+| vueRoute     | Router instance name, 默认值: `router` |
+| showUse      | Static website display guide           |
+| header       | Header config                          |
+
+## Header
+
+| 参数  | 说明                 |
+| ----- | -------------------- |
+| title | Website header title |
 
 ## Plan
 
-- 🚀 means functions that have been implemented
-- 👷 means functions in progress
-- ⏳ means functions in planning
+- 🚀 Indicates the functions that have been implemented
 
-| Features                                                   | Status       |
-| ---------------------------------------------------------- | ------------ |
-| Packaged into a static web page                            | ⏳ Planning  |
-| Configurable document website                              | ⏳ Planning  |
-| Compatible`<script setup>`                                 | ⏳ Planning  |
-| View source code                                           | ⏳ Planning  |
-| Page jump history mode &#124;&#124; hash mode              | 🚀 Completed |
-| View examples online                                       | 🚀 Completed |
-| Modified files are directly hot-updated without F5 refresh | 🚀 Completed |
-| Support parsing `slot`                                     | 🚀 Completed |
-| Support parsing `ref`                                      | 🚀 Completed |
-| Support `defineComponent()` writing method                 | 🚀 Completed |
-| Support `type` multiple types                              | 🚀 Completed |
-| Automatically generate routing                             | 🚀 Completed |
+- 👷 Indicates a function in progress
 
-## changlog
+- ⏳ Represents the function in the plan
 
-[Version Log](https://meetqy.github.io/vite-plugin-vue-docs/#/docs/changelog)
+| Function                                                     | Status         |
+| ------------------------------------------------------------ | -------------- |
+| Configurable document website                                | ⏳ Planning    |
+| Compatible with `< script setup >`                           | ⏳ Planning    |
+| Compatible with 'composition API'                            | ⏳ Planning    |
+| You can view the source code                                 | 👷 Progress |
+| Package into static web pages                                | 🚀 Completed   |
+| The page jumps to history mode &#124&# 124; Hash mode        | 🚀 Completed   |
+| View instances Online                                        | 🚀 Completed   |
+| The modified file is directly hot updated without F5 refresh | 🚀 Completed   |
+| Support parsing ` slot '                                     | 🚀 Completed   |
+| Support parsing ` ref '                                      | 🚀 Completed   |
+| Multiple types of 'type' are supported                       | 🚀 Completed   |
+| Automatic route generation                                   | 🚀 Completed   |
+
+## CHANGELOG
+
+[CHANGELOG](https://meetqy.github.io/vite-plugin-vue-docs/#/docs/changelog)
