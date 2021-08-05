@@ -141,4 +141,4 @@ app.use(initVueDocsDemo);
 
 ## CHANGELOG
 
-<a target="_blank" href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs/@vite-plugin-vue-docs/changelog'>更新日志</a>
+<a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs/@vite-plugin-vue-docs/changelog' target="_blank">更新日志</a>

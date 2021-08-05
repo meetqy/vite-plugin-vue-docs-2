@@ -119,4 +119,4 @@ For detailed usage, please refer to [@vue-docs/example](./packages/example/READM
 
 ## CHANGELOG
 
-<a target="_blank" href="https://meetqy.github.io/vite-plugin-vue-docs/#/docs/@vite-plugin-vue-docs/changelog">CHANGELOG</a>
+<a href="https://meetqy.github.io/vite-plugin-vue-docs/#/docs/@vite-plugin-vue-docs/changelog" target="_blank">CHANGELOG</a>
