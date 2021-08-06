@@ -15,9 +15,6 @@
     "fs-extra",
     "comment-parser"
   ],
-  "format": [
-    "esm",
-    "cjs"
-  ],
-  "dts": true
+  "dts": true,
+  "clean": true
 }
