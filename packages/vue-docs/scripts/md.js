@@ -48,7 +48,13 @@ h1 {margin-bottom: 0 !important;}
 );
 
 function createHtml(file, data, saveName) {
-  const result = md.render(fs.readFileSync(file, "utf-8").split("### 计划")[0]);
+  const result = md.render(
+    fs
+      .readFileSync(file, "utf-8")
+      .split("### 计划")[0]
+      .replace("[English](./README.en.md) | **中文**", "")
+  );
+
   const html = result
     .replace(/h3/g, "h4")
     .replace(/<h2>/g, '</div><div class="card"><h3>')
@@ -59,10 +65,6 @@ function createHtml(file, data, saveName) {
     .replace(`<p><img src="./preview.jpg" alt="preview"></p>`, "")
     .replace(
       `<p><a href='https://meetqy.github.io/vite-plugin-vue-docs/#/docs' traget='_blank'>在线体验</a></p>`,
-      ""
-    )
-    .replace(
-      `<p><a href="./README.md">English</a> | <strong>中文</strong></p>`,
       ""
     );
   fs.writeFileSync(
