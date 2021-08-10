@@ -1,84 +1,74 @@
-/* 样式来源: https://youzan.github.io/vant-weapp/#/home */
-
-.source-code {
+.van-doc .source-code {
   margin-top: 24px;
+  padding-top: 24px;
   width: 100%;
   border-top: 1px solid #f5f5f5;
-  padding-top: 24px;
 }
 
-body {
-  min-width: 1100px;
-  overflow-x: auto;
-  color: #323233;
-  font-size: 16px;
-  font-family: Open Sans, -apple-system, BlinkMacSystemFont, Helvetica Neue,
-    Helvetica, Segoe UI, Arial, Roboto, PingFang SC, miui, Hiragino Sans GB,
-    Microsoft Yahei, sans-serif;
-  background-color: #f7f8fa;
-  -webkit-font-smoothing: antialiased;
-}
-
-body,
-p {
+.van-doc p {
   margin: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.van-doc h1,
+.van-doc h2,
+.van-doc h3,
+.van-doc h4,
+.van-doc h5,
+.van-doc h6 {
   margin: 0;
   font-size: inherit;
 }
 
-ol,
-ul {
+.van-doc ol,
+.van-doc ul {
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-a {
+.van-doc a {
   text-decoration: none;
 }
 
 .van-doc {
   position: absolute;
-  width: 100%;
-  left: 0;
   top: 0;
+  left: 0;
   z-index: 999;
-  background-color: #f6f5f9;
+  background-color: #f7f8fa;
+  color: #323233;
   text-align: left;
+  font-size: 16px;
+  font-family: Open Sans, -apple-system, BlinkMacSystemFont, Helvetica Neue,
+    Helvetica, Segoe UI, Arial, Roboto, PingFang SC, miui, Hiragino Sans GB,
+    Microsoft Yahei, sans-serif;
 }
 
+.van-doc,
 .van-doc-row {
   width: 100%;
 }
 
 @media (min-width: 1680px) {
   .van-doc-row {
-    width: 1680px;
     margin: 0 auto;
+    width: 1680px;
   }
 }
 
 .van-doc-content {
   position: relative;
+  margin-top: 64px;
+  padding: 0 0 75px;
   -webkit-flex: 1;
   flex: 1;
-  padding: 0 0 75px;
-  margin-top: 64px;
 }
 
 .van-doc-content .card {
   margin-bottom: 24px;
   padding: 24px;
-  background-color: #fff;
   border-radius: 20px;
+  background-color: #fff;
   box-shadow: 0 8px 12px #ebedf0;
 }
 
@@ -151,18 +141,18 @@ a {
 }
 
 .van-doc-content table {
-  width: 100%;
   margin-top: 12px;
+  width: 100%;
+  border-collapse: collapse;
   color: #34495e;
   font-size: 14px;
   line-height: 1.5;
-  border-collapse: collapse;
 }
 
 .van-doc-content table th {
   padding: 8px 10px;
-  font-weight: 600;
   text-align: left;
+  font-weight: 600;
 }
 
 .van-doc-content table th:first-child {
@@ -185,11 +175,11 @@ a {
 .van-doc-content table td:first-child code {
   margin: 0;
   padding: 2px 6px;
+  border-radius: 20px;
+  background-color: rgba(25, 137, 250, 0.1);
   color: #1989fa;
   font-weight: 600;
   font-size: 11px;
-  background-color: rgba(25, 137, 250, 0.1);
-  border-radius: 20px;
 }
 
 .van-doc-content table td:last-child {
@@ -198,9 +188,9 @@ a {
 
 .van-doc-content table em {
   color: #4fc08d;
+  font-style: normal;
   font-size: 14px;
   font-family: Source Code Pro, Monaco, Inconsolata, monospace;
-  font-style: normal;
 }
 
 .van-doc-content ol li,
@@ -219,9 +209,9 @@ a {
   top: 0;
   left: 0;
   box-sizing: border-box;
+  margin-top: 10px;
   width: 6px;
   height: 6px;
-  margin-top: 10px;
   border: 1px solid #666;
   border-radius: 50%;
   content: "";
@@ -233,18 +223,18 @@ a {
   border-top: 1px solid #eee;
 }
 
+.van-doc-content a > code,
 .van-doc-content li > code,
 .van-doc-content p > code,
-.van-doc-content table code,
-.van-doc-content a > code {
+.van-doc-content table code {
   display: inline;
   margin: 0 2px;
   padding: 2px 5px;
+  border-radius: 4px;
+  background-color: #f7f8fa;
   font-size: 14px;
   font-family: inherit;
   word-break: keep-all;
-  background-color: #f7f8fa;
-  border-radius: 4px;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -253,20 +243,20 @@ a {
 }
 
 .van-doc-content section {
-  padding: 24px;
   overflow: hidden;
+  padding: 24px;
 }
 
 .van-doc-content blockquote {
   margin: 16px 0 0;
   padding: 16px;
-  background-color: #ecf9ff;
   border-radius: 20px;
+  background-color: #ecf9ff;
 }
 
 .van-doc-content img {
-  width: 100%;
   margin: 16px 0;
+  width: 100%;
   border-radius: 20px;
 }
 
@@ -290,35 +280,41 @@ a {
   position: fixed;
   left: 0;
   z-index: 1;
-  min-width: 220px;
-  max-width: 220px;
-  padding: 24px 0;
   overflow-y: scroll;
+  padding: 24px 0;
+  max-width: 220px;
+  min-width: 220px;
   background-color: #fff;
   box-shadow: 0 8px 12px #ebedf0;
 }
+
 @media (min-width: 1680px) {
   .van-doc-nav {
     left: 50%;
     margin-left: -840px;
   }
 }
+
 .van-doc-nav::-webkit-scrollbar {
   width: 6px;
   height: 6px;
   background-color: initial;
 }
+
 .van-doc-nav::-webkit-scrollbar-thumb {
-  background-color: initial;
   border-radius: 6px;
+  background-color: initial;
 }
+
 .van-doc-nav:hover::-webkit-scrollbar-thumb {
   background-color: rgba(69, 90, 100, 0.2);
 }
+
 .van-doc-nav__group {
   margin-bottom: 16px;
   padding-left: 6px;
 }
+
 .van-doc-nav__title {
   padding: 8px 0 8px 24px;
   color: #455a64;
@@ -326,6 +322,7 @@ a {
   font-size: 15px;
   line-height: 28px;
 }
+
 .van-doc-nav__item a {
   display: block;
   margin: 8px 0;
@@ -335,32 +332,38 @@ a {
   line-height: 20px;
   transition: color 0.2s;
 }
+
 .van-doc-nav__item a.active,
 .van-doc-nav__item a:hover {
   color: #4fc08d;
 }
+
 .van-doc-nav__item a.active {
-  font-weight: 600;
-  background-color: #ebfff0;
   border-radius: 999px;
+  background-color: #ebfff0;
+  font-weight: 600;
 }
+
 .van-doc-nav__item a span {
   font-size: 13px;
 }
+
 @media (max-width: 1300px) {
   .van-doc-nav__item a {
     font-size: 13px;
   }
+
   .van-doc-nav__item:active {
     font-size: 14px;
   }
 }
 
 .van-doc-container {
+  overflow: hidden;
   box-sizing: border-box;
   padding-left: 220px;
-  overflow: hidden;
 }
+
 .van-doc-container--with-simulator {
   padding-right: 384px;
 }
@@ -373,199 +376,230 @@ a {
   -webkit-user-select: none;
   user-select: none;
 }
+
 .van-doc-header__top {
   display: -webkit-flex;
   display: flex;
+  padding: 0 24px;
+  height: 64px;
   -webkit-align-items: center;
   align-items: center;
-  height: 64px;
-  padding: 0 24px;
 }
+
 .van-doc-header__top-nav {
+  text-align: right;
+  font-size: 0;
   -webkit-flex: 1;
   flex: 1;
-  font-size: 0;
-  text-align: right;
 }
+
 .van-doc-header__top-nav > li {
   position: relative;
   display: inline-block;
   vertical-align: middle;
 }
+
 .van-doc-header__top-nav-item {
   margin-left: 16px;
 }
+
 .van-doc-header__top-nav-title {
   display: block;
   font-size: 15px;
 }
+
 .van-doc-header__cube {
   position: relative;
   display: block;
   padding: 0 12px;
-  color: #001938;
-  background: #f7f8fa;
-  font-size: 14px;
-  line-height: 30px;
-  text-align: center;
   border: 1px solid hsla(0, 0%, 100%, 0.7);
   border-radius: 20px;
+  background: #f7f8fa;
+  color: #001938;
+  text-align: center;
+  font-size: 14px;
+  line-height: 30px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
+
 .van-doc-header__version {
   padding-right: 20px;
 }
+
 .van-doc-header__version:after {
   position: absolute;
   top: 10px;
   right: 9px;
   width: 5px;
   height: 5px;
-  color: #001938;
   border-color: transparent transparent currentcolor currentcolor;
   border-style: solid;
   border-width: 1px;
+  color: #001938;
+  content: "";
   -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
-  content: "";
 }
+
 .van-doc-header__version-pop {
   position: absolute;
   top: 34px;
   left: 0;
-  width: 100%;
   z-index: 99;
-  color: #333;
-  line-height: 36px;
-  text-align: left;
   overflow: hidden;
-  background-color: #fff;
+  width: 100%;
   border-radius: 8px;
+  background-color: #fff;
   box-shadow: 0 4px 12px #ebedf0;
+  color: #333;
+  text-align: left;
+  line-height: 36px;
+  transition: 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
   -webkit-transform-origin: top;
   transform-origin: top;
-  transition: 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
+
 .van-doc-header__version-pop-item {
   padding-left: 12px;
   transition: 0.2s;
 }
+
 .van-doc-header__version-pop-item:hover {
-  color: #1989fa;
   background-color: #f7f8fa;
+  color: #1989fa;
 }
+
 .van-doc-header__logo {
   display: block;
 }
+
 .van-doc-header__logo img,
 .van-doc-header__logo span {
   display: inline-block;
   vertical-align: middle;
 }
+
 .van-doc-header__logo sub {
   margin-left: 5px;
   color: #fff;
 }
+
 .van-doc-header__logo img {
-  width: 28px;
   margin-right: 12px;
+  width: 28px;
 }
+
 .van-doc-header__logo span {
   color: #fff;
   font-size: 22px;
 }
+
 .van-doc-header__link span {
   color: #fff;
   font-size: 16px;
 }
+
 .van-doc-header__link img {
   display: block;
   width: 30px;
   height: 30px;
   transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
 .van-doc-header__link img:hover {
   -webkit-transform: scale(1.2);
   transform: scale(1.2);
 }
+
 .van-doc-dropdown-enter,
 .van-doc-dropdown-leave-active {
+  opacity: 0;
   -webkit-transform: scaleY(0);
   transform: scaleY(0);
-  opacity: 0;
 }
-code {
+
+.van-doc code {
   position: relative;
   display: block;
-  padding: 16px 20px;
   overflow-x: auto;
+  padding: 16px 20px;
+  border-radius: 20px;
+  background-color: #f8f8f8;
   color: #58727e;
-  font-weight: 400;
-  font-size: 14px;
-  font-family: "Source Code Pro", "Monaco", "Inconsolata", monospace;
-  line-height: 26px;
   white-space: pre-wrap;
   word-wrap: break-word;
-  background-color: #f8f8f8;
-  border-radius: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: Source Code Pro, Monaco, Inconsolata, monospace;
+  line-height: 26px;
 }
-pre {
+
+.van-doc pre {
   margin: 20px 0 0;
 }
-pre + p {
+
+.van-doc pre + p {
   margin-top: 20px;
 }
 
-.hljs-subst {
+.van-doc .hljs-subst {
   color: #58727e;
 }
-.hljs-string,
-.hljs-meta,
-.hljs-symbol,
-.hljs-template-tag,
-.hljs-template-variable,
-.hljs-addition {
+
+.van-doc .hljs-addition,
+.van-doc .hljs-meta,
+.van-doc .hljs-string,
+.van-doc .hljs-symbol,
+.van-doc .hljs-template-tag,
+.van-doc .hljs-template-variable {
   color: #4fc08d;
 }
-.hljs-comment,
-.hljs-quote {
+
+.van-doc .hljs-comment,
+.van-doc .hljs-quote {
   color: #999;
 }
-.hljs-params,
-.hljs-keyword,
-.hljs-attribute {
+
+.van-doc .hljs-attribute,
+.van-doc .hljs-keyword,
+.van-doc .hljs-params {
   color: #8080ff;
 }
-.hljs-deletion,
-.hljs-variable,
-.hljs-number,
-.hljs-regexp,
-.hljs-literal,
-.hljs-bullet,
-.hljs-link {
+
+.van-doc .hljs-bullet,
+.van-doc .hljs-deletion,
+.van-doc .hljs-link,
+.van-doc .hljs-literal,
+.van-doc .hljs-number,
+.van-doc .hljs-regexp,
+.van-doc .hljs-variable {
   color: #eb6f6f;
 }
-.hljs-attr,
-.hljs-selector-tag,
-.hljs-title,
-.hljs-section,
-.hljs-built_in,
-.hljs-doctag,
-.hljs-type,
-.hljs-name,
-.hljs-selector-id,
-.hljs-selector-class,
-.hljs-strong {
+
+.van-doc .hljs-attr,
+.van-doc .hljs-built_in,
+.van-doc .hljs-doctag,
+.van-doc .hljs-name,
+.van-doc .hljs-section,
+.van-doc .hljs-selector-class,
+.van-doc .hljs-selector-id,
+.van-doc .hljs-selector-tag,
+.van-doc .hljs-strong,
+.van-doc .hljs-title,
+.van-doc .hljs-type {
   color: #4994df;
 }
-.hljs-emphasis {
+
+.van-doc .hljs-emphasis {
   font-style: italic;
 }
-.van-doc-intro {
+
+.van-doc .van-doc-intro {
   padding-top: 20px;
   text-align: center;
 }
-.van-doc-intro p {
+
+.van-doc .van-doc-intro p {
   margin-bottom: 20px;
 }

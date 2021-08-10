@@ -7,4 +7,4 @@ export const typesArray = [
   { value: "danger", name: "危险按钮" },
 ];
 
-export const types = typesArray.map((item) => item.val);
+export const types = typesArray.map((item) => item.value);

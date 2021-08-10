@@ -1,16 +1,21 @@
 <template>
   <div>
-    <router-link to="/setup">setup1</router-link>
-    <router-link to="/docs">to docs</router-link>
+    <p>
+      <el-button type="danger" @click="$router.push('/docs')">
+        查看文档
+      </el-button>
+    </p>
     <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import ElButton from "./components/element/button.vue";
 
 export default defineComponent({
-  name: "App1",
+  name: "App",
+  components: { ElButton },
 });
 </script>
 
