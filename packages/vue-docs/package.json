@@ -10,11 +10,11 @@
     "client.d.ts"
   ],
   "scripts": {
-    "dev": "yarn tsup --watch & yarn watch:template",
-    "build": "yarn tsup --minify && yarn test && yarn cp:template && yarn create:vue",
+    "dev": "yarn tsup & yarn watch:template & yarn create:vue",
+    "build": "rm -rf dist && yarn tsup --minify && yarn test && yarn cp:template && yarn create:vue",
     "create:vue": "node scripts/md.js",
-    "tsup": "tsup src/index.ts --format cjs,esm --dts",
-    "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template && yarn create:vue'",
+    "tsup": "tsup src/index.ts --dts --format cjs,esm",
+    "watch:template": "nodemon --watch ./src/template -e vue,css --exec 'yarn cp:template'",
     "cp:template": "copyfiles -f src/template/* dist/template",
     "test:dev": "jest --watch",
     "test": "jest --coverage"
@@ -52,7 +52,7 @@
     "jest": "^27.0.6",
     "markdown-it": "^12.1.0",
     "nodemon": "^2.0.9",
-    "tsup": "^4.13.1",
+    "tsup": "^4.12.0",
     "typescript": "^4.3.4",
     "vite": "^2.3.8"
   },
