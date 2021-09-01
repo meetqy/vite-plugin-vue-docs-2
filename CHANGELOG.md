@@ -1,5 +1,11 @@
 # 更新日志
 
+## v0.1.14
+
+### BugFix
+
+* element-plus 样式路径失效
+
 ## v0.1.13
 
 ### Feature
