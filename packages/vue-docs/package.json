@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-vue-docs",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "vite plugin auto document generation for vue",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -52,6 +52,7 @@
     "jest": "^27.0.6",
     "markdown-it": "^12.1.0",
     "nodemon": "^2.0.9",
+    "ts-node": "^10.2.1",
     "tsup": "^4.12.0",
     "typescript": "^4.3.4",
     "vite": "^2.3.8"

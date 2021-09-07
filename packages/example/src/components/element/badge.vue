@@ -44,6 +44,20 @@ export default defineComponent({
       },
     },
   },
+  emits: {
+    // 没有验证函数
+    click: null,
+
+    // 带有验证函数
+    submit: (payload) => {
+      if (payload.email && payload.password) {
+        return true;
+      } else {
+        console.warn(`Invalid submit event payload!`);
+        return false;
+      }
+    },
+  },
   setup(props) {
     const content = computed(() => {
       if (props.isDot) {

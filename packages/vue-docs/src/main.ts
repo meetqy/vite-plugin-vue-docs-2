@@ -6,6 +6,7 @@ import {
   getPropsByObject,
   getAstValue,
   getEmitsByArray,
+  getEmitsByObject,
   getMethodsByObject,
   getSlotsByTemplate,
 } from "./ast";
@@ -122,7 +123,12 @@ function handleExportDefault(ast: ObjectExpression): Component {
         }
 
         case "emits": {
-          emits = getEmitsByArray(vueParams.value as ArrayExpression);
+          if (t.isArrayExpression(vueParams.value)) {
+            emits = getEmitsByArray(vueParams.value as ArrayExpression);
+          } else if (t.isObjectExpression(vueParams.value)) {
+            emits = getEmitsByObject(vueParams.value as ObjectExpression);
+          } else emits = [];
+
           break;
         }
 
