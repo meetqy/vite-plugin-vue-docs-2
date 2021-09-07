@@ -23,6 +23,26 @@ export function getPropsByObject(ast: ObjectExpression): Prop[] {
   return [];
 }
 
+export function getEmitsByObject(ast: ObjectExpression): Emit[] {
+  if (ast.properties && ast.properties.length) {
+    return ast.properties.map((item) => {
+      const variable = item as ObjectProperty;
+      const emit: Emit = {
+        name: getAstValue(variable.key),
+        notes: "",
+      };
+
+      if (variable.leadingComments && variable.leadingComments.length) {
+        emit.notes = variable.leadingComments[0].value;
+      }
+
+      return emit;
+    });
+  }
+
+  return [];
+}
+
 // 处理emits ['click', 'change',...]
 export function getEmitsByArray(ast: ArrayExpression): Emit[] {
   return ast.elements.map((item) => {
