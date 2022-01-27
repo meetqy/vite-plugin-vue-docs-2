@@ -2,7 +2,7 @@
   "name": "@vue-docs/example",
   "version": "0.1.15",
   "scripts": {
-    "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec cross-env DEBUG=vue-docs:* vite",
+    "dev": "nodemon --watch ../vue-docs/dist -e vue,js --exec 'cross-env DEBUG=vue-docs:* vite'",
     "dev1": "vite",
     "build": "cross-env BASE_URL=/vite-plugin-vue-docs/ vite build",
     "serve": "vite preview"

@@ -56,17 +56,14 @@ export default function vueDocs(rawOptions?: CustomConfig): Plugin {
     fileExp: RegExp(""),
     showUse: true,
     userProjectDir: userProjectDir,
-    cacheDir: path.join(userProjectDir, ".cache-vue-docs").replace(/\\/g, "/"),
+    cacheDir: path.join(userProjectDir, ".cache-vue-docs"),
     header: {
       title: userPkg.name,
     },
     ...rawOptions,
   };
 
-  config.root = `${process.cwd()}/src${config.componentDir}`.replace(
-    /\\/g,
-    "/"
-  );
+  config.root = `${process.cwd()}/src${config.componentDir}`;
   config.fileExp = RegExp(`${config.componentDir}\\/.*?.vue$`);
   config.templateDir = `${pkg.name}/dist/template`;
 
