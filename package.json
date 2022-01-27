@@ -10,7 +10,7 @@
     "setup": "yarn && lerna bootstrap && lerna link --force-local",
     "clean": "lerna clean && rm -rf node_modules",
     "build": "lerna run build",
-    "dev": "lerna run dev",
+    "dev": "lerna run dev --no-sort",
     "prepare": "husky install",
     "test": "lerna run test",
     "lint": "eslint packages/**/src",
